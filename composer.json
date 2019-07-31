@@ -1,5 +1,6 @@
 {
   "name": "se/sdk",
+  "version": "master",
   "description": "SmartExpert SDK for Laravel 5.x",
   "keywords": [
     "laravel",
