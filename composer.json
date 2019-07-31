@@ -1,0 +1,36 @@
+{
+  "name": "se/sdk",
+  "description": "SmartExpert SDK for Laravel 5.x",
+  "keywords": [
+    "laravel",
+    "se",
+    "sdk"
+  ],
+  "require": {
+    "php": "^7.1.3",
+    "illuminate/support": "5.8.*",
+    "guzzlehttp/guzzle": "6.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "SE\\SDK\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SE\\Tests\\SDK\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SE\\SDK\\ServiceProvider"
+      ],
+      "aliases": {
+        "Tracking": "SE\\SDK\\Facades\\SeSDK"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
