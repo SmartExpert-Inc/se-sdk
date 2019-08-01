@@ -13,6 +13,11 @@ add this code to your composer.json
   ]
 ```
 
+add to require:
+
+``` bash
+"se/sdk": "dev-master"
+```
 run
 
 ``` bash

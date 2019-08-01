@@ -1,5 +1,6 @@
 {
   "name": "se/sdk",
+  "version": "master",
   "description": "SmartExpert SDK for Laravel 5.x",
   "keywords": [
     "laravel",
@@ -8,7 +9,7 @@
   ],
   "require": {
     "php": "^7.1.3",
-    "illuminate/support": "5.8.*",
+    "illuminate/support": "5.5.*",
     "guzzlehttp/guzzle": "6.*"
   },
   "autoload": {
@@ -22,6 +23,9 @@
     }
   },
   "extra": {
+    "branch-alias": {
+      "dev-master": "dev"
+    },
     "laravel": {
       "providers": [
         "SE\\SDK\\ServiceProvider"
