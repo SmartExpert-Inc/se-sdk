@@ -19,7 +19,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("{$botName}/unlink", [
+            ->post("/{$botName}/unlink", [
                 'user_id' => $userId
             ])
             ->getObject();
@@ -38,7 +38,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("{$botName}/message", [
+            ->post("/{$botName}/message", [
                 'chat_id' => $chatId,
                 'message' => $message
             ])
@@ -58,7 +58,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("{$botName}/webhook", [
+            ->post("/{$botName}/webhook", [
                 'token' => $token
             ])
             ->getObject();
