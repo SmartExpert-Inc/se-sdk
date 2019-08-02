@@ -21,5 +21,5 @@ add to require:
 run
 
 ``` bash
-composer install
+composer update
 ```
