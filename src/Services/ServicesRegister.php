@@ -38,6 +38,9 @@ final class ServicesRegister
     /** @var CategoryService $bots */
     public $category;
 
+    /** @var S3Service $bots */
+    public $s3;
+
     /**
      * ServicesRegister constructor.
      * @param Application $app
@@ -53,5 +56,6 @@ final class ServicesRegister
         $this->postCategories = $app->make(PostCategoryService::class);
         $this->bot = $app->make(BotService::class);
         $this->category = $app->make(CategoryService::class);
+        $this->s3 = $app->make(S3Service::class);
     }
 }
