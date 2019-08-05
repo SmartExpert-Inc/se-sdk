@@ -24,5 +24,21 @@ return [
             'link' => env('FB_BOT_LINK', null),
             'callback_token' => env('BOT_CALLBACK_TOKEN', null)
         ]
+    ],
+
+    's3' => [
+        'default' => env('FILESYSTEM_CLOUD', 'minio'),
+        'cloud' => env('FILESYSTEM_CLOUD', 'minio'),
+        'disks' => [
+            'minio' => [
+                'driver' => 's3',
+                'endpoint' => env('MINIO_ENDPOINT', 'http://127.0.0.1:9005'),
+                'use_path_style_endpoint' => true,
+                'key' => env('AWS_KEY'),
+                'secret' => env('AWS_SECRET'),
+                'region' => env('AWS_REGION'),
+                'bucket' => env('AWS_BUCKET'),
+            ],
+        ],
     ]
 ];

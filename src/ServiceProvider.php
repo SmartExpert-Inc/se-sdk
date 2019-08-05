@@ -2,6 +2,7 @@
 
 namespace SE\SDK;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Services\{ApiClientService,
     BotService,
@@ -85,6 +86,12 @@ class ServiceProvider extends IlluminateServiceProvider
         $this->app->singleton(S3Service::class, function () {
             return new S3Service;
         });
+
+        if (config('se_sdk.s3')) {
+            $disk = config('se_sdk.s3.cloud');
+            Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
+            Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
+        }
 
         $this->app->bind(static::$abstract, function ($app) {
             return new ServicesRegister($app);
