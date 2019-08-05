@@ -70,6 +70,7 @@ final class S3Service
         $url = preg_replace_callback('/[^\x20-\x7f]/', function($match) {
             return urlencode($match[0]);
         }, $url); // encoding only on non-ASCII characters
+
         try {
             $info = pathinfo($url);
             $contents = file_get_contents($url);
@@ -79,6 +80,7 @@ final class S3Service
             report($e);
             return null;
         }
+        
         $uploadedFile = new UploadedFile($file, $info['basename']);
         return $this->putFile($uploadedFile, $folder);
     }
