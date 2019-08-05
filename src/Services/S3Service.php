@@ -9,7 +9,7 @@ use Webpatser\Uuid\Uuid;
 
 final class S3Service
 {
-    const DEFAULT_FOLDER = 'posts/home_task/';
+    const DEFAULT_FOLDER = '_tmp';
 
     /** @var Storage $storage*/
     private $storage;
