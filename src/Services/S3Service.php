@@ -3,8 +3,9 @@
 namespace SE\SDK\Services;
 
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\{File, Storage};
 use Webpatser\Uuid\Uuid;
 
 final class S3Service
@@ -72,9 +73,11 @@ final class S3Service
 
         try {
             $info = pathinfo($url);
-            $contents = file_get_contents($url);
+            $client = new Client();
+            $res = $client->get($url);
+            $contents = (string) $res->getBody()->getContents();
             $file = "/tmp/{$info['basename']}";
-            file_put_contents($file, $contents);
+            File::put($file, $contents);
         } catch (Exception $e) {
             report($e);
             return null;
