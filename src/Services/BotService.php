@@ -30,7 +30,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function message($botName, $chatId, $message)
+    public function message($botName, $chatId, $message, ?int $userId, ?string $tokenHash)
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -40,7 +40,9 @@ final class BotService extends BaseService
             ->setPrefix($this->prefix)
             ->post("/{$botName}/message", [
                 'chat_id' => $chatId,
-                'message' => $message
+                'message' => $message,
+                'user_id' => $userId,
+                'token_hash' => $tokenHash
             ])
             ->getObject();
 
