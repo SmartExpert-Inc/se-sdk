@@ -4,7 +4,8 @@ namespace SE\SDK;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
-use SE\SDK\Services\{ApiClientService,
+use SE\SDK\Services\{
+    ApiClientService,
     BotService,
     Posts\PostCategoryService,
     Posts\PostService,
@@ -14,7 +15,8 @@ use SE\SDK\Services\{ApiClientService,
     UserAttributeService,
     UserService,
     AuthService,
-    UserSettingService};
+    UserSettingService
+};
 use GuzzleHttp\Client;
 
 class ServiceProvider extends IlluminateServiceProvider
