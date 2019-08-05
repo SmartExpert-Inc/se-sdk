@@ -49,7 +49,7 @@ final class S3Service
     public function putFile(UploadedFile $file, $folder = self::DEFAULT_FOLDER): string
     {
         $folder = $folder ?: self::DEFAULT_FOLDER;
-        $folder = "{$this->env}/{$folder}";
+        $folder = "{$this->env}/{$folder}/";
 
         $filename = $this->generateName($file);
         $this->storage->putFileAs($folder, $file, $filename);
