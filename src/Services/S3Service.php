@@ -80,7 +80,7 @@ final class S3Service
             report($e);
             return null;
         }
-        
+
         $uploadedFile = new UploadedFile($file, $info['basename']);
         return $this->putFile($uploadedFile, $folder);
     }
