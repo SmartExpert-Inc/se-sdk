@@ -4,7 +4,7 @@ namespace SE\SDK;
 
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Services\{
-    ApiClientService, BotService, Posts\PostCategoryService, Posts\PostService, Posts\PostTagService, ServicesRegister, UserAttributeService, UserService, AuthService, UserSettingService
+    ApiClientService, BotChatService, BotService, Posts\PostCategoryService, Posts\PostService, Posts\PostTagService, ServicesRegister, UserAttributeService, UserService, AuthService, UserSettingService
 };
 use GuzzleHttp\Client;
 
@@ -72,6 +72,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(BotService::class, function ($app) {
             return new BotService(resolve(ApiClientService::class));
+        });
+
+        $this->app->singleton(BotChatService::class, function ($app) {
+            return new BotChatService(resolve(ApiClientService::class));
         });
 
         $this->app->bind(static::$abstract, function ($app) {

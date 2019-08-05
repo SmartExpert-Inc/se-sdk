@@ -70,4 +70,21 @@ final class BotService extends BaseService
 
         return $response;
     }
+
+    public function store(array $data)
+    {
+//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/bots", $data)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
