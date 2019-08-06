@@ -2,9 +2,21 @@
 
 namespace SE\SDK;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Services\{
-    ApiClientService, BotChatService, BotService, Posts\PostCategoryService, Posts\PostService, Posts\PostTagService, ServicesRegister, UserAttributeService, UserService, AuthService, UserSettingService
+    ApiClientService,
+    BotService,
+    BotChatService,
+    Posts\PostCategoryService,
+    Posts\PostService,
+    Posts\PostTagService,
+    S3Service,
+    ServicesRegister,
+    UserAttributeService,
+    UserService,
+    AuthService,
+    UserSettingService
 };
 use GuzzleHttp\Client;
 
@@ -73,6 +85,16 @@ class ServiceProvider extends IlluminateServiceProvider
         $this->app->singleton(BotService::class, function ($app) {
             return new BotService(resolve(ApiClientService::class));
         });
+
+        $this->app->singleton(S3Service::class, function () {
+            return new S3Service;
+        });
+
+        if (config('se_sdk.s3')) {
+            $disk = config('se_sdk.s3.cloud');
+            Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
+            Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
+        }
 
         $this->app->singleton(BotChatService::class, function ($app) {
             return new BotChatService(resolve(ApiClientService::class));

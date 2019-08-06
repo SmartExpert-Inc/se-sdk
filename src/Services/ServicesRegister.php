@@ -41,6 +41,9 @@ final class ServicesRegister
     /** @var CategoryService $category */
     public $category;
 
+    /** @var S3Service $bots */
+    public $s3;
+
     /**
      * ServicesRegister constructor.
      * @param Application $app
@@ -61,5 +64,6 @@ final class ServicesRegister
         $this->botChats = $app->make(BotChatService::class);
 
         $this->category = $app->make(CategoryService::class);
+        $this->s3 = $app->make(S3Service::class);
     }
 }
