@@ -50,8 +50,7 @@ final class S3Service
      */
     public function putFile(UploadedFile $file, $folder = self::DEFAULT_FOLDER): string
     {
-        $folder = $folder ?: self::DEFAULT_FOLDER;
-        $folder = "{$this->env}/{$folder}/";
+        $folder = generateFolder($folder);
 
         $filename = $this->generateName($file);
         $this->storage->putFileAs($folder, $file, $filename);
@@ -99,8 +98,7 @@ final class S3Service
     {
         if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
             // folder
-            $folder = $folder ?: self::DEFAULT_FOLDER;
-            $folder = "{$this->env}/{$folder}/";
+            $folder = generateFolder($folder);
 
             // file data
             $file = substr($base64data, strpos($base64data, ',') + 1);
@@ -124,6 +122,17 @@ final class S3Service
         }
 
         return null;
+    }
+
+    /**
+     * Generate folder
+     * @param string $folder
+     * @return string
+     */
+    private function generateFolder(string $folder): string
+    {
+        $folder = $folder ?: self::DEFAULT_FOLDER;
+        return "{$this->env}/{$folder}/";
     }
 
     /**
