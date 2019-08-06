@@ -30,7 +30,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function message($botName, $chatId, $message, ?int $userId, ?string $tokenHash)
+    public function message($botName, string $message, int $userId, ?int $ownerId)
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -39,29 +39,9 @@ final class BotService extends BaseService
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->post("/{$botName}/message", [
-                'chat_id' => $chatId,
-                'message' => $message,
                 'user_id' => $userId,
-                'token_hash' => $tokenHash
-            ])
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $response;
-    }
-
-    public function configuringWebhook($botName, $token)
-    {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
-
-        $response = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->post("/{$botName}/webhook", [
-                'token' => $token
+                'message' => $message,
+                'owner_id' => $ownerId
             ])
             ->getObject();
 
