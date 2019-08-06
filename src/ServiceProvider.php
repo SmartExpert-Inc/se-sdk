@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Services\{
     ApiClientService,
     BotService,
+    BotChatService,
     Posts\PostCategoryService,
     Posts\PostService,
     Posts\PostTagService,
@@ -94,6 +95,10 @@ class ServiceProvider extends IlluminateServiceProvider
             Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
             Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
         }
+
+        $this->app->singleton(BotChatService::class, function ($app) {
+            return new BotChatService(resolve(ApiClientService::class));
+        });
 
         $this->app->bind(static::$abstract, function ($app) {
             return new ServicesRegister($app);

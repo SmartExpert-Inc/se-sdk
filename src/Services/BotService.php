@@ -2,6 +2,8 @@
 
 namespace SE\SDK\Services;
 
+use Illuminate\Support\Collection;
+
 final class BotService extends BaseService
 {
     public function __construct(ApiClientService $api)
@@ -30,7 +32,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function message($botName, $chatId, $message)
+    public function message($botName, string $message, int $userId, ?int $ownerId)
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -39,8 +41,9 @@ final class BotService extends BaseService
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->post("/{$botName}/message", [
-                'chat_id' => $chatId,
-                'message' => $message
+                'user_id' => $userId,
+                'message' => $message,
+                'owner_id' => $ownerId
             ])
             ->getObject();
 
@@ -50,7 +53,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function configuringWebhook($botName, $token)
+    public function store(array $data)
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -58,14 +61,29 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/{$botName}/webhook", [
-                'token' => $token
-            ])
+            ->post("/bots", $data)
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
         return $response;
+    }
+
+    public function find(array $queryParams = []): Collection
+    {
+//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+
+        $bots = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get('/bots/find', $queryParams)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return collect($bots->data);
     }
 }
