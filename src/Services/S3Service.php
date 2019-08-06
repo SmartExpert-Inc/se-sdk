@@ -11,6 +11,7 @@ use Webpatser\Uuid\Uuid;
 final class S3Service
 {
     const DEFAULT_FOLDER = '_tmp';
+    const DEFAULT_EXTENSION = 'jpg';
 
     /** @var Storage $storage*/
     private $storage;
@@ -85,6 +86,44 @@ final class S3Service
 
         $uploadedFile = new UploadedFile($file, $info['basename']);
         return $this->putFile($uploadedFile, $folder);
+    }
+
+    /**
+     * Put file from base64
+     * @param string $base64data
+     * @param string $folder
+     * @return string|null
+     * @throws Exception
+     */
+    public function putFileFromBase64(string $base64data, $folder = self::DEFAULT_FOLDER): ?string
+    {
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
+            // folder
+            $folder = $folder ?: self::DEFAULT_FOLDER;
+            $folder = "{$this->env}/{$folder}/";
+
+            // file data
+            $file = substr($base64data, strpos($base64data, ',') + 1);
+            $file = base64_decode($file);
+
+            // filename
+            $filename = Uuid::generate()->string;
+
+            // extension
+            preg_match("/^data\:image\/([a-z]+)\;base64*./", $base64data, $matches);
+            $extension = self::DEFAULT_EXTENSION;
+            if ($matches) {
+                $extension = $matches[1];
+            }
+            $filename .= ".{$extension}";
+
+            // put file
+            $this->storage->putFileAs($folder, $file, $filename);
+
+            return $this->storage->url("{$folder}{$filename}");
+        }
+
+        return null;
     }
 
     /**
