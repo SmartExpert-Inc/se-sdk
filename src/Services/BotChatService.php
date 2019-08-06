@@ -30,7 +30,7 @@ final class BotChatService extends BaseService
         return $response;
     }
 
-    public function find(array $query_params = []): Collection
+    public function find(array $queryParams = []): Collection
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -38,7 +38,7 @@ final class BotChatService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/chats/find', $query_params)
+            ->get('/chats/find', $queryParams)
             ->getObject();
 
         $this->api->dropState();

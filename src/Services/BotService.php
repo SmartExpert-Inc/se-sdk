@@ -70,7 +70,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function find(array $query_params = []): Collection
+    public function find(array $queryParams = []): Collection
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -78,7 +78,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/bots/find', $query_params)
+            ->get('/bots/find', $queryParams)
             ->getObject();
 
         $this->api->dropState();
