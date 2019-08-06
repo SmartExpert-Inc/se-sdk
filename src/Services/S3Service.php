@@ -118,7 +118,7 @@ final class S3Service
             $filename .= ".{$extension}";
 
             // put file
-            $this->storage->putFileAs($folder, $file, $filename);
+            $this->storage->put("{$folder}{$filename}", $file);
 
             return $this->storage->url("{$folder}{$filename}");
         }
