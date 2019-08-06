@@ -2,6 +2,8 @@
 
 namespace SE\SDK\Services;
 
+use Illuminate\Support\Collection;
+
 final class BotService extends BaseService
 {
     public function __construct(ApiClientService $api)
@@ -66,5 +68,22 @@ final class BotService extends BaseService
         $this->api->dropUrls();
 
         return $response;
+    }
+
+    public function find(array $query_params = []): Collection
+    {
+//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+
+        $bots = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get('/bots/find', $query_params)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return collect($bots->data);
     }
 }
