@@ -105,7 +105,7 @@ final class S3Service
             $file = base64_decode($file);
 
             // filename
-            $filename = Uuid::generate()->string;
+            $filename = $this->generateName();
 
             // extension
             preg_match("/^data\:image\/([a-z]+)\;base64*./", $base64data, $matches);
@@ -137,16 +137,18 @@ final class S3Service
 
     /**
      * Generate unique filename
-     * @param UploadedFile $file
+     * @param UploadedFile|null $file
      * @return string
      * @throws Exception
      */
-    private function generateName(UploadedFile $file): string
+    private function generateName(UploadedFile $file = null): string
     {
         $filename = Uuid::generate()->string;
-        $extension = $file->getClientOriginalExtension()
-            ? ".{$file->getClientOriginalExtension()}"
-            : null;
-        return "{$filename}{$extension}";
+        if (! is_null($file)) {
+            $filename .= $file->getClientOriginalExtension()
+                ? ".{$file->getClientOriginalExtension()}" // extension
+                : null;
+        }
+        return $filename;
     }
 }
