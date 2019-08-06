@@ -29,13 +29,16 @@ final class ServicesRegister
     /** @var PostTagService $postTags */
     public $postTags;
 
-    /** @var PostCategoryService $post_categories */
+    /** @var PostCategoryService $postCategories */
     public $postCategories;
 
     /** @var BotService $bots */
     public $bot;
 
-    /** @var CategoryService $bots */
+    /** @var BotChatService $botChats */
+    public $botChats;
+
+    /** @var CategoryService $category */
     public $category;
 
     /** @var S3Service $bots */
@@ -48,13 +51,18 @@ final class ServicesRegister
     public function __construct(Application $app)
     {
         $this->auth = $app->make(AuthService::class);
+
         $this->user = $app->make(UserService::class);
         $this->userAttributes = $app->make(UserAttributeService::class);
         $this->userSettings = $app->make(UserSettingService::class);
+
         $this->post = $app->make(PostService::class);
         $this->postTags = $app->make(PostTagService::class);
         $this->postCategories = $app->make(PostCategoryService::class);
+
         $this->bot = $app->make(BotService::class);
+        $this->botChats = $app->make(BotChatService::class);
+
         $this->category = $app->make(CategoryService::class);
         $this->s3 = $app->make(S3Service::class);
     }
