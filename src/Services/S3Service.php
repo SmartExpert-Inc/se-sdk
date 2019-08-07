@@ -10,7 +10,7 @@ use Webpatser\Uuid\Uuid;
 
 final class S3Service
 {
-    const DEFAULT_FOLDER = '_tmp';
+    const DEFAULT_FOLDER = 'temp';
     const DEFAULT_EXTENSION = 'jpg';
 
     /** @var Storage $storage*/
@@ -25,13 +25,6 @@ final class S3Service
         $this->env = config('app.env');
     }
 
-    /**
-     * Put array of files
-     * @param array $files
-     * @param string $folder
-     * @return array
-     * @throws Exception
-     */
     public function putFiles(array $files, $folder = self::DEFAULT_FOLDER): array
     {
         $return = [];
@@ -41,30 +34,16 @@ final class S3Service
         return $return;
     }
 
-    /**
-     * Put file
-     * @param UploadedFile $file
-     * @param string $folder
-     * @return string
-     * @throws Exception
-     */
     public function putFile(UploadedFile $file, $folder = self::DEFAULT_FOLDER): string
     {
         $folder = $this->generateFolder($folder);
 
-        $filename = $this->generateName($file);
+        $filename = $this->generateFileName($file);
         $this->storage->putFileAs($folder, $file, $filename);
 
         return $this->storage->url("{$folder}{$filename}");
     }
 
-    /**
-     * Put file from url
-     * @param string $url
-     * @param string $folder
-     * @return string|null
-     * @throws Exception
-     */
     public function putFileFromUrl(string $url, $folder = self::DEFAULT_FOLDER): ?string
     {
         $url = preg_replace_callback('/[^\x20-\x7f]/', function($match) {
@@ -87,13 +66,6 @@ final class S3Service
         return $this->putFile($uploadedFile, $folder);
     }
 
-    /**
-     * Put file from base64
-     * @param string $base64data
-     * @param string $folder
-     * @return string|null
-     * @throws Exception
-     */
     public function putFileFromBase64(string $base64data, $folder = self::DEFAULT_FOLDER): ?string
     {
         if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
@@ -105,7 +77,7 @@ final class S3Service
             $file = base64_decode($file);
 
             // filename
-            $filename = $this->generateName();
+            $filename = $this->generateFileName();
 
             // extension
             preg_match("/^data\:image\/([a-z]+)\;base64*./", $base64data, $matches);
@@ -124,24 +96,13 @@ final class S3Service
         return null;
     }
 
-    /**
-     * Generate folder
-     * @param string $folder
-     * @return string
-     */
     private function generateFolder(string $folder): string
     {
         $folder = $folder ?: self::DEFAULT_FOLDER;
         return "{$this->env}/{$folder}/";
     }
 
-    /**
-     * Generate unique filename
-     * @param UploadedFile|null $file
-     * @return string
-     * @throws Exception
-     */
-    private function generateName(UploadedFile $file = null): string
+    private function generateFileName(UploadedFile $file = null): string
     {
         $filename = Uuid::generate()->string;
         if (! is_null($file)) {
