@@ -41,7 +41,7 @@ final class ServicesRegister
     /** @var CategoryService $category */
     public $category;
 
-    /** @var S3Service $bots */
+    /** @var S3Service $s3 */
     public $s3;
 
     /**
