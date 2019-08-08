@@ -155,7 +155,13 @@ final class ApiClientService
             Log::info(print_r($content, true));
 
             if ($content) {
-                $res = \GuzzleHttp\json_decode($content);
+                $res = null;
+
+                try {
+                    $res = \GuzzleHttp\json_decode($content);
+                } catch (\Exception $e) {
+                    Log::info($e->getMessage());
+                }
             }
 
             $this->setResults($res);
