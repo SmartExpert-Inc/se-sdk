@@ -62,7 +62,7 @@ final class ApiClientService
         return $params;
     }
 
-    private function setResults(\stdClass $results): void
+    private function setResults(?\stdClass $results): void
     {
         $this->response = $results;
     }
