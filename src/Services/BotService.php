@@ -84,6 +84,10 @@ final class BotService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        if (! property_exists($bots, "data")) {
+            return null;
+        }
+
         return collect($bots->data);
     }
 }
