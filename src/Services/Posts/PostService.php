@@ -4,7 +4,7 @@ namespace SE\SDK\Services\Posts;
 
 final class PostService extends BasePostService
 {
-    public function index(int $page = 1): ?\stdClass
+    public function index(int $page = null): ?\stdClass
     {
         $posts = $this->api
             ->setHeaders($this->headers)
@@ -21,7 +21,7 @@ final class PostService extends BasePostService
         return $posts;
     }
 
-    public function update(int $post_id, array $data)
+    public function update(int $postId, array $data)
     {
         $this->headers = [
             'User-Agent' => 'testing/1.0',
@@ -40,7 +40,7 @@ final class PostService extends BasePostService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/posts/{$post_id}", $data)
+            ->put("/posts/{$postId}", $data)
             ->getObject();
 
         $this->api->dropState();
@@ -102,13 +102,13 @@ final class PostService extends BasePostService
         return $post;
     }
 
-    public function find(array $query_params = []): ?\stdClass
+    public function find(array $queryParams = []): ?\stdClass
     {
         $posts = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/posts/find', $query_params)
+            ->get('/posts/find', $queryParams)
             ->getObject();
 
         $this->api->dropState();
