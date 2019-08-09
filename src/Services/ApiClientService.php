@@ -132,13 +132,13 @@ final class ApiClientService
         $url = "{$this->baseUrl}{$this->prefix}{$path}";
 
         $params = $this->getParams($arguments);
-        if ($name == 'get' and $params) {
+        if (in_array($name, ['get', 'put']) and $params) {
             $uriParams = http_build_query($params);
             $url .= "?{$uriParams}";
         }
 
         try {
-            if ($name != 'get' and $params) {
+            if (! in_array($name, ['get', 'put']) and $params) {
                 $options['form_params'] = $params;
             }
 
@@ -165,6 +165,8 @@ final class ApiClientService
             }
 
             $this->setResults($res);
+        } catch (\Exception $e) {
+            Log::error("{$e->getCode()}: {$e->getMessage()}\n{$e->getLine()}: {$e->getFile()}");
         }
 
         return $this;
