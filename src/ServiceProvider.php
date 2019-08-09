@@ -13,6 +13,7 @@ use SE\SDK\Services\{
     Posts\PostTagService,
     S3Service,
     ServicesRegister,
+    TagService,
     UserAttributeService,
     UserService,
     AuthService,
@@ -84,6 +85,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(BotService::class, function ($app) {
             return new BotService(resolve(ApiClientService::class));
+        });
+
+        $this->app->singleton(TagService::class, function () {
+            return new TagService(resolve(ApiClientService::class));
         });
 
         $this->app->singleton(S3Service::class, function () {

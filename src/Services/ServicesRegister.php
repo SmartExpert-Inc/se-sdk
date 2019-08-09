@@ -41,6 +41,9 @@ final class ServicesRegister
     /** @var CategoryService $category */
     public $category;
 
+    /** @var TagService $tag */
+    public $tag;
+
     /** @var S3Service $s3 */
     public $s3;
 
@@ -64,6 +67,9 @@ final class ServicesRegister
         $this->botChats = $app->make(BotChatService::class);
 
         $this->category = $app->make(CategoryService::class);
+
+        $this->tag = $app->make(TagService::class);
+
         $this->s3 = $app->make(S3Service::class);
     }
 }
