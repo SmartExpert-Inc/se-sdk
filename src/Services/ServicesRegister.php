@@ -3,7 +3,6 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Contracts\Foundation\Application;
-use SE\SDK\Services\Posts\PostCategoryService;
 use SE\SDK\Services\Posts\PostService;
 
 final class ServicesRegister
@@ -22,9 +21,6 @@ final class ServicesRegister
 
     /** @var PostService $post */
     public $post;
-
-    /** @var PostCategoryService $postCategories */
-    public $postCategories;
 
     /** @var BotService $bots */
     public $bot;
@@ -51,7 +47,6 @@ final class ServicesRegister
         $this->userSettings = $app->make(UserSettingService::class);
 
         $this->post = $app->make(PostService::class);
-        $this->postCategories = $app->make(PostCategoryService::class);
 
         $this->bot = $app->make(BotService::class);
         $this->botChats = $app->make(BotChatService::class);
