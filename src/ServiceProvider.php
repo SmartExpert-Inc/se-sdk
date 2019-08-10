@@ -8,7 +8,7 @@ use SE\SDK\Services\{
     ApiClientService,
     BotService,
     BotChatService,
-    Posts\PostService,
+    PostService,
     S3Service,
     ServicesRegister,
     TagService,

@@ -3,7 +3,6 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Contracts\Foundation\Application;
-use SE\SDK\Services\Posts\PostService;
 
 final class ServicesRegister
 {

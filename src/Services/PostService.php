@@ -1,9 +1,26 @@
 <?php
 
-namespace SE\SDK\Services\Posts;
+namespace SE\SDK\Services;
 
-final class PostService extends BasePostService
+final class PostService extends BaseService
 {
+    /** @var array $headers */
+    protected $headers;
+
+    public function __construct(ApiClientService $api)
+    {
+        parent::__construct($api);
+
+        $this->host = config('se_sdk.posts.host');
+
+        $this->headers = [
+            'User-Agent' => 'testing/1.0',
+            'Accept' => 'application/json',
+//            'Authorization' => resolve('se_sdk')->auth->getToken(),
+//            'Content-Type' => 'application/json'
+        ];
+    }
+
     public function index(int $page = null): ?\stdClass
     {
         $posts = $this->api
