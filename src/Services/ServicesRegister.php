@@ -7,7 +7,6 @@ use PhpOffice\PhpSpreadsheet\Calculation\Category;
 use SE\SDK\Services\Posts\PostCategoryService;
 use SE\SDK\Services\Posts\PostService;
 use SE\SDK\Services\Posts\PostTagService;
-use SE\SDK\Services\Posts\CategoryService;
 
 final class ServicesRegister
 {
@@ -38,9 +37,6 @@ final class ServicesRegister
     /** @var BotChatService $botChats */
     public $botChats;
 
-    /** @var CategoryService $category */
-    public $category;
-
     /** @var TagService $tag */
     public $tag;
 
@@ -65,8 +61,6 @@ final class ServicesRegister
 
         $this->bot = $app->make(BotService::class);
         $this->botChats = $app->make(BotChatService::class);
-
-        $this->category = $app->make(CategoryService::class);
 
         $this->tag = $app->make(TagService::class);
 
