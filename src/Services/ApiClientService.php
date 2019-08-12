@@ -3,7 +3,6 @@
 namespace SE\SDK\Services;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
@@ -146,7 +145,7 @@ final class ApiClientService
             $this->setCookies($results);
             $res = (object) \GuzzleHttp\json_decode($results->getBody()->getContents());
             $this->setResults($res);
-        } catch (ClientException $e) {
+        } catch (\Exception $e) {
             Log::error("{$e->getCode()}: {$e->getMessage()}\n{$e->getLine()}: {$e->getFile()}");
 
             $res = [];
@@ -165,8 +164,6 @@ final class ApiClientService
             }
 
             $this->setResults($res);
-        } catch (\Exception $e) {
-            Log::error("{$e->getCode()}: {$e->getMessage()}\n{$e->getLine()}: {$e->getFile()}");
         }
 
         return $this;
