@@ -27,7 +27,10 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return collect($tags->data);
+        if (property_exists($tags, 'data')) {
+            return collect($tags->data);
+        }
+        return null;
     }
 
     public function getTag(int $id): ?\stdClass
@@ -44,7 +47,10 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $tag->data;
+        if (property_exists($tag, 'data')) {
+            return $tag->data;
+        }
+        return null;
     }
 
     public function getCategories(): ?Collection
@@ -61,7 +67,10 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return collect($categories->data);
+        if (property_exists($categories, 'data')) {
+            return collect($categories->data);
+        }
+        return null;
     }
 
     public function getCategory(int $id): ?\stdClass
@@ -78,6 +87,9 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $category->data;
+        if (property_exists($category, 'data')) {
+            return collect($category->data);
+        }
+        return null;
     }
 }
