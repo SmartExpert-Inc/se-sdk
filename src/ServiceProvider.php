@@ -8,11 +8,10 @@ use SE\SDK\Services\{
     ApiClientService,
     BotService,
     BotChatService,
-    Posts\PostCategoryService,
-    Posts\PostService,
-    Posts\PostTagService,
+    PostService,
     S3Service,
     ServicesRegister,
+    TagService,
     UserAttributeService,
     UserService,
     AuthService,
@@ -74,16 +73,12 @@ class ServiceProvider extends IlluminateServiceProvider
             return new PostService(resolve(ApiClientService::class));
         });
 
-        $this->app->singleton(PostTagService::class, function ($app) {
-            return new PostTagService(resolve(ApiClientService::class));
-        });
-
-        $this->app->singleton(PostCategoryService::class, function ($app) {
-            return new PostCategoryService(resolve(ApiClientService::class));
-        });
-
         $this->app->singleton(BotService::class, function ($app) {
             return new BotService(resolve(ApiClientService::class));
+        });
+
+        $this->app->singleton(TagService::class, function () {
+            return new TagService(resolve(ApiClientService::class));
         });
 
         $this->app->singleton(S3Service::class, function () {

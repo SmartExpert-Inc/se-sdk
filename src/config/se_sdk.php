@@ -5,6 +5,10 @@ return [
         'host' => env('POSTS_SERVICE_HOST', null),
     ],
 
+    'tags' => [
+        'host' => env('TAGS_SERVICE_HOST', null),
+    ],
+
     'bots' => [
         'host' => env('BOTS_SERVICE_HOST', null),
         'telegram' => [

@@ -3,11 +3,6 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Contracts\Foundation\Application;
-use PhpOffice\PhpSpreadsheet\Calculation\Category;
-use SE\SDK\Services\Posts\PostCategoryService;
-use SE\SDK\Services\Posts\PostService;
-use SE\SDK\Services\Posts\PostTagService;
-use SE\SDK\Services\Posts\CategoryService;
 
 final class ServicesRegister
 {
@@ -26,20 +21,14 @@ final class ServicesRegister
     /** @var PostService $post */
     public $post;
 
-    /** @var PostTagService $postTags */
-    public $postTags;
-
-    /** @var PostCategoryService $postCategories */
-    public $postCategories;
-
     /** @var BotService $bots */
     public $bot;
 
     /** @var BotChatService $botChats */
     public $botChats;
 
-    /** @var CategoryService $category */
-    public $category;
+    /** @var TagService $tag */
+    public $tag;
 
     /** @var S3Service $s3 */
     public $s3;
@@ -57,13 +46,12 @@ final class ServicesRegister
         $this->userSettings = $app->make(UserSettingService::class);
 
         $this->post = $app->make(PostService::class);
-        $this->postTags = $app->make(PostTagService::class);
-        $this->postCategories = $app->make(PostCategoryService::class);
 
         $this->bot = $app->make(BotService::class);
         $this->botChats = $app->make(BotChatService::class);
 
-        $this->category = $app->make(CategoryService::class);
+        $this->tag = $app->make(TagService::class);
+
         $this->s3 = $app->make(S3Service::class);
     }
 }
