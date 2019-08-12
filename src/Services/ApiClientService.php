@@ -3,7 +3,6 @@
 namespace SE\SDK\Services;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
@@ -132,13 +131,13 @@ final class ApiClientService
         $url = "{$this->baseUrl}{$this->prefix}{$path}";
 
         $params = $this->getParams($arguments);
-        if ($name == 'get' and $params) {
+        if (in_array($name, ['get', 'put']) and $params) {
             $uriParams = http_build_query($params);
             $url .= "?{$uriParams}";
         }
 
         try {
-            if ($name != 'get' and $params) {
+            if (! in_array($name, ['get', 'put']) and $params) {
                 $options['form_params'] = $params;
             }
 
@@ -146,7 +145,7 @@ final class ApiClientService
             $this->setCookies($results);
             $res = (object) \GuzzleHttp\json_decode($results->getBody()->getContents());
             $this->setResults($res);
-        } catch (ClientException $e) {
+        } catch (\Exception $e) {
             Log::error("{$e->getCode()}: {$e->getMessage()}\n{$e->getLine()}: {$e->getFile()}");
 
             $res = [];
