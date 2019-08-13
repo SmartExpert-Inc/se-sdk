@@ -4,6 +4,7 @@ namespace SE\SDK;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
+use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Services\{
     ApiClientService,
     BotService,
@@ -49,6 +50,16 @@ class ServiceProvider extends IlluminateServiceProvider
             __DIR__.'/config/se_sdk.php', 'se_sdk'
         );
 
+        if (config('se_sdk.s3')) {
+            $disk = config('se_sdk.s3.cloud');
+            Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
+            Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
+        }
+
+        if (config('se_sdk.channels')) {
+            Config::set("logging.channels.api", config("se_sdk.channels.api"));
+        }
+
         $this->app->singleton(ApiClientService::class, function ($app) {
             return new ApiClientService(new Client());
         });
@@ -85,18 +96,13 @@ class ServiceProvider extends IlluminateServiceProvider
             return new S3Service;
         });
 
-        if (config('se_sdk.s3')) {
-            $disk = config('se_sdk.s3.cloud');
-            Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
-            Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
-        }
-
-        if (config('se_sdk.channels')) {
-            Config::set("logging.channels.api", config("se_sdk.channels.api"));
-        }
-
         $this->app->singleton(BotChatService::class, function ($app) {
             return new BotChatService(resolve(ApiClientService::class));
+        });
+
+        $this->app->singleton(CustomLogger::class, function () {
+            $logger = new CustomLogger;
+            return $logger(config('logging.channels.api'));
         });
 
         $this->app->bind(static::$abstract, function ($app) {
