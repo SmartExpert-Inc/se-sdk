@@ -88,7 +88,7 @@ final class TagService extends BaseService
         $this->api->dropUrls();
 
         if (property_exists($category, 'data')) {
-            return collect($category->data);
+            return $category->data;
         }
         return null;
     }
