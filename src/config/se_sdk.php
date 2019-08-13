@@ -44,5 +44,15 @@ return [
                 'bucket' => env('AWS_BUCKET'),
             ],
         ],
+    ],
+
+    'channels' => [
+        'api' => [
+            'driver' => 'custom',
+            'via'    => SE\SDK\Logging\CustomLogger::class,
+            'url'    => env('LOGS_SERVICE_HOST'),
+            'level'  => 'debug',
+        ],
     ]
+
 ];

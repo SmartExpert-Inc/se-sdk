@@ -91,6 +91,12 @@ class ServiceProvider extends IlluminateServiceProvider
             Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
         }
 
+        if (config('se_sdk.channels')) {
+            $channel = config('se_sdk.channels');
+            Config::set('logging.channels', config('se_sdk.channels'));
+            Config::set("logging.channels.{$channel}", config("se_sdk.channels.{$channel}"));
+        }
+
         $this->app->singleton(BotChatService::class, function ($app) {
             return new BotChatService(resolve(ApiClientService::class));
         });
