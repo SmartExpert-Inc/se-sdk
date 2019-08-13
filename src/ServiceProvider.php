@@ -92,9 +92,7 @@ class ServiceProvider extends IlluminateServiceProvider
         }
 
         if (config('se_sdk.channels')) {
-            $channel = config('se_sdk.channels');
-            Config::set('logging.channels', config('se_sdk.channels'));
-            Config::set("logging.channels.{$channel}", config("se_sdk.channels.{$channel}"));
+            Config::set("logging.channels.api", config("se_sdk.channels.api"));
         }
 
         $this->app->singleton(BotChatService::class, function ($app) {
