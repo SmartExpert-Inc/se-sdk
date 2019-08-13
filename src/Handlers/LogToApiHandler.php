@@ -17,14 +17,20 @@ class LogToApiHandler extends AbstractProcessingHandler
         parent::__construct($level, $bubble);
 
         $this->webHookUrl = $webHookUrl;
-        $this->client = ($client) ?: new Client();
+        $this->client = ($client) ?: new Client([
+            'exceptions' => false,
+        ]);
     }
 
     public function write(array $record)
     {
         $this->client->request('POST', $this->webHookUrl, [
-            'form_params' => [
-                'payload' => json_encode($record),
+            'json' => [
+                "message" => $record["message"],
+                "code" => $record["context"]["code"] ?? null,
+                "file" => $record["context"]["file"] ?? null,
+                "line" => $record["context"]["line"] ?? null,
+                "trace" => $record["context"]["trace"] ?? null,
             ],
         ]);
     }
