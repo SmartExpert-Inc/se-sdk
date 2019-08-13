@@ -3,6 +3,7 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Contracts\Foundation\Application;
+use SE\SDK\Logging\CustomLogger;
 
 final class ServicesRegister
 {
@@ -33,6 +34,9 @@ final class ServicesRegister
     /** @var S3Service $s3 */
     public $s3;
 
+    /** @var SE\SDK\Logging\CustomLogger $logger */
+    public $logger;
+
     /**
      * ServicesRegister constructor.
      * @param Application $app
@@ -53,5 +57,7 @@ final class ServicesRegister
         $this->tag = $app->make(TagService::class);
 
         $this->s3 = $app->make(S3Service::class);
+
+        $this->logger = $app->make(CustomLogger::class);
     }
 }
