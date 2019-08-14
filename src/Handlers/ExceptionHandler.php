@@ -23,7 +23,11 @@ class ExceptionHandler
     {
         try {
             $this->client->request('POST', $this->webHookUrl, [
-                'json' => $this->getFormatedData($exception),
+                'headers' => [
+                    'User-Agent' => 'testing/1.0',
+                    'Accept' => 'application/json',
+                ],
+                'form_params' => $this->getFormatedData($exception),
             ]);
         } catch (Exception $e) {
             dump($e->getMessage());
