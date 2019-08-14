@@ -22,10 +22,12 @@ class ExceptionHandler
     public function captureException(Exception $exception)
     {
         try {
+            $token = config('se_sdk.logger.token');
             $this->client->request('POST', $this->webHookUrl, [
                 'headers' => [
                     'User-Agent' => 'testing/1.0',
                     'Accept' => 'application/json',
+                    'Authorization' => "Bearer {$token}",
                 ],
                 'form_params' => $this->getFormatedData($exception),
             ]);
