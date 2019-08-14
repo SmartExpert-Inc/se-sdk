@@ -53,6 +53,10 @@ return [
             'url'    => env('LOGS_SERVICE_HOST'),
             'level'  => 'debug',
         ],
+    ],
+
+    'logger' => [
+        'token' => env('LOGGER_AUTH_TOKEN')
     ]
 
 ];
