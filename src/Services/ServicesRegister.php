@@ -4,6 +4,7 @@ namespace SE\SDK\Services;
 
 use Illuminate\Contracts\Foundation\Application;
 use SE\SDK\Logging\CustomLogger;
+use SE\SDK\Handlers\ExceptionHandler;
 
 final class ServicesRegister
 {
@@ -59,5 +60,6 @@ final class ServicesRegister
         $this->s3 = $app->make(S3Service::class);
 
         $this->logger = $app->make(CustomLogger::class);
+        $this->exception = $app->make(ExceptionHandler::class);
     }
 }

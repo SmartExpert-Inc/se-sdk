@@ -18,6 +18,7 @@ use SE\SDK\Services\{
     AuthService,
     UserSettingService
 };
+use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;
 
 class ServiceProvider extends IlluminateServiceProvider
@@ -60,31 +61,31 @@ class ServiceProvider extends IlluminateServiceProvider
             Config::set("logging.channels.api", config("se_sdk.channels.api"));
         }
 
-        $this->app->singleton(ApiClientService::class, function ($app) {
+        $this->app->singleton(ApiClientService::class, function () {
             return new ApiClientService(new Client());
         });
 
-        $this->app->singleton(UserService::class, function ($app) {
+        $this->app->singleton(UserService::class, function () {
             return new AuthService(resolve(ApiClientService::class));
         });
 
-        $this->app->singleton(UserService::class, function ($app) {
+        $this->app->singleton(UserService::class, function () {
             return new UserService(resolve(ApiClientService::class));
         });
 
-        $this->app->singleton(UserAttributeService::class, function ($app) {
+        $this->app->singleton(UserAttributeService::class, function () {
             return new UserAttributeService(resolve(ApiClientService::class));
         });
 
-        $this->app->singleton(UserSettingService::class, function ($app) {
+        $this->app->singleton(UserSettingService::class, function () {
             return new UserSettingService(resolve(ApiClientService::class));
         });
 
-        $this->app->singleton(PostService::class, function ($app) {
+        $this->app->singleton(PostService::class, function () {
             return new PostService(resolve(ApiClientService::class));
         });
 
-        $this->app->singleton(BotService::class, function ($app) {
+        $this->app->singleton(BotService::class, function () {
             return new BotService(resolve(ApiClientService::class));
         });
 
@@ -96,13 +97,17 @@ class ServiceProvider extends IlluminateServiceProvider
             return new S3Service;
         });
 
-        $this->app->singleton(BotChatService::class, function ($app) {
+        $this->app->singleton(BotChatService::class, function () {
             return new BotChatService(resolve(ApiClientService::class));
         });
 
         $this->app->singleton(CustomLogger::class, function () {
             $logger = new CustomLogger;
             return $logger(config('logging.channels.api'));
+        });
+
+        $this->app->singleton(ExceptionHandler::class, function () {
+            return new ExceptionHandler();
         });
 
         $this->app->bind(static::$abstract, function ($app) {
