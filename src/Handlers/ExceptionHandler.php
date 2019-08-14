@@ -21,9 +21,13 @@ class ExceptionHandler
 
     public function captureException(Exception $exception)
     {
-        $this->client->request('POST', $this->webHookUrl, [
-            'json' => $this->getFormatedData($exception),
-        ]);
+        try {
+            $this->client->request('POST', $this->webHookUrl, [
+                'json' => $this->getFormatedData($exception),
+            ]);
+        } catch (Exception $e) {
+            dump($e->getMessage());
+        }
     }
 
     private function getFormatedData(Exception $exception): array
@@ -34,6 +38,8 @@ class ExceptionHandler
             "file" => $exception->getFile() ?? null,
             "line" => $exception->getLine() ?? null,
             "trace" => $exception->getTraceAsString() ?? null,
+            "env" => app()->environment() ?? null,
+            "app_name" => config('app.name') ?? null,
         ];
     }
 }
