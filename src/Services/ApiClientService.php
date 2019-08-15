@@ -148,21 +148,7 @@ final class ApiClientService
         } catch (\Exception $e) {
             Log::error("{$e->getCode()}: {$e->getMessage()}\n{$e->getLine()}: {$e->getFile()}");
 
-            $res = [];
-            $content = $e->getResponse()->getBody()->getContents();
-
-            Log::info(print_r($content, true));
-
-            if ($content) {
-                $res = null;
-
-                try {
-                    $res = \GuzzleHttp\json_decode($content);
-                } catch (\Exception $e) {
-                    Log::info($e->getMessage());
-                }
-            }
-
+            $res = null;
             $this->setResults($res);
         }
 
