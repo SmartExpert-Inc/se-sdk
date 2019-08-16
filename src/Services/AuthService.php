@@ -22,7 +22,7 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (isset($auth->errors)) {
+        if (isset($registered->errors)) {
             return [
                 'response' => $registered,
                 'cookies' => $cookies
@@ -70,15 +70,49 @@ final class AuthService extends BaseService
         return $this->authorise($request, $cookies);
     }
 
+    public function loginAs(array $request): ?array
+    {
+        $auth = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post('/login-as', $request)
+            ->getObject();
+
+        $cookies = $this->api->getLastCookies();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        if (isset($auth->errors)) {
+            return [
+                'response' => $auth,
+                'cookies' => $cookies
+            ];
+        }
+
+        if (! session()->has("user")) {
+            session()->put([
+                'secret' => $auth->data->secret,
+                'client_id' => $auth->data->client_id,
+                'user' => $auth->data->user
+            ]);
+        }
+
+        return $this->authorise($request, $cookies);
+    }
+
     public function authorise(array $request, $cookies = []): ?array
     {
         $key = $this->getSessionKey();
         $user = Redis::get($key);
 
         if ($user) {
-            return ['response' => [
-                'access_token' => $user
-            ]];
+            return [
+                'response' => (object) [
+                    'access_token' => $user
+                ]
+            ];
         }
 
         $oauth = $this->api

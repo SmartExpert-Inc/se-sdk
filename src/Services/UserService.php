@@ -66,7 +66,7 @@ final class UserService extends BaseService
 
     public function find(array $query_params = []): Collection
     {
-        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
         $users = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
@@ -77,11 +77,29 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return collect($users->data);
+        return collect($users->data)->keyBy('id');
     }
 
     public function findFirst(array $query_params = []): ?\stdClass
     {
         return $this->find($query_params)->first();
+    }
+
+    public function checkPassword(int $userId, string $password): ?\stdClass
+    {
+        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/check-password/{$userId}", [
+                'password' => $password
+            ])
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
     }
 }
