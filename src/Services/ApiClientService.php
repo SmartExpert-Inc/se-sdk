@@ -132,13 +132,13 @@ final class ApiClientService
         $url = "{$this->baseUrl}{$this->prefix}{$path}";
 
         $params = $this->getParams($arguments);
-        if (in_array($name, ['get', 'put']) and $params) {
+        if (in_array($name, ['get']) and $params) {
             $uriParams = http_build_query($params);
             $url .= "?{$uriParams}";
         }
 
         try {
-            if (! in_array($name, ['get', 'put']) and $params) {
+            if (! in_array($name, ['get']) and $params) {
                 $options['form_params'] = $params;
             }
 
