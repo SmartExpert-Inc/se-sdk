@@ -12,7 +12,7 @@ final class UserAttributeService extends BaseService
     {
         $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
-        $user_attributes = $this->api
+        $userAttributes = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
@@ -22,7 +22,7 @@ final class UserAttributeService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $user_attributes;
+        return $userAttributes->data;
     }
 
     public function update(int $user_id, array $data): ?\stdClass
@@ -34,7 +34,7 @@ final class UserAttributeService extends BaseService
             'Content-Type' => 'application/json'
         ];
 
-        $user_attributes = $this->api
+        $userAttributes = $this->api
             ->setHeaders($headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
@@ -44,6 +44,6 @@ final class UserAttributeService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $user_attributes;
+        return $userAttributes;
     }
 }
