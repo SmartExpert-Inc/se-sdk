@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'auth' => [
+        'host' => env('AUTH_SERVICE_HOST', null),
+        'socialRoute' => '/social/'
+    ],
+
     'posts' => [
         'host' => env('POSTS_SERVICE_HOST', null),
     ],
