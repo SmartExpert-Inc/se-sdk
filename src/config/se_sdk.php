@@ -3,7 +3,8 @@
 return [
     'auth' => [
         'host' => env('AUTH_SERVICE_HOST', null),
-        'socialRoute' => '/social/'
+        'socialRoute' => env('AUTH_SERVICE_HOST', null) . '/social/',
+        'forgotPasswordRoute' => env('AUTH_SERVICE_HOST', null) . '/api/v1/password/reset'
     ],
 
     'posts' => [
