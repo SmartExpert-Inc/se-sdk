@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'auth' => [
+        'host' => env('AUTH_SERVICE_HOST', null),
+        'socialRoute' => env('AUTH_SERVICE_HOST', null) . '/social/',
+        'forgotPasswordRoute' => env('AUTH_SERVICE_HOST', null) . '/api/v1/password/reset'
+    ],
+
     'posts' => [
         'host' => env('POSTS_SERVICE_HOST', null),
     ],

@@ -25,7 +25,7 @@ final class UserService extends BaseService
         return $users;
     }
 
-    public function update(int $user_id, array $data)
+    public function store(array $data)
     {
         $headers = [
             'User-Agent' => 'testing/1.0',
@@ -38,7 +38,29 @@ final class UserService extends BaseService
             ->setHeaders($headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put('/users/' . $user_id, $data)
+            ->post('/users', $data)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $users;
+    }
+
+    public function update(int $userId, array $data)
+    {
+        $headers = [
+            'User-Agent' => 'testing/1.0',
+            'Accept' => 'application/json',
+            'Authorization' => resolve('se_sdk')->auth->getToken(),
+            'Content-Type' => 'application/json'
+        ];
+
+        $users = $this->api
+            ->setHeaders($headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->put("/users/{$userId}", $data)
             ->getObject();
 
         $this->api->dropState();

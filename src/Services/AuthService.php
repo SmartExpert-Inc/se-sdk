@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Redis;
 
 final class AuthService extends BaseService
 {
-    const GRANT_TYPE = 'password';
+    const GRANT_TYPE_PASSWORD = 'password';
+    const GRANT_TYPE_CLIENT_CREDENTIALS = 'client_credentials';
 
     public function register(array $request): ?array
     {
@@ -115,16 +116,25 @@ final class AuthService extends BaseService
             ];
         }
 
+        $requestArr =  [
+            'grant_type' => self::GRANT_TYPE_CLIENT_CREDENTIALS,
+            'client_id' => (string) session()->get('client_id'),
+            'client_secret' => session()->get('secret'),
+        ];
+
+
+        if (!$request['social']) {
+            array_merge($requestArr, [
+                'grant_type' => self::GRANT_TYPE_PASSWORD,
+                'username' => $request['email'],
+                'password' => $request['password']
+            ]);
+        }
+
         $oauth = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
-            ->post('/oauth/token', [
-                'grant_type' => self::GRANT_TYPE,
-                'client_id' => (string) session()->get('client_id'),
-                'client_secret' => session()->get('secret'),
-                'username' => $request['email'],
-                'password' => $request['password']
-            ])
+            ->post('/oauth/token', $requestArr)
             ->getObject();
 
         $cookie = $this->api->getLastCookies();
@@ -167,7 +177,7 @@ final class AuthService extends BaseService
             ->setBaseUrl($this->host)
             ->post('/oauth/token/refresh', [
                 'form_params' => [
-                    'grant_type' => self::GRANT_TYPE,
+                    'grant_type' => self::GRANT_TYPE_PASSWORD,
                     'client_id' => session()->get('client_id'),
                     'client_secret' => session()->get('secret'),
                     'refresh_token' => session()->get('refresh_token')
@@ -242,5 +252,35 @@ final class AuthService extends BaseService
         }
 
         return null;
+    }
+
+    public function sendResetLinkEmail(array $request)
+    {
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post('/password/email', $request)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function resetPassword($request)
+    {
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post('/password/reset', $request)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
     }
 }
