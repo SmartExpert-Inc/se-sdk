@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Redis;
 
 final class AuthService extends BaseService
 {
-    const GRANT_TYPE_PASSWORD = 'password';
-    const GRANT_TYPE_CLIENT_CREDENTIALS = 'client_credentials';
+    const PASSWORD_GRANT_TYPE = 'password';
+    const CLIENT_CREDENTIALS_GRANT_TYPE = 'client_credentials';
 
     public function register(array $request): ?array
     {
@@ -117,7 +117,7 @@ final class AuthService extends BaseService
         }
 
         $requestArr =  [
-            'grant_type' => self::GRANT_TYPE_CLIENT_CREDENTIALS,
+            'grant_type' => self::CLIENT_CREDENTIALS_GRANT_TYPE,
             'client_id' => (string) session()->get('client_id'),
             'client_secret' => session()->get('secret'),
         ];
@@ -125,7 +125,7 @@ final class AuthService extends BaseService
 
         if (!$request['social']) {
             array_merge($requestArr, [
-                'grant_type' => self::GRANT_TYPE_PASSWORD,
+                'grant_type' => self::PASSWORD_GRANT_TYPE,
                 'username' => $request['email'],
                 'password' => $request['password']
             ]);
@@ -177,7 +177,7 @@ final class AuthService extends BaseService
             ->setBaseUrl($this->host)
             ->post('/oauth/token/refresh', [
                 'form_params' => [
-                    'grant_type' => self::GRANT_TYPE_PASSWORD,
+                    'grant_type' => self::PASSWORD_GRANT_TYPE,
                     'client_id' => session()->get('client_id'),
                     'client_secret' => session()->get('secret'),
                     'refresh_token' => session()->get('refresh_token')
