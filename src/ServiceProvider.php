@@ -53,8 +53,12 @@ class ServiceProvider extends IlluminateServiceProvider
 
         if (config('se_sdk.s3')) {
             $disk = config('se_sdk.s3.cloud');
-            Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
-            Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
+            if (config('filesystem.cloud')) {
+                Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
+            }
+            if (config("filesystems.disks.{$disk}")) {
+                Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
+            }
         }
 
         if (config('se_sdk.channels')) {
@@ -66,39 +70,41 @@ class ServiceProvider extends IlluminateServiceProvider
         });
 
         $this->app->singleton(UserService::class, function () {
-            return new AuthService(resolve(ApiClientService::class));
+            return new AuthService(app(ApiClientService::class));
         });
 
         $this->app->singleton(UserService::class, function () {
-            return new UserService(resolve(ApiClientService::class));
+            return new UserService(app(ApiClientService::class));
         });
 
         $this->app->singleton(UserAttributeService::class, function () {
-            return new UserAttributeService(resolve(ApiClientService::class));
+            return new UserAttributeService(app(ApiClientService::class));
         });
 
         $this->app->singleton(UserSettingService::class, function () {
-            return new UserSettingService(resolve(ApiClientService::class));
+            return new UserSettingService(app(ApiClientService::class));
         });
 
         $this->app->singleton(PostService::class, function () {
-            return new PostService(resolve(ApiClientService::class));
+            return new PostService(app(ApiClientService::class));
         });
 
         $this->app->singleton(BotService::class, function () {
-            return new BotService(resolve(ApiClientService::class));
+            return new BotService(app(ApiClientService::class));
         });
 
         $this->app->singleton(TagService::class, function () {
-            return new TagService(resolve(ApiClientService::class));
+            return new TagService(app(ApiClientService::class));
         });
 
-        $this->app->singleton(S3Service::class, function () {
-            return new S3Service;
-        });
+        if (config('filesystem')) {
+            $this->app->singleton(S3Service::class, function () {
+                return new S3Service;
+            });
+        }
 
         $this->app->singleton(BotChatService::class, function () {
-            return new BotChatService(resolve(ApiClientService::class));
+            return new BotChatService(app(ApiClientService::class));
         });
 
         $this->app->singleton(CustomLogger::class, function () {
@@ -110,8 +116,8 @@ class ServiceProvider extends IlluminateServiceProvider
             return new ExceptionHandler();
         });
 
-        $this->app->bind(static::$abstract, function ($app) {
-            return new ServicesRegister($app);
+        $this->app->bind(static::$abstract, function () {
+            return new ServicesRegister();
         });
     }
 }
