@@ -53,10 +53,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         if (config('se_sdk.s3')) {
             $disk = config('se_sdk.s3.cloud');
-            if (config('filesystem.cloud')) {
+            if (config('filesystems.cloud')) {
                 Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
             }
-            if (config("filesystems.disks.{$disk}")) {
+            if (config("filesystems.disks")) {
                 Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
             }
         }
@@ -97,7 +97,7 @@ class ServiceProvider extends IlluminateServiceProvider
             return new TagService(app(ApiClientService::class));
         });
 
-        if (config('filesystem')) {
+        if (config('filesystems')) {
             $this->app->singleton(S3Service::class, function () {
                 return new S3Service;
             });
