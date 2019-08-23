@@ -42,24 +42,26 @@ final class ServicesRegister
      * ServicesRegister constructor.
      * @param Application $app
      */
-    public function __construct(Application $app)
+    public function __construct()
     {
-        $this->auth = $app->make(AuthService::class);
+        $this->auth = app()->make(AuthService::class);
 
-        $this->user = $app->make(UserService::class);
-        $this->userAttributes = $app->make(UserAttributeService::class);
-        $this->userSettings = $app->make(UserSettingService::class);
+        $this->user = app()->make(UserService::class);
+        $this->userAttributes = app()->make(UserAttributeService::class);
+        $this->userSettings = app()->make(UserSettingService::class);
 
-        $this->post = $app->make(PostService::class);
+        $this->post = app()->make(PostService::class);
 
-        $this->bot = $app->make(BotService::class);
-        $this->botChats = $app->make(BotChatService::class);
+        $this->bot = app()->make(BotService::class);
+        $this->botChats = app()->make(BotChatService::class);
 
-        $this->tag = $app->make(TagService::class);
+        $this->tag = app()->make(TagService::class);
 
-        $this->s3 = $app->make(S3Service::class);
+        if (config('filesystem')) {
+            $this->s3 = app()->make(S3Service::class);
+        }
 
-        $this->logger = $app->make(CustomLogger::class);
-        $this->exception = $app->make(ExceptionHandler::class);
+        $this->logger = app()->make(CustomLogger::class);
+        $this->exception = app()->make(ExceptionHandler::class);
     }
 }
