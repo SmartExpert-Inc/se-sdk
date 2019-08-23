@@ -57,7 +57,7 @@ final class ServicesRegister
 
         $this->tag = app()->make(TagService::class);
 
-        if (config('filesystem')) {
+        if (config('filesystems')) {
             $this->s3 = app()->make(S3Service::class);
         }
 
