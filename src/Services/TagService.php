@@ -12,7 +12,7 @@ final class TagService extends BaseService
 
         $this->host = config('se_sdk.tags.host');
     }
-    public function getTags(int $page = 1): ?\stdClass
+    public function index(int $page = 1): ?\stdClass
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -31,7 +31,7 @@ final class TagService extends BaseService
         return $tags;
     }
 
-    public function getTag(int $id): ?\stdClass
+    public function show(int $id): ?\stdClass
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -91,7 +91,7 @@ final class TagService extends BaseService
         return null;
     }
 
-    public function storeTag(array $data): ?\stdClass
+    public function store(array $data): ?\stdClass
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -108,7 +108,7 @@ final class TagService extends BaseService
         return $response;
     }
 
-    public function putTag(int $id, array $data): ?\stdClass
+    public function update(int $id, array $data): ?\stdClass
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -125,7 +125,7 @@ final class TagService extends BaseService
         return $tag;
     }
 
-    public function deleteTag(int $id): ?\stdClass
+    public function delete(int $id): ?\stdClass
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -142,7 +142,7 @@ final class TagService extends BaseService
         return $tag;
     }
 
-    public function findTags(array $data): Collection
+    public function find(array $data): Collection
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
