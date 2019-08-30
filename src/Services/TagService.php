@@ -12,8 +12,7 @@ final class TagService extends BaseService
 
         $this->host = config('se_sdk.tags.host');
     }
-
-    public function getTags(): ?Collection
+    public function getTags(int $page = 1): ?\stdClass
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -21,16 +20,15 @@ final class TagService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/tags')
+            ->get('/tags', [
+                'page' => $page
+            ])
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (property_exists($tags, 'data')) {
-            return collect($tags->data);
-        }
-        return null;
+        return $tags;
     }
 
     public function getTag(int $id): ?\stdClass
@@ -91,5 +89,73 @@ final class TagService extends BaseService
             return $category->data;
         }
         return null;
+    }
+
+    public function storeTag(array $data): ?\stdClass
+    {
+//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/tags", $data)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function putTag(int $id, array $data): ?\stdClass
+    {
+//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+
+        $tag = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->put("/tags/{$id}", $data)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $tag;
+    }
+
+    public function deleteTag(int $id): ?\stdClass
+    {
+//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+
+        $tag = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/tags/{$id}")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $tag;
+    }
+
+    public function findTags(array $data): Collection
+    {
+//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+
+        $tags = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/tags/find", $data)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return collect($tags);
     }
 }
