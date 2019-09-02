@@ -142,7 +142,7 @@ final class TagService extends BaseService
         return $tag;
     }
 
-    public function find(array $data): Collection
+    public function find(array $data): ?\stdClass
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
@@ -156,6 +156,6 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return collect($tags);
+        return $tags;
     }
 }
