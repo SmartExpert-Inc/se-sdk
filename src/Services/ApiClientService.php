@@ -130,7 +130,7 @@ final class ApiClientService
         $url = "{$this->baseUrl}{$this->prefix}{$path}";
 
         $results = $this->client->{$name}($url, $payload, $headers);
-        $this->setCookies($results);
+//        $this->setCookies($results);
         $res = (object) $results->body;
         $this->setResults($res);
 
