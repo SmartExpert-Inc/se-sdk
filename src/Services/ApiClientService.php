@@ -98,14 +98,15 @@ final class ApiClientService
         $this->headers = [];
     }
 
-//    public function getObject(): \stdClass
-//    {
+    public function getObject()
+    {
 //        if ($this->response) {
 //            return (object) $this->response;
 //        }
 //
 //        return new \stdClass;
-//    }
+        return $this->response;
+    }
 
     public function setHeaders(array $headers): self
     {
