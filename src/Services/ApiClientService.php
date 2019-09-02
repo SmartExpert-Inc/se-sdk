@@ -2,7 +2,6 @@
 
 namespace SE\SDK\Services;
 
-use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Illuminate\Support\Facades\Log;
@@ -65,7 +64,7 @@ final class ApiClientService
         $this->response = $results;
     }
 
-    private function setCookies(ResponseInterface $results)
+    private function setCookies(\stdClass $results)
     {
         $headers = $results->getHeaders();
 
