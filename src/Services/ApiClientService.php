@@ -2,8 +2,6 @@
 
 namespace SE\SDK\Services;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
@@ -34,9 +32,9 @@ final class ApiClientService
     /** @var array $cookies */
     private $cookies;
 
-    public function __construct(Client $client)
+    public function __construct()
     {
-        $this->client = $client;
+        $this->client = requests();
     }
 
     public function setBaseUrl(string $url): self
@@ -101,14 +99,14 @@ final class ApiClientService
         $this->headers = [];
     }
 
-    public function getObject(): \stdClass
-    {
-        if ($this->response) {
-            return (object) $this->response;
-        }
-
-        return new \stdClass;
-    }
+//    public function getObject(): \stdClass
+//    {
+//        if ($this->response) {
+//            return (object) $this->response;
+//        }
+//
+//        return new \stdClass;
+//    }
 
     public function setHeaders(array $headers): self
     {
@@ -127,46 +125,15 @@ final class ApiClientService
             throw new MethodNotAllowedException($this->methods, $message);
         }
 
-        $options['headers'] = $this->headers;
+        $payload = $this->getParams($arguments);
+        $headers = $this->headers;
         $path = $this->getPath($arguments);
         $url = "{$this->baseUrl}{$this->prefix}{$path}";
 
-        $params = $this->getParams($arguments);
-        if (in_array($name, ['get']) and $params) {
-            $uriParams = http_build_query($params);
-            $url .= "?{$uriParams}";
-        }
-
-        try {
-            if (! in_array($name, ['get']) and $params) {
-                $options['form_params'] = $params;
-            }
-
-            $results = $this->client->request($name, $url, $options);
-            $this->setCookies($results);
-            $res = (object) \GuzzleHttp\json_decode($results->getBody()->getContents());
-            $this->setResults($res);
-        } catch (RequestException $e) {
-            Log::error("{$e->getCode()}: {$e->getMessage()}\n{$e->getLine()}: {$e->getFile()}");
-
-            $res = [];
-
-            try {
-                $res = null;
-                if ($e->hasResponse()) {
-                    $res = (object) \GuzzleHttp\json_decode($e->getResponse()->getBody()->getContents());
-                }
-            } catch (\Exception $e) {
-                Log::error("{$e->getCode()}: {$e->getMessage()}\n{$e->getLine()}: {$e->getFile()}");
-            }
-
-            $this->setResults($res);
-        } catch (\Exception $e) {
-            Log::error("{$e->getCode()}: {$e->getMessage()}\n{$e->getLine()}: {$e->getFile()}");
-
-            $res = null;
-            $this->setResults($res);
-        }
+        $results = $this->client->{$name}($url, $payload, $headers);
+        $this->setCookies($results);
+        $res = (object) $results->body;
+        $this->setResults($res);
 
         return $this;
     }

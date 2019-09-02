@@ -18,6 +18,7 @@ use SE\SDK\Services\{
     AuthService,
     UserSettingService
 };
+use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;
 
@@ -50,6 +51,11 @@ class ServiceProvider extends IlluminateServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/config/se_sdk.php', 'se_sdk'
         );
+
+        /* Require helpers */
+        foreach (glob(__DIR__ . '/Helpers/*.php') as $file) {
+            require_once($file);
+        }
 
         if (config('se_sdk.s3')) {
             $disk = config('se_sdk.s3.cloud');
@@ -118,6 +124,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->bind(static::$abstract, function () {
             return new ServicesRegister();
+        });
+
+        $this->app->bind('requests', function () {
+            return new HttpClient();
         });
     }
 }
