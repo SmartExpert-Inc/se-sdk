@@ -88,12 +88,16 @@ final class HttpClient
         return strtoupper($method) == self::DELETE_METHOD;
     }
 
-    private function getData(array $arguments): ?array
+    private function getData(array $arguments): ?string
     {
-        $data = [];
+        $data = null;
 
         if (isset($arguments[1]) and is_array($arguments[1])) {
-            return $arguments[1];
+            $data = $arguments[1];
+        }
+
+        if (is_array($data)) {
+            $data = http_build_query($data, '', '&');
         }
 
         return $data;
@@ -202,6 +206,10 @@ final class HttpClient
 
     public function __call($name, $arguments): ?\stdClass
     {
+        if (count($arguments) < 1) {
+            throw new \InvalidArgumentException('Magic request methods require a URI and optional options array');
+        }
+
         if (! in_array(strtoupper($name), $this->methods)) {
             $message = __("Method \":name\" not allowed!", ['name' => $name]);
 
@@ -217,24 +225,23 @@ final class HttpClient
 
         if ($this->isGetMethod($name)) {
             if ($data) {
-                $uriParams = http_build_query($data);
-                $url .= "?{$uriParams}";
+                $url .= "?{$data}";
             }
-        } else {
-            if ($this->isPostMethod($name)) {
-                curl_setopt($this->channel, CURLOPT_POST, true);
-                curl_setopt($this->channel, CURLOPT_CUSTOMREQUEST, self::POST_METHOD);
-            }
+        }
 
-            if ($this->isPutMethod($name)) {
-                $data = http_build_query($data);
-                curl_setopt($this->channel, CURLOPT_CUSTOMREQUEST, self::PUT_METHOD);
-            }
+        if ($this->isPostMethod($name)) {
+            curl_setopt($this->channel, CURLOPT_POST, true);
+            curl_setopt($this->channel, CURLOPT_CUSTOMREQUEST, self::POST_METHOD);
+            curl_setopt($this->channel, CURLOPT_POSTFIELDS, $data);
+        }
 
-            if ($this->isDeleteMethod($name)) {
-                curl_setopt($this->channel, CURLOPT_CUSTOMREQUEST, self::DELETE_METHOD);
-            }
+        if ($this->isPutMethod($name)) {
+            curl_setopt($this->channel, CURLOPT_CUSTOMREQUEST, self::PUT_METHOD);
+            curl_setopt($this->channel, CURLOPT_POSTFIELDS, $data);
+        }
 
+        if ($this->isDeleteMethod($name)) {
+            curl_setopt($this->channel, CURLOPT_CUSTOMREQUEST, self::DELETE_METHOD);
             curl_setopt($this->channel, CURLOPT_POSTFIELDS, $data);
         }
 

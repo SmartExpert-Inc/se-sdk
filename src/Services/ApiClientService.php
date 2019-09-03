@@ -66,7 +66,7 @@ final class ApiClientService
 
     private function setCookies(\stdClass $results)
     {
-        $headers = $results->getHeaders();
+        $headers = $results->headers;
 
         if (isset($headers) && array_key_exists('Set-Cookie', $headers)) {
             $this->cookies = $headers['Set-Cookie'];
@@ -100,11 +100,6 @@ final class ApiClientService
 
     public function getObject()
     {
-//        if ($this->response) {
-//            return (object) $this->response;
-//        }
-//
-//        return new \stdClass;
         return $this->response;
     }
 
@@ -131,7 +126,7 @@ final class ApiClientService
         $url = "{$this->baseUrl}{$this->prefix}{$path}";
 
         $results = $this->client->{$name}($url, $payload, $headers);
-//        $this->setCookies($results);
+        $this->setCookies($results);
         $res = (object) $results->body;
         $this->setResults($res);
 
