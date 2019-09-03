@@ -6,6 +6,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\{File, Storage};
+use Spatie\Image\{Image, Manipulations};
 use Webpatser\Uuid\Uuid;
 
 final class S3Service
@@ -86,6 +87,48 @@ final class S3Service
                 $extension = $matches[1];
             }
             $filename .= ".{$extension}";
+
+            // put file
+            $this->storage->put("{$folder}{$filename}", $file);
+
+            return $this->storage->url("{$folder}{$filename}");
+        }
+
+        return null;
+    }
+
+    public function putFileThumbFromBase64(string $base64data, $folder = self::DEFAULT_FOLDER): ?string
+    {
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
+            // folder
+            $folder = $this->generateFolder($folder);
+
+            // file data
+            $file = substr($base64data, strpos($base64data, ',') + 1);
+            $file = base64_decode($file);
+
+            // filename
+            $filename = $this->generateFileName();
+
+            // extension
+            preg_match("/^data\:image\/([a-z]+)\;base64*./", $base64data, $matches);
+            $extension = self::DEFAULT_EXTENSION;
+            if ($matches) {
+                $extension = $matches[1];
+            }
+            $filename .= ".{$extension}";
+
+            // temporarily store the decoded data on the filesystem to be able to pass it to the fileAdder
+            $tmpFile = tempnam(sys_get_temp_dir(), 'se_sdk');
+            File::put($tmpFile, $file);
+
+            Image::load($tmpFile)
+                ->crop(Manipulations::CROP_CENTER,
+                    config('se_sdk.s3.thumb.width'),
+                    config('se_sdk.s3.thumb.height'))
+                ->save();
+
+            $file = File::get($tmpFile);
 
             // put file
             $this->storage->put("{$folder}{$filename}", $file);

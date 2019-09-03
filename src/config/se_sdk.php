@@ -50,6 +50,10 @@ return [
                 'bucket' => env('AWS_BUCKET'),
             ],
         ],
+        'thumb' => [
+            'width' => 250,
+            'height' => 250,
+        ],
     ],
 
     'channels' => [
