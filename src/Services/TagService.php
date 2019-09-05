@@ -95,6 +95,14 @@ final class TagService extends BaseService
     {
 //        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
 
+        if (! isset($data['name'])) {
+            return null;
+        }
+
+        if (! isset($data['slug'])) {
+            $data['slug'] = str_slug($data['name']);
+        }
+
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
