@@ -3,6 +3,7 @@
 namespace SE\SDK\Client;
 
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Illuminate\Support\Facades\Log;
 
 final class HttpClient
 {
@@ -194,6 +195,10 @@ final class HttpClient
                     $body = json_decode($body);
                 }
             }
+        }
+
+        if (app()->environment() !== "production") {
+            Log::debug(print_r($body, true));
         }
 
         $response = new \stdClass();
