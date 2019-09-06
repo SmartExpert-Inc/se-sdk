@@ -22,7 +22,7 @@ class LogToApiHandler extends AbstractProcessingHandler
         ]);
     }
 
-    public function write(array $record)
+    public function write(array $record): void
     {
         $this->client->request('POST', $this->webHookUrl, [
             'json' => [
