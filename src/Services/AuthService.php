@@ -103,7 +103,7 @@ final class AuthService extends BaseService
         return $this->authorise($request, $cookies);
     }
 
-    public function authorise(array $request, $cookies = []): ?array
+    public function authorise(array $request, ?array $cookies = []): ?array
     {
         $key = $this->getSessionKey();
         $user = Redis::get($key);
@@ -123,8 +123,8 @@ final class AuthService extends BaseService
         ];
 
 
-        if (!$request['social']) {
-            array_merge($requestArr, [
+        if (!@$request['social']) {
+            $requestArr = array_merge($requestArr, [
                 'grant_type' => self::PASSWORD_GRANT_TYPE,
                 'username' => $request['email'],
                 'password' => $request['password']
@@ -138,18 +138,18 @@ final class AuthService extends BaseService
             ->getObject();
 
         $cookie = $this->api->getLastCookies();
-        $cookies = array_merge($cookies, $cookie);
+        $cookies = array_merge($cookies ?? [], $cookie);
 
         $this->api->dropState();
         $this->api->dropUrls();
 
         $results = [
-            'response' => $oauth,
+            'response' => json_decode($oauth->scalar),
             'cookies' => $cookies
         ];
 
         if (!isset($oauth->error)) {
-            $this->setTokenToSession($oauth);
+            $this->setTokenToSession(json_decode($oauth->scalar));
         }
 
         return $results;
