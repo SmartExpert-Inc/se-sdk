@@ -148,6 +148,12 @@ final class S3Service
         return null;
     }
 
+    public function files(string $folder = self::DEFAULT_FOLDER, bool $recursive = false): array
+    {
+        $folder = $this->generateFolder($folder);
+        return $this->storage->files($folder, $recursive);
+    }
+
     private function generateFolder(string $folder): string
     {
         $folder = $folder ?: self::DEFAULT_FOLDER;
