@@ -46,9 +46,9 @@ final class S3Service
 
     public function putFile(UploadedFile $file, $folder = self::DEFAULT_FOLDER): string
     {
-        $folder = $this->generateFolder($folder);
+        $folder = $this->getFolder($folder);
 
-        $filename = $this->generateFileName($file);
+        $filename = $this->getUniqueFileName($file);
         $this->storage->putFileAs($folder, $file, $filename);
 
         return $this->storage->url("{$folder}{$filename}");
@@ -80,14 +80,14 @@ final class S3Service
     {
         if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
             // folder
-            $folder = $this->generateFolder($folder);
+            $folder = $this->getFolder($folder);
 
             // file data
             $file = substr($base64data, strpos($base64data, ',') + 1);
             $file = base64_decode($file);
 
             // filename
-            $filename = $this->generateFileName();
+            $filename = $this->getUniqueFileName();
 
             // extension
             preg_match("/^data\:image\/([a-z]+)\;base64*./", $base64data, $matches);
@@ -110,14 +110,14 @@ final class S3Service
     {
         if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
             // folder
-            $folder = $this->generateFolder($folder);
+            $folder = $this->getFolder($folder);
 
             // file data
             $file = substr($base64data, strpos($base64data, ',') + 1);
             $file = base64_decode($file);
 
             // filename
-            $filename = $this->generateFileName();
+            $filename = $this->getUniqueFileName();
 
             // extension
             preg_match("/^data\:image\/([a-z]+)\;base64*./", $base64data, $matches);
@@ -150,17 +150,17 @@ final class S3Service
 
     public function files(string $folder = self::DEFAULT_FOLDER, bool $recursive = false): array
     {
-        $folder = $this->generateFolder($folder);
+        $folder = $this->getFolder($folder);
         return $this->storage->files($folder, $recursive);
     }
 
-    private function generateFolder(string $folder): string
+    private function getFolder(string $folder): string
     {
         $folder = $folder ?: self::DEFAULT_FOLDER;
         return "{$this->env}/{$folder}/";
     }
 
-    private function generateFileName(UploadedFile $file = null): string
+    private function getUniqueFileName(UploadedFile $file = null): string
     {
         $filename = Uuid::generate()->string;
         if (! is_null($file)) {
