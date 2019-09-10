@@ -26,6 +26,15 @@ final class S3Service
         $this->env = config('app.env');
     }
 
+    public function __call($method, $parameters)
+    {
+        if(method_exists($this, $method)) {
+            return $this->$method(...$parameters);
+        }
+
+        return $this->storage->$method(...$parameters);
+    }
+
     public function putFiles(array $files, $folder = self::DEFAULT_FOLDER): array
     {
         $return = [];
