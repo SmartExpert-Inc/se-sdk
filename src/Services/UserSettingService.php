@@ -4,24 +4,27 @@ namespace SE\SDK\Services;
 
 final class UserSettingService extends BaseService
 {
-    public function get(int $user_id): ?\stdClass
+    public function get(int $userId): ?\stdClass
     {
-        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+        $this->headers = [
+            'Authorization' => resolve('se_sdk')->auth->getToken(),
+            'Accept' => 'application/json',
+        ];
 
-        $user_settings = $this->api
+        $userSettings = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/settings/' . $user_id)
+            ->get("/settings/{$userId}")
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $user_settings->data;
+        return $userSettings->data;
     }
 
-    public function update(int $user_id, array $data): ?\stdClass
+    public function update(int $userId, array $data): ?\stdClass
     {
         $headers = [
             'User-Agent' => 'testing/1.0',
@@ -30,16 +33,16 @@ final class UserSettingService extends BaseService
             'Content-Type' => 'application/json'
         ];
 
-        $user_settings = $this->api
+        $userSettings = $this->api
             ->setHeaders($headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put('/settings/' . $user_id, $data)
+            ->put("/settings/{$userId}", $data)
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $user_settings;
+        return $userSettings;
     }
 }
