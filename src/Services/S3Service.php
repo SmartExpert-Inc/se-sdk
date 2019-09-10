@@ -11,7 +11,7 @@ use Webpatser\Uuid\Uuid;
 
 final class S3Service
 {
-    const DEFAULT_FOLDER = 'temp';
+    const DEFAULT_DIRECTORY = 'temp';
     const DEFAULT_EXTENSION = 'jpg';
 
     /** @var Storage $storage*/
@@ -35,26 +35,26 @@ final class S3Service
         return $this->storage->$method(...$parameters);
     }
 
-    public function putFiles(array $files, $folder = self::DEFAULT_FOLDER): array
+    public function putFiles(array $files, $directory = self::DEFAULT_DIRECTORY): array
     {
         $return = [];
         foreach ($files as $file) {
-            $return[] = $this->putFile($file, $folder);
+            $return[] = $this->putFile($file, $directory);
         }
         return $return;
     }
 
-    public function putFile(UploadedFile $file, $folder = self::DEFAULT_FOLDER): string
+    public function putFile(UploadedFile $file, $directory = self::DEFAULT_DIRECTORY): string
     {
-        $folder = $this->getFolder($folder);
+        $directory = $this->getDirectory($directory);
 
         $filename = $this->getUniqueFileName($file);
-        $this->storage->putFileAs($folder, $file, $filename);
+        $this->storage->putFileAs($directory, $file, $filename);
 
-        return $this->storage->url("{$folder}{$filename}");
+        return $this->storage->url("{$directory}{$filename}");
     }
 
-    public function putFileFromUrl(string $url, $folder = self::DEFAULT_FOLDER): ?string
+    public function putFileFromUrl(string $url, $directory = self::DEFAULT_DIRECTORY): ?string
     {
         $url = preg_replace_callback('/[^\x20-\x7f]/', function($match) {
             return urlencode($match[0]);
@@ -73,14 +73,14 @@ final class S3Service
         }
 
         $uploadedFile = new UploadedFile($file, $info['basename']);
-        return $this->putFile($uploadedFile, $folder);
+        return $this->putFile($uploadedFile, $directory);
     }
 
-    public function putFileFromBase64(string $base64data, $folder = self::DEFAULT_FOLDER): ?string
+    public function putFileFromBase64(string $base64data, $directory = self::DEFAULT_DIRECTORY): ?string
     {
         if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
-            // folder
-            $folder = $this->getFolder($folder);
+            // directory
+            $directory = $this->getDirectory($directory);
 
             // file data
             $file = substr($base64data, strpos($base64data, ',') + 1);
@@ -98,19 +98,19 @@ final class S3Service
             $filename .= ".{$extension}";
 
             // put file
-            $this->storage->put("{$folder}{$filename}", $file);
+            $this->storage->put("{$directory}{$filename}", $file);
 
-            return $this->storage->url("{$folder}{$filename}");
+            return $this->storage->url("{$directory}{$filename}");
         }
 
         return null;
     }
 
-    public function putFileThumbFromBase64(string $base64data, $folder = self::DEFAULT_FOLDER): ?string
+    public function putFileThumbFromBase64(string $base64data, $directory = self::DEFAULT_DIRECTORY): ?string
     {
         if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
-            // folder
-            $folder = $this->getFolder($folder);
+            // directory
+            $directory = $this->getDirectory($directory);
 
             // file data
             $file = substr($base64data, strpos($base64data, ',') + 1);
@@ -140,24 +140,24 @@ final class S3Service
             $file = File::get($tmpFile);
 
             // put file
-            $this->storage->put("{$folder}{$filename}", $file);
+            $this->storage->put("{$directory}{$filename}", $file);
 
-            return $this->storage->url("{$folder}{$filename}");
+            return $this->storage->url("{$directory}{$filename}");
         }
 
         return null;
     }
 
-    public function files(string $folder = self::DEFAULT_FOLDER, bool $recursive = false): array
+    public function files(string $directory = self::DEFAULT_DIRECTORY, bool $recursive = false): array
     {
-        $folder = $this->getFolder($folder);
-        return $this->storage->files($folder, $recursive);
+        $directory = $this->getDirectory($directory);
+        return $this->storage->files($directory, $recursive);
     }
 
-    private function getFolder(string $folder): string
+    private function getDirectory(string $directory): string
     {
-        $folder = $folder ?: self::DEFAULT_FOLDER;
-        return "{$this->env}/{$folder}/";
+        $directory = $directory ?: self::DEFAULT_DIRECTORY;
+        return "{$this->env}/{$directory}/";
     }
 
     private function getUniqueFileName(UploadedFile $file = null): string
