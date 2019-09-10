@@ -22,7 +22,7 @@ final class UserAttributeService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $userAttributes->data;
+        return $userAttributes->data ?? $userAttributes;
     }
 
     public function update(int $user_id, array $data): ?\stdClass
