@@ -28,7 +28,7 @@ final class S3Service
 
     public function __call($method, $parameters)
     {
-        if(method_exists($this, $method)) {
+        if (method_exists($this, $method)) {
             return $this->$method(...$parameters);
         }
 

@@ -8,7 +8,7 @@ final class UserService extends BaseService
 {
     public function index(int $page = 1): ?\stdClass
     {
-        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+        $this->withAut();
 
         $users = $this->api
             ->setHeaders($this->headers)
@@ -27,15 +27,16 @@ final class UserService extends BaseService
 
     public function store(array $data)
     {
-        $headers = [
+        $this->headers = [
             'User-Agent' => 'testing/1.0',
             'Accept' => 'application/json',
-            'Authorization' => resolve('se_sdk')->auth->getToken(),
             'Content-Type' => 'application/json'
         ];
 
+        $this->withAut();
+
         $users = $this->api
-            ->setHeaders($headers)
+            ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->post('/users', $data)
@@ -49,15 +50,16 @@ final class UserService extends BaseService
 
     public function update(int $userId, array $data)
     {
-        $headers = [
+        $this->headers = [
             'User-Agent' => 'testing/1.0',
             'Accept' => 'application/json',
-            'Authorization' => resolve('se_sdk')->auth->getToken(),
             'Content-Type' => 'application/json'
         ];
 
+        $this->withAut();
+
         $users = $this->api
-            ->setHeaders($headers)
+            ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->put("/users/{$userId}", $data)
@@ -71,7 +73,7 @@ final class UserService extends BaseService
 
     public function show(int $id): ?\stdClass
     {
-        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+        $this->withAut();
 
         $user = $this->api
             ->setHeaders($this->headers)
@@ -88,7 +90,8 @@ final class UserService extends BaseService
 
     public function find(array $queryParams = []): ?\stdClass
     {
-        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+        $this->withAut();
+
         $users = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
@@ -109,7 +112,8 @@ final class UserService extends BaseService
 
     public function checkPassword(int $userId, string $password): ?\stdClass
     {
-        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+        $this->withAut();
+
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)

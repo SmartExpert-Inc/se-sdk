@@ -23,6 +23,8 @@ final class PostService extends BaseService
 
     public function index(int $page = null): ?\stdClass
     {
+//        $this->withAut();
+
         $posts = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
@@ -44,6 +46,8 @@ final class PostService extends BaseService
             'User-Agent' => 'testing/1.0',
             'Accept' => 'application/json',
         ];
+
+//        $this->withAut();
 
         if (array_key_exists("_token", $data)) {
             unset($data['_token']);
@@ -72,6 +76,8 @@ final class PostService extends BaseService
             'Accept' => 'application/json',
         ];
 
+//        $this->withAut();
+
         $post = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
@@ -91,6 +97,8 @@ final class PostService extends BaseService
             'Accept' => 'application/json',
         ];
 
+//        $this->withAut();
+
         $post = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
@@ -106,6 +114,8 @@ final class PostService extends BaseService
 
     public function show(int $id): ?\stdClass
     {
+//        $this->withAut();
+
         $post = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
@@ -121,6 +131,8 @@ final class PostService extends BaseService
 
     public function find(array $queryParams = []): ?\stdClass
     {
+//        $this->withAut();
+
         $posts = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
@@ -136,6 +148,8 @@ final class PostService extends BaseService
 
     public function delete(int $id): ?\stdClass
     {
+//        $this->withAut();
+
         $post = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
@@ -151,6 +165,8 @@ final class PostService extends BaseService
 
     public function publish(array $data)
     {
+//        $this->withAut();
+
         $post = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
