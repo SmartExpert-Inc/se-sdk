@@ -105,6 +105,23 @@ final class UserService extends BaseService
         return $users;
     }
 
+    public function findByIds(array $queryParams = []): ?\stdClass
+    {
+        $this->withAut();
+
+        $users = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get('/users/find-by-ids', $queryParams)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $users;
+    }
+
     public function findFirst(array $queryParams = []): ?\stdClass
     {
         return collect($this->find($queryParams)->data)->first();
