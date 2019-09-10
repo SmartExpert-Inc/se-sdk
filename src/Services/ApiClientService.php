@@ -100,6 +100,10 @@ final class ApiClientService
 
     public function getObject()
     {
+        if (property_exists($this->response, "message") or property_exists($this->response, "error")) {
+            return null;
+        }
+
         return $this->response;
     }
 
