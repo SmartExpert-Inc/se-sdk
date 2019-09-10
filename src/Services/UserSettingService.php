@@ -7,9 +7,10 @@ final class UserSettingService extends BaseService
     public function get(int $userId): ?\stdClass
     {
         $this->headers = [
-            'Authorization' => resolve('se_sdk')->auth->getToken(),
             'Accept' => 'application/json',
         ];
+
+        $this->withAut();
 
         $userSettings = $this->api
             ->setHeaders($this->headers)
@@ -29,9 +30,10 @@ final class UserSettingService extends BaseService
         $headers = [
             'User-Agent' => 'testing/1.0',
             'Accept' => 'application/json',
-            'Authorization' => resolve('se_sdk')->auth->getToken(),
             'Content-Type' => 'application/json'
         ];
+
+        $this->withAut();
 
         $userSettings = $this->api
             ->setHeaders($headers)

@@ -15,7 +15,7 @@ final class BotService extends BaseService
 
     public function unlink($botName, $userId)
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -34,7 +34,7 @@ final class BotService extends BaseService
 
     public function message($botName, string $message, int $userId, ?int $ownerId)
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -55,7 +55,7 @@ final class BotService extends BaseService
 
     public function store(array $data)
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -72,7 +72,7 @@ final class BotService extends BaseService
 
     public function find(array $queryParams = []): Collection
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $bots = $this->api
             ->setHeaders($this->headers)

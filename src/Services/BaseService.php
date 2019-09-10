@@ -39,4 +39,9 @@ abstract class BaseService
 
         return "{$name}{$sessionName}";
     }
+
+    protected function withAut(): void
+    {
+        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+    }
 }

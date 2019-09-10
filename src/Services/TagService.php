@@ -14,7 +14,7 @@ final class TagService extends BaseService
     }
     public function index(int $page = 1): ?\stdClass
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $tags = $this->api
             ->setHeaders($this->headers)
@@ -33,7 +33,7 @@ final class TagService extends BaseService
 
     public function show(int $id): ?\stdClass
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $tag = $this->api
             ->setHeaders($this->headers)
@@ -53,7 +53,7 @@ final class TagService extends BaseService
 
     public function getCategories(): ?Collection
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $categories = $this->api
             ->setHeaders($this->headers)
@@ -73,7 +73,7 @@ final class TagService extends BaseService
 
     public function getCategory(int $id): ?\stdClass
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $category = $this->api
             ->setHeaders($this->headers)
@@ -93,7 +93,7 @@ final class TagService extends BaseService
 
     public function store(array $data): ?\stdClass
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         if (! isset($data['name'])) {
             return null;
@@ -118,7 +118,7 @@ final class TagService extends BaseService
 
     public function update(int $id, array $data): ?\stdClass
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $tag = $this->api
             ->setHeaders($this->headers)
@@ -135,7 +135,7 @@ final class TagService extends BaseService
 
     public function delete(int $id): ?\stdClass
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $tag = $this->api
             ->setHeaders($this->headers)
@@ -152,7 +152,7 @@ final class TagService extends BaseService
 
     public function find(array $data): ?\stdClass
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $tags = $this->api
             ->setHeaders($this->headers)

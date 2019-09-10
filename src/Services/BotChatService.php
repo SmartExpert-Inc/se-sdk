@@ -15,7 +15,7 @@ final class BotChatService extends BaseService
 
     public function store(array $data)
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -32,7 +32,7 @@ final class BotChatService extends BaseService
 
     public function find(array $queryParams = []): Collection
     {
-//        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+//        $this->withAut();
 
         $chats = $this->api
             ->setHeaders($this->headers)
