@@ -122,8 +122,7 @@ final class AuthService extends BaseService
             'client_secret' => session()->get('secret'),
         ];
 
-
-        if (!$request['social']) {
+        if (! isset($request['social'])) {
             array_merge($requestArr, [
                 'grant_type' => self::PASSWORD_GRANT_TYPE,
                 'username' => $request['email'],
