@@ -6,13 +6,6 @@ use Illuminate\Support\Collection;
 
 final class UserService extends BaseService
 {
-    public function __construct(ApiClientService $api)
-    {
-        parent::__construct($api);
-
-        $this->host = config('se_sdk.auth.host');
-    }
-
     public function index(int $page = 1): ?\stdClass
     {
         $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();

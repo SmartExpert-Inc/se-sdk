@@ -27,6 +27,7 @@ abstract class BaseService
             'Accept' => 'application/json',
         ];
 
+        $this->host = config('se_sdk.auth.host');
         $this->prefix = "/api/v1";
     }
 
