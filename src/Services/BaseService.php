@@ -26,7 +26,7 @@ abstract class BaseService
             'User-Agent' => 'testing/1.0',
             'Accept' => 'application/json',
         ];
-        $this->host = "https://auth.p.smartexpert.net";
+
         $this->prefix = "/api/v1";
     }
 
