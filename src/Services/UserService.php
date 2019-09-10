@@ -83,7 +83,7 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $user->data;
+        return $user->data ?? $user;
     }
 
     public function find(array $queryParams = []): ?\stdClass
