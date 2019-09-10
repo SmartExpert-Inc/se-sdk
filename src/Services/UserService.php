@@ -107,7 +107,8 @@ final class UserService extends BaseService
 
     public function findByIds(array $queryParams = []): ?\stdClass
     {
-        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+        $this->withAut();
+
         $users = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
