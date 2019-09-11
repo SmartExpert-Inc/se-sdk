@@ -85,7 +85,7 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (isset($auth->errors)) {
+        if (property_exists($auth, "errors")) {
             return [
                 'response' => $auth,
                 'cookies' => $cookies
@@ -106,12 +106,12 @@ final class AuthService extends BaseService
     public function authorise(array $request, ?array $cookies = []): ?array
     {
         $key = $this->getSessionKey();
-        $user = Redis::get($key);
+        $accessToken = Redis::get($key);
 
-        if ($user) {
+        if ($accessToken) {
             return [
                 'response' => (object) [
-                    'access_token' => $user
+                    'access_token' => $accessToken
                 ]
             ];
         }
@@ -122,7 +122,7 @@ final class AuthService extends BaseService
             'client_secret' => session()->get('secret'),
         ];
 
-        if (! isset($request['social'])) {
+        if (! array_key_exists('social', $request)) {
             $requestArr = array_merge($requestArr, [
                 'grant_type' => self::PASSWORD_GRANT_TYPE,
                 'username' => $request['email'],
