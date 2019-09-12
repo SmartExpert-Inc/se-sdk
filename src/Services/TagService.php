@@ -28,6 +28,8 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($tags);
+
         return $tags;
     }
 
@@ -45,11 +47,9 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (property_exists($tag, 'data')) {
-            return $tag->data;
-        }
+        $this->badResponse($tag);
 
-        return null;
+        return $tag->data;
     }
 
     public function getCategories(): ?Collection
@@ -66,11 +66,9 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (property_exists($categories, 'data')) {
-            return collect($categories->data);
-        }
+        $this->badResponse($categories);
 
-        return null;
+        return collect($categories->data);
     }
 
     public function getCategory(int $id): ?\stdClass
@@ -87,11 +85,9 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (property_exists($category, 'data')) {
-            return $category->data;
-        }
+        $this->badResponse($category);
 
-        return null;
+        return $category->data;
     }
 
     public function store(array $data): ?\stdClass
@@ -116,6 +112,8 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($response);
+
         return $response;
     }
 
@@ -132,6 +130,8 @@ final class TagService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($tag);
 
         return $tag;
     }
@@ -150,6 +150,8 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($tag);
+
         return $tag;
     }
 
@@ -166,6 +168,8 @@ final class TagService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($tags);
 
         return $tags;
     }

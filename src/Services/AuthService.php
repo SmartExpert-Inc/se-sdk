@@ -23,12 +23,7 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (isset($registered->errors)) {
-            return [
-                'response' => $registered,
-                'cookies' => $cookies
-            ];
-        }
+        $this->badResponse($registered);
 
         session()->put([
             'secret' => $registered->data->secret,
@@ -53,12 +48,7 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (isset($auth->errors)) {
-            return [
-                'response' => $auth,
-                'cookies' => $cookies
-            ];
-        }
+        $this->badResponse($auth);
 
         if (! session()->has("user")) {
             session()->put([
@@ -85,12 +75,7 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (property_exists($auth, "errors")) {
-            return [
-                'response' => $auth,
-                'cookies' => $cookies
-            ];
-        }
+        $this->badResponse($auth);
 
         if (! session()->has("user")) {
             session()->put([
@@ -147,9 +132,9 @@ final class AuthService extends BaseService
             'cookies' => $cookies
         ];
 
-        if (!isset($oauth->error)) {
-            $this->setTokenToSession(json_decode($oauth->scalar));
-        }
+        $this->badResponse($oauth);
+
+        $this->setTokenToSession(json_decode($oauth->scalar));
 
         return $results;
     }
@@ -171,7 +156,7 @@ final class AuthService extends BaseService
 
     private function refreshToken($cookies = [])
     {
-        $refresh_token = $this->api
+        $refreshToken = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->post('/oauth/token/refresh', [
@@ -190,12 +175,14 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($refreshToken);
+
         $results = [
-            'response' => $refresh_token,
+            'response' => $refreshToken,
             'cookies' => $cookies
         ];
 
-        $this->setTokenToSession($refresh_token);
+        $this->setTokenToSession($refreshToken);
 
         return $results;
     }
@@ -221,11 +208,11 @@ final class AuthService extends BaseService
         $key = $this->getSessionKey();
 
         if (Redis::ttl($key) == -2) {
-            if (session()->has('access_token')) {
-                Redis::set($key, session()->get('access_token'), 'EX', session()->get('expires_in'));
-            } else {
+            if (! session()->has('access_token')) {
                 return false;
             }
+
+            Redis::set($key, session()->get('access_token'), 'EX', session()->get('expires_in'));
         } elseif (Redis::ttl($key) == -1) {
             $cookies = $this->api->getLastCookies();
 
@@ -238,9 +225,11 @@ final class AuthService extends BaseService
     public function getToken() :string
     {
         $key = $this->getSessionKey();
+        $user = Redis::get($key);
+        $token = session()->get('token_type', 'Bearer');
 
         return $this->hasToken()
-            ? session()->get('token_type', 'Bearer') . ' ' . Redis::get($key)
+            ? "{$token} {$user}"
             : '';
     }
 
@@ -265,6 +254,8 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($response);
+
         return $response;
     }
 
@@ -279,6 +270,8 @@ final class AuthService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($response);
 
         return $response;
     }

@@ -29,6 +29,8 @@ final class BotService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($response);
+
         return $response;
     }
 
@@ -50,6 +52,8 @@ final class BotService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($response);
+
         return $response;
     }
 
@@ -66,6 +70,8 @@ final class BotService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($response);
 
         return $response;
     }
@@ -84,14 +90,8 @@ final class BotService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (! $bots) {
-            return collect();
-        }
+        $this->badResponse($bots, collect());
 
-        if (! property_exists($bots, "data")) {
-            return collect();
-        }
-
-        return $bots->data ? collect($bots->data) : collect();
+        return collect($bots->data);
     }
 }

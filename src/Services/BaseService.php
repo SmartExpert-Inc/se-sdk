@@ -44,4 +44,17 @@ abstract class BaseService
     {
         $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
     }
+
+    protected function badResponse($response, $results=null)
+    {
+        if (! $response or property_exists($response, "errors")) {
+            if ($results) {
+                return $results;
+            }
+
+            return [
+                'response' => $response,
+            ];
+        }
+    }
 }

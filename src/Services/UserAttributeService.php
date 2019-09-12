@@ -22,6 +22,8 @@ final class UserAttributeService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($userAttributes);
+
         return $userAttributes->data ?? $userAttributes;
     }
 
@@ -44,6 +46,8 @@ final class UserAttributeService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($userAttributes);
 
         return $userAttributes;
     }

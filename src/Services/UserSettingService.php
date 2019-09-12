@@ -22,6 +22,8 @@ final class UserSettingService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($userSettings);
+
         return $userSettings->data ?? $userSettings;
     }
 
@@ -44,6 +46,8 @@ final class UserSettingService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($userSettings);
 
         return $userSettings;
     }

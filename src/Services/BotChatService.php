@@ -27,6 +27,8 @@ final class BotChatService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($response);
+
         return $response;
     }
 
@@ -44,13 +46,7 @@ final class BotChatService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        if (! $chats) {
-            return collect();
-        }
-
-        if (! property_exists($chats, "data")) {
-            return collect();
-        }
+        $this->badResponse($chats, collect());
 
         return $chats->data ? collect($chats->data) : collect();
     }

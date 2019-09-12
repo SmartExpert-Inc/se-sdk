@@ -37,6 +37,8 @@ final class PostService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($posts);
+
         return $posts;
     }
 
@@ -67,6 +69,8 @@ final class PostService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($post);
+
         return $post;
     }
 
@@ -87,6 +91,8 @@ final class PostService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($post);
 
         return $post;
     }
@@ -109,6 +115,8 @@ final class PostService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($post);
+
         return $post;
     }
 
@@ -125,6 +133,8 @@ final class PostService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($post);
 
         return $post;
     }
@@ -143,6 +153,8 @@ final class PostService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($posts);
+
         return $posts;
     }
 
@@ -160,6 +172,8 @@ final class PostService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($post);
+
         return $post;
     }
 
@@ -176,6 +190,8 @@ final class PostService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($post);
 
         return $post;
     }
