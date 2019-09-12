@@ -24,7 +24,7 @@ final class UserSettingService extends BaseService
 
         $this->badResponse($userSettings);
 
-        return $userSettings->data ?? $userSettings;
+        return $userSettings->data;
     }
 
     public function update(int $userId, array $data): ?\stdClass

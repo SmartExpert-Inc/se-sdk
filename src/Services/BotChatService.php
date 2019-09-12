@@ -13,7 +13,7 @@ final class BotChatService extends BaseService
         $this->host = config('se_sdk.bots.host');
     }
 
-    public function store(array $data)
+    public function store(array $data): ?\stdClass
     {
 //        $this->withAut();
 

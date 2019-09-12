@@ -24,7 +24,7 @@ final class UserAttributeService extends BaseService
 
         $this->badResponse($userAttributes);
 
-        return $userAttributes->data ?? $userAttributes;
+        return $userAttributes->data;
     }
 
     public function update(int $userId, array $data): ?\stdClass

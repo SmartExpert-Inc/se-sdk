@@ -38,16 +38,17 @@ final class S3Service
     public function putFiles(array $files, $directory = self::DEFAULT_DIRECTORY): array
     {
         $return = [];
+        
         foreach ($files as $file) {
             $return[] = $this->putFile($file, $directory);
         }
+
         return $return;
     }
 
     public function putFile(UploadedFile $file, $directory = self::DEFAULT_DIRECTORY): string
     {
         $directory = $this->getDirectory($directory);
-
         $filename = $this->getUniqueFileName($file);
         $this->storage->putFileAs($directory, $file, $filename);
 
@@ -69,10 +70,12 @@ final class S3Service
             File::put($file, $contents);
         } catch (Exception $e) {
             report($e);
+
             return null;
         }
 
         $uploadedFile = new UploadedFile($file, $info['basename']);
+
         return $this->putFile($uploadedFile, $directory);
     }
 
@@ -151,23 +154,27 @@ final class S3Service
     public function files(string $directory = self::DEFAULT_DIRECTORY, bool $recursive = false): array
     {
         $directory = $this->getDirectory($directory);
+
         return $this->storage->files($directory, $recursive);
     }
 
     private function getDirectory(string $directory): string
     {
         $directory = $directory ?: self::DEFAULT_DIRECTORY;
+
         return "{$this->env}/{$directory}/";
     }
 
     private function getUniqueFileName(UploadedFile $file = null): string
     {
         $filename = Uuid::generate()->string;
+
         if (! is_null($file)) {
             $filename .= $file->getClientOriginalExtension()
                 ? ".{$file->getClientOriginalExtension()}" // extension
                 : null;
         }
+
         return $filename;
     }
 }

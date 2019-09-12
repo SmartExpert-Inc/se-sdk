@@ -42,7 +42,7 @@ final class PostService extends BaseService
         return $posts;
     }
 
-    public function update(int $postId, array $data)
+    public function update(int $postId, array $data): ?\stdClass
     {
         $this->headers = [
             'User-Agent' => 'testing/1.0',
@@ -74,7 +74,7 @@ final class PostService extends BaseService
         return $post;
     }
 
-    public function store(array $data)
+    public function store(array $data): ?\stdClass
     {
         $this->headers = [
             'Accept' => 'application/json',
@@ -97,7 +97,7 @@ final class PostService extends BaseService
         return $post;
     }
 
-    public function updateStatus(int $postId, array $data)
+    public function updateStatus(int $postId, array $data): ?\stdClass
     {
         $this->headers = [
             'Accept' => 'application/json',
@@ -177,7 +177,7 @@ final class PostService extends BaseService
         return $post;
     }
 
-    public function publish(array $data)
+    public function publish(array $data): ?\stdClass
     {
 //        $this->withAut();
 

@@ -12,9 +12,13 @@ final class TagService extends BaseService
 
         $this->host = config('se_sdk.tags.host');
     }
-    public function index(int $page = 1): ?\stdClass
+    public function index(int $page = null): ?\stdClass
     {
 //        $this->withAut();
+
+        if (is_null($page)) {
+            $page = 1;
+        }
 
         $tags = $this->api
             ->setHeaders($this->headers)

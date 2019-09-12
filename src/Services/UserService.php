@@ -6,9 +6,13 @@ use Illuminate\Support\Collection;
 
 final class UserService extends BaseService
 {
-    public function index(int $page = 1): ?\stdClass
+    public function index(int $page = null): ?\stdClass
     {
         $this->withAut();
+
+        if (is_null($page)) {
+            $page = 1;
+        }
 
         $users = $this->api
             ->setHeaders($this->headers)
@@ -27,7 +31,7 @@ final class UserService extends BaseService
         return $users;
     }
 
-    public function store(array $data)
+    public function store(array $data): ?\stdClass
     {
         $this->headers = [
             'User-Agent' => 'testing/1.0',

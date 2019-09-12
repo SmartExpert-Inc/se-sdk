@@ -47,6 +47,16 @@ abstract class BaseService
 
     protected function badResponse($response, $results=null)
     {
+        if (is_callable($results)) {
+            if (! $response or ! property_exists($response, "data")) {
+                if ($results) {
+                    return $results;
+                }
+
+                return null;
+            }
+        }
+
         if (! $response or property_exists($response, "errors")) {
             if ($results) {
                 return $results;
