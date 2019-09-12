@@ -48,6 +48,7 @@ final class TagService extends BaseService
         if (property_exists($tag, 'data')) {
             return $tag->data;
         }
+        
         return null;
     }
 
