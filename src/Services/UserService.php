@@ -22,6 +22,8 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($users);
+
         return $users;
     }
 
@@ -44,6 +46,8 @@ final class UserService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($users);
 
         return $users;
     }
@@ -68,6 +72,8 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($users);
+
         return $users;
     }
 
@@ -84,6 +90,8 @@ final class UserService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($user);
 
         return $user->data ?? $user;
     }
@@ -102,6 +110,8 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($users);
+
         return $users;
     }
 
@@ -118,6 +128,8 @@ final class UserService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($users);
 
         return $users;
     }
@@ -142,6 +154,8 @@ final class UserService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
+
+        $this->badResponse($response);
 
         return $response;
     }
