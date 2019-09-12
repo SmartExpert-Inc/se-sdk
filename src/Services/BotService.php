@@ -57,7 +57,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function store(array $data)
+    public function store(array $data): ?\stdClass
     {
 //        $this->withAut();
 

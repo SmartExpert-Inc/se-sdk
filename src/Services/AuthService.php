@@ -25,6 +25,10 @@ final class AuthService extends BaseService
 
         $this->badResponse($registered);
 
+        if (! $registered or ! property_exists($registered, "data")) {
+            return null;
+        }
+
         session()->put([
             'secret' => $registered->data->secret,
             'client_id' => $registered->data->client_id,
@@ -49,6 +53,10 @@ final class AuthService extends BaseService
         $this->api->dropUrls();
 
         $this->badResponse($auth);
+
+        if (! $auth or ! property_exists($auth, "data")) {
+            return null;
+        }
 
         if (! session()->has("user")) {
             session()->put([
@@ -76,6 +84,10 @@ final class AuthService extends BaseService
         $this->api->dropUrls();
 
         $this->badResponse($auth);
+
+        if (! $auth or ! property_exists($auth, "data")) {
+            return null;
+        }
 
         if (! session()->has("user")) {
             session()->put([
@@ -127,19 +139,20 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
+        $this->badResponse($oauth);
+
+//        TODO: Check scalar field in $oauth response
         $results = [
             'response' => json_decode($oauth->scalar),
             'cookies' => $cookies
         ];
-
-        $this->badResponse($oauth);
 
         $this->setTokenToSession(json_decode($oauth->scalar));
 
         return $results;
     }
 
-    public function logout()
+    public function logout(): ?\stdClass
     {
         $key = $this->getSessionKey();
         Redis::del($key);
@@ -151,10 +164,12 @@ final class AuthService extends BaseService
             ->post('/api/v1/logout')
             ->getObject();
 
+        $this->badResponse($logout);
+
         return $logout;
     }
 
-    private function refreshToken($cookies = [])
+    private function refreshToken($cookies = []): ?array
     {
         $refreshToken = $this->api
             ->setHeaders($this->headers)
@@ -242,7 +257,7 @@ final class AuthService extends BaseService
         return null;
     }
 
-    public function sendResetLinkEmail(array $request)
+    public function sendResetLinkEmail(array $request): ?\stdClass
     {
         $response = $this->api
             ->setHeaders($this->headers)
@@ -259,7 +274,7 @@ final class AuthService extends BaseService
         return $response;
     }
 
-    public function resetPassword($request)
+    public function resetPassword($request): ?\stdClass
     {
         $response = $this->api
             ->setHeaders($this->headers)
