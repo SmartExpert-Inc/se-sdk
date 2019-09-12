@@ -48,7 +48,7 @@ final class TagService extends BaseService
         if (property_exists($tag, 'data')) {
             return $tag->data;
         }
-        
+
         return null;
     }
 
@@ -69,6 +69,7 @@ final class TagService extends BaseService
         if (property_exists($categories, 'data')) {
             return collect($categories->data);
         }
+
         return null;
     }
 
@@ -89,6 +90,7 @@ final class TagService extends BaseService
         if (property_exists($category, 'data')) {
             return $category->data;
         }
+
         return null;
     }
 
