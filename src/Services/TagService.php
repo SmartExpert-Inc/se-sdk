@@ -49,7 +49,7 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $tag->data;
+        return $tag;
     }
 
     public function getCategories(): ?\stdClass
@@ -83,7 +83,7 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $category->data;
+        return $category;
     }
 
     public function store(Request $request): ?\stdClass
