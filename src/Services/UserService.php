@@ -128,7 +128,7 @@ final class UserService extends BaseService
 
     public function findFirst(Request $request): ?\stdClass
     {
-        $user = $this->find($request->all());
+        $user = $this->find($request);
 
         if (! property_exists($user, "data")) {
             return null;
