@@ -2,7 +2,7 @@
 
 namespace SE\SDK\Services;
 
-use Illuminate\Support\Collection;
+use Illuminate\Http\Request;
 
 final class TagService extends BaseService
 {
@@ -32,8 +32,6 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($tags);
-
         return $tags;
     }
 
@@ -51,12 +49,10 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($tag);
-
         return $tag->data;
     }
 
-    public function getCategories(): ?Collection
+    public function getCategories(): ?\stdClass
     {
 //        $this->withAut();
 
@@ -70,9 +66,7 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($categories);
-
-        return collect($categories->data);
+        return $categories;
     }
 
     public function getCategory(int $id): ?\stdClass
@@ -89,12 +83,10 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($category);
-
         return $category->data;
     }
 
-    public function store(array $data): ?\stdClass
+    public function store(Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -102,26 +94,26 @@ final class TagService extends BaseService
             return null;
         }
 
-        if (! isset($data['slug'])) {
-            $data['slug'] = str_slug($data['name']);
+        if (! $request->has('slug')) {
+            $request->merge([
+                'slug' => str_slug($request->input('name'))
+            ]);
         }
 
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/tags", $data)
+            ->post("/tags", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($response);
-
         return $response;
     }
 
-    public function update(int $id, array $data): ?\stdClass
+    public function update(int $id, Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -129,13 +121,11 @@ final class TagService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/tags/{$id}", $data)
+            ->put("/tags/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($tag);
 
         return $tag;
     }
@@ -154,12 +144,10 @@ final class TagService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($tag);
-
         return $tag;
     }
 
-    public function find(array $data): ?\stdClass
+    public function find(Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -167,13 +155,11 @@ final class TagService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/tags/find", $data)
+            ->get("/tags/find", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($tags);
 
         return $tags;
     }

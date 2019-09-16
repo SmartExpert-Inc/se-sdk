@@ -2,6 +2,8 @@
 
 namespace SE\SDK\Services;
 
+use Illuminate\Http\Request;
+
 final class PostService extends BaseService
 {
     /** @var array $headers */
@@ -37,12 +39,10 @@ final class PostService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($posts);
-
         return $posts;
     }
 
-    public function update(int $postId, array $data): ?\stdClass
+    public function update(int $postId, Request $request): ?\stdClass
     {
         $this->headers = [
             'User-Agent' => 'testing/1.0',
@@ -51,30 +51,20 @@ final class PostService extends BaseService
 
 //        $this->withAut();
 
-        if (array_key_exists("_token", $data)) {
-            unset($data['_token']);
-        }
-
-        if (array_key_exists("_method", $data)) {
-            unset($data['_method']);
-        }
-
         $post = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/posts/{$postId}", $data)
+            ->put("/posts/{$postId}", $request->except(["_token", "_method"]))
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($post);
-
         return $post;
     }
 
-    public function store(array $data): ?\stdClass
+    public function store(Request $request): ?\stdClass
     {
         $this->headers = [
             'Accept' => 'application/json',
@@ -86,18 +76,16 @@ final class PostService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/posts", $data)
+            ->post("/posts", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($post);
-
         return $post;
     }
 
-    public function updateStatus(int $postId, array $data): ?\stdClass
+    public function updateStatus(int $postId, Request $request): ?\stdClass
     {
         $this->headers = [
             'Accept' => 'application/json',
@@ -109,13 +97,11 @@ final class PostService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/posts/{$postId}/status", $data)
+            ->post("/posts/{$postId}/status", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($post);
 
         return $post;
     }
@@ -134,12 +120,10 @@ final class PostService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($post);
-
         return $post;
     }
 
-    public function find(array $queryParams = []): ?\stdClass
+    public function find(Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -147,13 +131,11 @@ final class PostService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/posts/find', $queryParams)
+            ->get('/posts/find', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($posts);
 
         return $posts;
     }
@@ -172,12 +154,10 @@ final class PostService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($post);
-
         return $post;
     }
 
-    public function publish(array $data): ?\stdClass
+    public function publish(Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -185,13 +165,11 @@ final class PostService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/posts/publish", $data)
+            ->post("/posts/publish", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($post);
 
         return $post;
     }

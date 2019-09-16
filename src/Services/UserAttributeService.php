@@ -4,7 +4,6 @@ namespace SE\SDK\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use SE\SDK\Facades\SeSDK;
 
 final class UserAttributeService extends BaseService
 {
@@ -22,12 +21,10 @@ final class UserAttributeService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($userAttributes);
-
-        return $userAttributes->data;
+        return $userAttributes;
     }
 
-    public function update(int $userId, array $data): ?\stdClass
+    public function update(int $userId, Request $request): ?\stdClass
     {
         $this->headers = [
             'User-Agent' => 'testing/1.0',
@@ -41,13 +38,11 @@ final class UserAttributeService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/attributes/{$userId}", $data)
+            ->put("/attributes/{$userId}", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($userAttributes);
 
         return $userAttributes;
     }

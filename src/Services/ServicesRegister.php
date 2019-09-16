@@ -26,8 +26,8 @@ final class ServicesRegister
     /** @var BotService $bots */
     public $bot;
 
-    /** @var BotChatService $botChats */
-    public $botChats;
+    /** @var ChatService $botChats */
+    public $chat;
 
     /** @var TagService $tag */
     public $tag;
@@ -53,7 +53,7 @@ final class ServicesRegister
         $this->post = app()->make(PostService::class);
 
         $this->bot = app()->make(BotService::class);
-        $this->botChats = app()->make(BotChatService::class);
+        $this->chat = app()->make(ChatService::class);
 
         $this->tag = app()->make(TagService::class);
 

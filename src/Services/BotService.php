@@ -2,7 +2,7 @@
 
 namespace SE\SDK\Services;
 
-use Illuminate\Support\Collection;
+use Illuminate\Http\Request;
 
 final class BotService extends BaseService
 {
@@ -13,7 +13,7 @@ final class BotService extends BaseService
         $this->host = config('se_sdk.bots.host');
     }
 
-    public function unlink($botName, $userId)
+    public function unlink($botName, $userId): ?\stdClass
     {
 //        $this->withAut();
 
@@ -29,12 +29,10 @@ final class BotService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($response);
-
         return $response;
     }
 
-    public function message($botName, string $message, int $userId, ?int $ownerId)
+    public function message(string $botName, string $message, int $userId, ?int $ownerId): ?\stdClass
     {
 //        $this->withAut();
 
@@ -52,12 +50,10 @@ final class BotService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($response);
-
         return $response;
     }
 
-    public function store(array $data): ?\stdClass
+    public function store(Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -65,18 +61,16 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/bots", $data)
+            ->post("/bots", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($response);
-
         return $response;
     }
 
-    public function find(array $queryParams = []): Collection
+    public function find(Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -84,14 +78,12 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/bots/find', $queryParams)
+            ->get('/bots/find', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($bots, collect());
-
-        return collect($bots->data);
+        return $bots;
     }
 }

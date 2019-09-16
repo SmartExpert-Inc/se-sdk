@@ -2,6 +2,8 @@
 
 namespace SE\SDK\Services;
 
+use Illuminate\Http\Request;
+
 final class UserSettingService extends BaseService
 {
     public function get(int $userId): ?\stdClass
@@ -22,12 +24,10 @@ final class UserSettingService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($userSettings);
-
         return $userSettings->data;
     }
 
-    public function update(int $userId, array $data): ?\stdClass
+    public function update(int $userId, Request $request): ?\stdClass
     {
         $headers = [
             'User-Agent' => 'testing/1.0',
@@ -41,13 +41,11 @@ final class UserSettingService extends BaseService
             ->setHeaders($headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/settings/{$userId}", $data)
+            ->put("/settings/{$userId}", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($userSettings);
 
         return $userSettings;
     }

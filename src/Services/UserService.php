@@ -2,7 +2,7 @@
 
 namespace SE\SDK\Services;
 
-use Illuminate\Support\Collection;
+use Illuminate\Http\Request;
 
 final class UserService extends BaseService
 {
@@ -26,12 +26,10 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($users);
-
         return $users;
     }
 
-    public function store(array $data): ?\stdClass
+    public function store(Request $request): ?\stdClass
     {
         $this->headers = [
             'User-Agent' => 'testing/1.0',
@@ -45,18 +43,16 @@ final class UserService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post('/users', $data)
+            ->post('/users', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($users);
-
         return $users;
     }
 
-    public function update(int $userId, array $data)
+    public function update(int $userId, Request $request)
     {
         $this->headers = [
             'User-Agent' => 'testing/1.0',
@@ -70,13 +66,11 @@ final class UserService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/users/{$userId}", $data)
+            ->put("/users/{$userId}", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($users);
 
         return $users;
     }
@@ -95,12 +89,10 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($user);
-
-        return $user->data ?? $user;
+        return $user;
     }
 
-    public function find(array $queryParams = []): ?\stdClass
+    public function find(Request $request): ?\stdClass
     {
         $this->withAut();
 
@@ -108,18 +100,16 @@ final class UserService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/users/find', $queryParams)
+            ->get('/users/find', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($users);
-
         return $users;
     }
 
-    public function findByIds(array $queryParams = []): ?\stdClass
+    public function findByIds(Request $request): ?\stdClass
     {
         $this->withAut();
 
@@ -127,20 +117,24 @@ final class UserService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/users/find-by-ids', $queryParams)
+            ->get('/users/find-by-ids', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($users);
-
         return $users;
     }
 
-    public function findFirst(array $queryParams = []): ?\stdClass
+    public function findFirst(Request $request): ?\stdClass
     {
-        return collect($this->find($queryParams)->data)->first();
+        $user = $this->find($$request->all());
+
+        if (! property_exists($user, "data")) {
+            return null;
+        }
+
+        return collect($user->data)->first();
     }
 
     public function checkPassword(int $userId, string $password): ?\stdClass
@@ -158,8 +152,6 @@ final class UserService extends BaseService
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($response);
 
         return $response;
     }
