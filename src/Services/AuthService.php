@@ -3,19 +3,20 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Http\Request;
 
 final class AuthService extends BaseService
 {
     const PASSWORD_GRANT_TYPE = 'password';
     const CLIENT_CREDENTIALS_GRANT_TYPE = 'client_credentials';
 
-    public function register(array $request): ?array
+    public function register(Request $request): ?\stdClass
     {
         $registered = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post('/register', $request)
+            ->post('/register', $request->all())
             ->getObject();
 
         $cookies = $this->api->getLastCookies();
@@ -23,10 +24,8 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($registered);
-
         if (! $registered or ! property_exists($registered, "data")) {
-            return null;
+            return $registered;
         }
 
         session()->put([
@@ -38,13 +37,13 @@ final class AuthService extends BaseService
         return $this->authorise($request, $cookies);
     }
 
-    public function login(array $request): ?array
+    public function login(Request $request): ?\stdClass
     {
         $auth = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post('/login', $request)
+            ->post('/login', $request->all())
             ->getObject();
 
         $cookies = $this->api->getLastCookies();
@@ -52,10 +51,8 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($auth);
-
         if (! $auth or ! property_exists($auth, "data")) {
-            return null;
+            return $auth;
         }
 
         if (! session()->has("user")) {
@@ -69,13 +66,13 @@ final class AuthService extends BaseService
         return $this->authorise($request, $cookies);
     }
 
-    public function loginAs(array $request): ?array
+    public function loginAs(Request $request): ?\stdClass
     {
         $auth = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post('/login-as', $request)
+            ->post('/login-as', $request->all())
             ->getObject();
 
         $cookies = $this->api->getLastCookies();
@@ -83,10 +80,8 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($auth);
-
         if (! $auth or ! property_exists($auth, "data")) {
-            return null;
+            return $auth;
         }
 
         if (! session()->has("user")) {
@@ -100,13 +95,13 @@ final class AuthService extends BaseService
         return $this->authorise($request, $cookies);
     }
 
-    public function authorise(array $request, ?array $cookies = []): ?array
+    public function authorise(Request $request, ?array $cookies = []): ?\stdClass
     {
         $key = $this->getSessionKey();
         $accessToken = Redis::get($key);
 
         if ($accessToken) {
-            return [
+            return (object) [
                 'response' => (object) [
                     'access_token' => $accessToken
                 ]
@@ -119,11 +114,11 @@ final class AuthService extends BaseService
             'client_secret' => session()->get('secret'),
         ];
 
-        if (! array_key_exists('social', $request)) {
+        if (! $request->has('social')) {
             $requestArr = array_merge($requestArr, [
                 'grant_type' => self::PASSWORD_GRANT_TYPE,
-                'username' => $request['email'],
-                'password' => $request['password']
+                'username' => $request->input('email'),
+                'password' => $request->input('password')
             ]);
         }
 
@@ -139,8 +134,6 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($oauth);
-
 //        TODO: Check scalar field in $oauth response
         $results = [
             'response' => json_decode($oauth->scalar),
@@ -149,7 +142,7 @@ final class AuthService extends BaseService
 
         $this->setTokenToSession(json_decode($oauth->scalar));
 
-        return $results;
+        return (object) $results;
     }
 
     public function logout(): ?\stdClass
@@ -164,12 +157,10 @@ final class AuthService extends BaseService
             ->post('/api/v1/logout')
             ->getObject();
 
-        $this->badResponse($logout);
-
         return $logout;
     }
 
-    private function refreshToken($cookies = []): ?array
+    private function refreshToken($cookies = []): ?\stdClass
     {
         $refreshToken = $this->api
             ->setHeaders($this->headers)
@@ -190,8 +181,6 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($refreshToken);
-
         $results = [
             'response' => $refreshToken,
             'cookies' => $cookies
@@ -199,10 +188,10 @@ final class AuthService extends BaseService
 
         $this->setTokenToSession($refreshToken);
 
-        return $results;
+        return (object) $results;
     }
 
-    private function setTokenToSession(\stdClass $result) :bool
+    private function setTokenToSession(\stdClass $result): void
     {
         $key = $this->getSessionKey();
 
@@ -214,11 +203,9 @@ final class AuthService extends BaseService
             "access_token" => $result->access_token,
             "refresh_token" => $result->refresh_token
         ]);
-
-        return true;
     }
 
-    public function hasToken() :bool
+    public function hasToken(): bool
     {
         $key = $this->getSessionKey();
 
@@ -228,7 +215,9 @@ final class AuthService extends BaseService
             }
 
             Redis::set($key, session()->get('access_token'), 'EX', session()->get('expires_in'));
-        } elseif (Redis::ttl($key) == -1) {
+        }
+
+        if (Redis::ttl($key) == -1) {
             $cookies = $this->api->getLastCookies();
 
             $this->refreshToken($cookies);
@@ -237,7 +226,7 @@ final class AuthService extends BaseService
         return true;
     }
 
-    public function getToken() :string
+    public function getToken(): string
     {
         $key = $this->getSessionKey();
         $user = Redis::get($key);
@@ -248,7 +237,7 @@ final class AuthService extends BaseService
             : '';
     }
 
-    public function user() :?\stdClass
+    public function user(): ?\stdClass
     {
         if (session()->has('user')) {
             return (object) session()->get('user');
@@ -257,36 +246,32 @@ final class AuthService extends BaseService
         return null;
     }
 
-    public function sendResetLinkEmail(array $request): ?\stdClass
+    public function sendResetLinkEmail(Request $request): ?\stdClass
     {
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post('/password/email', $request)
+            ->post('/password/email', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($response);
 
         return $response;
     }
 
-    public function resetPassword($request): ?\stdClass
+    public function resetPassword(Request $request): ?\stdClass
     {
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post('/password/reset', $request)
+            ->post('/password/reset', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
-
-        $this->badResponse($response);
 
         return $response;
     }

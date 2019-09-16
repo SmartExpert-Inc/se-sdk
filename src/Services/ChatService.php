@@ -2,9 +2,9 @@
 
 namespace SE\SDK\Services;
 
-use Illuminate\Support\Collection;
+use Illuminate\Http\Request;
 
-final class BotChatService extends BaseService
+final class ChatService extends BaseService
 {
     public function __construct(ApiClientService $api)
     {
@@ -13,7 +13,7 @@ final class BotChatService extends BaseService
         $this->host = config('se_sdk.bots.host');
     }
 
-    public function store(array $data): ?\stdClass
+    public function store(Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -21,18 +21,16 @@ final class BotChatService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/chats", $data)
+            ->post("/chats", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($response);
-
         return $response;
     }
 
-    public function find(array $queryParams = []): Collection
+    public function find(Request $request): ?\stdClass
     {
 //        $this->withAut();
 
@@ -40,14 +38,12 @@ final class BotChatService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/chats/find', $queryParams)
+            ->get('/chats/find', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        $this->badResponse($chats, collect());
-
-        return $chats->data ? collect($chats->data) : collect();
+        return $chats;
     }
 }
