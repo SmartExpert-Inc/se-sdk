@@ -24,7 +24,7 @@ final class UserSettingService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $userSettings->data;
+        return $userSettings;
     }
 
     public function update(int $userId, Request $request): ?\stdClass
