@@ -19,7 +19,6 @@ use SE\SDK\Services\{
     UserSettingService
 };
 use SE\SDK\Client\HttpClient;
-use SE\SDK\Factories\SERequest;
 use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;
 
@@ -129,10 +128,6 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->bind('requests', function () {
             return new HttpClient();
-        });
-
-        $this->app->bind('request', function () {
-            return new SERequest();
         });
     }
 }
