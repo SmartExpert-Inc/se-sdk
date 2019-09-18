@@ -26,12 +26,6 @@ final class UserAttributeService extends BaseService
 
     public function update(int $userId, Request $request): ?\stdClass
     {
-        $this->headers = [
-            'User-Agent' => 'testing/1.0',
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json'
-        ];
-
         $this->withAut();
 
         $userAttributes = $this->api
