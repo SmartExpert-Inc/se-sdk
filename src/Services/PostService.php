@@ -14,13 +14,6 @@ final class PostService extends BaseService
         parent::__construct($api);
 
         $this->host = config('se_sdk.posts.host');
-
-        $this->headers = [
-            'User-Agent' => 'testing/1.0',
-            'Accept' => 'application/json',
-//            'Authorization' => resolve('se_sdk')->auth->getToken(),
-//            'Content-Type' => 'application/json'
-        ];
     }
 
     public function index(int $page = null): ?\stdClass
@@ -44,11 +37,6 @@ final class PostService extends BaseService
 
     public function update(int $postId, Request $request): ?\stdClass
     {
-        $this->headers = [
-            'User-Agent' => 'testing/1.0',
-            'Accept' => 'application/json',
-        ];
-
 //        $this->withAut();
 
         $post = $this->api
@@ -66,10 +54,6 @@ final class PostService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-        $this->headers = [
-            'Accept' => 'application/json',
-        ];
-
 //        $this->withAut();
 
         $post = $this->api
@@ -87,10 +71,6 @@ final class PostService extends BaseService
 
     public function updateStatus(int $postId, Request $request): ?\stdClass
     {
-        $this->headers = [
-            'Accept' => 'application/json',
-        ];
-
 //        $this->withAut();
 
         $post = $this->api

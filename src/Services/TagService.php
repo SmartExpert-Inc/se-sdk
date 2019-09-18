@@ -90,16 +90,6 @@ final class TagService extends BaseService
     {
 //        $this->withAut();
 
-        if (! isset($data['name'])) {
-            return null;
-        }
-
-        if (! $request->has('slug')) {
-            $request->merge([
-                'slug' => str_slug($request->input('name'))
-            ]);
-        }
-
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)

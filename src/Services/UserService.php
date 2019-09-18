@@ -31,12 +31,6 @@ final class UserService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-        $this->headers = [
-            'User-Agent' => 'testing/1.0',
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json'
-        ];
-
         $this->withAut();
 
         $users = $this->api
@@ -54,12 +48,6 @@ final class UserService extends BaseService
 
     public function update(int $userId, Request $request)
     {
-        $this->headers = [
-            'User-Agent' => 'testing/1.0',
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json'
-        ];
-
         $this->withAut();
 
         $users = $this->api

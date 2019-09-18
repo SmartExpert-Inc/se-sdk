@@ -8,10 +8,6 @@ final class UserSettingService extends BaseService
 {
     public function get(int $userId): ?\stdClass
     {
-        $this->headers = [
-            'Accept' => 'application/json',
-        ];
-
         $this->withAut();
 
         $userSettings = $this->api
@@ -29,16 +25,10 @@ final class UserSettingService extends BaseService
 
     public function update(int $userId, Request $request): ?\stdClass
     {
-        $headers = [
-            'User-Agent' => 'testing/1.0',
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json'
-        ];
-
         $this->withAut();
 
         $userSettings = $this->api
-            ->setHeaders($headers)
+            ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->put("/settings/{$userId}", $request->all())
