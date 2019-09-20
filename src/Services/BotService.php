@@ -15,7 +15,7 @@ final class BotService extends BaseService
 
     public function unlink($botName, $userId): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -34,7 +34,7 @@ final class BotService extends BaseService
 
     public function message(string $botName, string $message, int $userId, ?int $ownerId): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -55,7 +55,7 @@ final class BotService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -72,7 +72,7 @@ final class BotService extends BaseService
 
     public function find(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $bots = $this->api
             ->setHeaders($this->headers)

@@ -14,7 +14,7 @@ final class TagService extends BaseService
     }
     public function index(int $page = null): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         if (is_null($page)) {
             $page = 1;
@@ -37,7 +37,7 @@ final class TagService extends BaseService
 
     public function show(int $id): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $tag = $this->api
             ->setHeaders($this->headers)
@@ -54,7 +54,7 @@ final class TagService extends BaseService
 
     public function getCategories(): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $categories = $this->api
             ->setHeaders($this->headers)
@@ -71,7 +71,7 @@ final class TagService extends BaseService
 
     public function getCategory(int $id): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $category = $this->api
             ->setHeaders($this->headers)
@@ -88,7 +88,7 @@ final class TagService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -105,7 +105,7 @@ final class TagService extends BaseService
 
     public function update(int $id, Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $tag = $this->api
             ->setHeaders($this->headers)
@@ -122,7 +122,7 @@ final class TagService extends BaseService
 
     public function delete(int $id): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $tag = $this->api
             ->setHeaders($this->headers)
@@ -139,7 +139,7 @@ final class TagService extends BaseService
 
     public function find(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $tags = $this->api
             ->setHeaders($this->headers)

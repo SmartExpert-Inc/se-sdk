@@ -18,7 +18,7 @@ final class PostService extends BaseService
 
     public function index(int $page = null): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $posts = $this->api
             ->setHeaders($this->headers)
@@ -37,7 +37,7 @@ final class PostService extends BaseService
 
     public function update(int $postId, Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $post = $this->api
             ->setHeaders($this->headers)
@@ -54,7 +54,7 @@ final class PostService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $post = $this->api
             ->setHeaders($this->headers)
@@ -71,7 +71,7 @@ final class PostService extends BaseService
 
     public function updateStatus(int $postId, Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $post = $this->api
             ->setHeaders($this->headers)
@@ -88,7 +88,7 @@ final class PostService extends BaseService
 
     public function show(int $id): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $post = $this->api
             ->setHeaders($this->headers)
@@ -105,7 +105,7 @@ final class PostService extends BaseService
 
     public function find(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $posts = $this->api
             ->setHeaders($this->headers)
@@ -122,7 +122,7 @@ final class PostService extends BaseService
 
     public function delete(int $id): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $post = $this->api
             ->setHeaders($this->headers)
@@ -139,7 +139,7 @@ final class PostService extends BaseService
 
     public function publish(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $post = $this->api
             ->setHeaders($this->headers)
