@@ -133,7 +133,7 @@ final class UserService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/check-password/{$userId}", [
+            ->post("/users/{$userId}/check-password", [
                 'password' => $password
             ])
             ->getObject();
