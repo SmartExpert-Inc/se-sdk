@@ -15,7 +15,7 @@ final class ChatService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -32,7 +32,7 @@ final class ChatService extends BaseService
 
     public function find(Request $request): ?\stdClass
     {
-//        $this->withAut();
+        $this->withAut();
 
         $chats = $this->api
             ->setHeaders($this->headers)
