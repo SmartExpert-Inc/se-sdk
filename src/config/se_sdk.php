@@ -4,7 +4,11 @@ return [
     'auth' => [
         'host' => env('AUTH_SERVICE_HOST', null),
         'socialRoute' => env('AUTH_SERVICE_HOST', null) . '/social/',
-        'forgotPasswordRoute' => env('AUTH_SERVICE_HOST', null) . '/api/v1/password/reset'
+        'forgotPasswordRoute' => env('AUTH_SERVICE_HOST', null) . '/api/v1/password/reset',
+        'client_credentials' => [
+            'client_id' => env('AUTH_CLIENT_ID', null),
+            'client_secret' => env('AUTH_CLIENT_SECRET', null),
+        ]
     ],
 
     'posts' => [
