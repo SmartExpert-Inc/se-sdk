@@ -125,6 +125,23 @@ final class UserService extends BaseService
         return collect($user->data)->first();
     }
 
+    public function exists(Request $request): ?\stdClass
+    {
+        $this->withAut();
+
+        $users = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get('/users/exists', $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $users;
+    }
+
     public function checkPassword(int $userId, string $password): ?\stdClass
     {
         $this->withAut();
