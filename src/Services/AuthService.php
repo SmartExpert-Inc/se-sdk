@@ -275,4 +275,24 @@ final class AuthService extends BaseService
 
         return $response;
     }
+
+    public function clientCredentials(): ?\stdClass
+    {
+        $requestArr =  [
+            'grant_type' => self::CLIENT_CREDENTIALS_GRANT_TYPE,
+            'client_id' => config('client_credentials.client_id'),
+            'client_secret' => config('client_credentials.client_secret'),
+        ];
+
+        $oauth = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->post('/oauth/token', $requestArr)
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return (object) $oauth;
+    }
 }
