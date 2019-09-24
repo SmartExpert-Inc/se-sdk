@@ -125,7 +125,7 @@ final class UserService extends BaseService
         return collect($user->data)->first();
     }
 
-    public function exists(Request $request): ?\stdClass
+    public function exists(Request $request): ?bool
     {
         $this->withAut();
 
@@ -139,7 +139,15 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $users;
+        if (! property_exists($users, "scalar")) {
+            return false;
+        }
+
+        if ($users->scalar == "Found") {
+            return true;
+        }
+
+        return false;
     }
 
     public function checkPassword(int $userId, string $password): ?\stdClass
