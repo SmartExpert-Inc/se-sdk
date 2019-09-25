@@ -8,7 +8,7 @@ use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Services\{
     ApiClientService,
     BotService,
-    BotChatService,
+    ChatService,
     PostService,
     S3Service,
     ServicesRegister,
@@ -16,7 +16,8 @@ use SE\SDK\Services\{
     UserAttributeService,
     UserService,
     AuthService,
-    UserSettingService
+    UserSettingService,
+    SocialService
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -91,6 +92,10 @@ class ServiceProvider extends IlluminateServiceProvider
             return new UserSettingService(app(ApiClientService::class));
         });
 
+        $this->app->singleton(SocialService::class, function () {
+            return new SocialService(app(ApiClientService::class));
+        });
+
         $this->app->singleton(PostService::class, function () {
             return new PostService(app(ApiClientService::class));
         });
@@ -109,8 +114,8 @@ class ServiceProvider extends IlluminateServiceProvider
             });
         }
 
-        $this->app->singleton(BotChatService::class, function () {
-            return new BotChatService(app(ApiClientService::class));
+        $this->app->singleton(ChatService::class, function () {
+            return new ChatService(app(ApiClientService::class));
         });
 
         $this->app->singleton(CustomLogger::class, function () {

@@ -49,6 +49,7 @@ final class ServicesRegister
         $this->user = app()->make(UserService::class);
         $this->userAttributes = app()->make(UserAttributeService::class);
         $this->userSettings = app()->make(UserSettingService::class);
+        $this->social = app()->make(SocialService::class);
 
         $this->post = app()->make(PostService::class);
 
