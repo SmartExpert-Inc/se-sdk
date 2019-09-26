@@ -84,6 +84,10 @@ final class UserService extends BaseService
     {
         $this->withAut();
 
+        if ($request->headers->has('Authorization')) {
+            $this->headers['Authorization'] = $request->headers->get('Authorization');
+        }
+
         $users = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
