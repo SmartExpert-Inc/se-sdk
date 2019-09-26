@@ -5,6 +5,8 @@ namespace SE\SDK\Services;
 use Illuminate\Contracts\Foundation\Application;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Handlers\ExceptionHandler;
+use SE\SDK\Services\Tags\CategoryService;
+use SE\SDK\Services\Tags\TagService;
 
 final class ServicesRegister
 {
@@ -38,6 +40,9 @@ final class ServicesRegister
     /** @var SE\SDK\Logging\CustomLogger $logger */
     public $logger;
 
+    /** @var CategoryService $category */
+    public $category;
+
     /**
      * ServicesRegister constructor.
      * @param Application $app
@@ -57,6 +62,7 @@ final class ServicesRegister
         $this->chat = app()->make(ChatService::class);
 
         $this->tag = app()->make(TagService::class);
+        $this->category = app()->make(CategoryService::class);
 
         if (config('filesystems')) {
             $this->s3 = app()->make(S3Service::class);

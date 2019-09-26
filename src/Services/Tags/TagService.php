@@ -1,6 +1,6 @@
 <?php
 
-namespace SE\SDK\Services;
+namespace SE\SDK\Services\Tags;
 
 use Illuminate\Http\Request;
 
