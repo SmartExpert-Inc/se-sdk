@@ -278,11 +278,11 @@ final class AuthService extends BaseService
 
     public function clientCredentials(): ?\stdClass
     {
-        $requestArr =  [
+        $requestArr = new Request([
             'grant_type' => self::CLIENT_CREDENTIALS_GRANT_TYPE,
             'client_id' => config('client_credentials.client_id'),
             'client_secret' => config('client_credentials.client_secret'),
-        ];
+        ]);
 
         $oauth = $this->api
             ->setHeaders($this->headers)
