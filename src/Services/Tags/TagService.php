@@ -52,40 +52,6 @@ final class TagService extends BaseService
         return $tag;
     }
 
-    public function getCategories(): ?\stdClass
-    {
-        $this->withAut();
-
-        $categories = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/categories')
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $categories;
-    }
-
-    public function getCategory(int $id): ?\stdClass
-    {
-        $this->withAut();
-
-        $category = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get("/categories/{$id}")
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $category;
-    }
-
     public function store(Request $request): ?\stdClass
     {
         $this->withAut();
