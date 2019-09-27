@@ -6,18 +6,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Services\{
-    ApiClientService,
-    BotService,
-    ChatService,
-    PostService,
-    S3Service,
-    ServicesRegister,
-    TagService,
-    UserAttributeService,
-    UserService,
-    AuthService,
-    UserSettingService,
-    SocialService
+    ApiClientService, BotService, ChatService, PostService, S3Service, ServicesRegister, Tags\CategoryService, Tags\TagService,
+    UserAttributeService, UserService, AuthService, UserSettingService, SocialService
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -106,6 +96,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(TagService::class, function () {
             return new TagService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(CategoryService::class, function () {
+            return new CategoryService(app(ApiClientService::class));
         });
 
         if (config('filesystems')) {
