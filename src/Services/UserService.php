@@ -82,7 +82,7 @@ final class UserService extends BaseService
 
     public function find(Request $request): ?\stdClass
     {
-        $this->withAut();
+        $this->withAut($request);
 
         $users = $this->api
             ->setHeaders($this->headers)
