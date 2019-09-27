@@ -3,7 +3,7 @@
 namespace SE\SDK\Services\Tags;
 
 use Illuminate\Http\Request;
-use SE\SDK\Services\BaseService;
+use SE\SDK\Services\{BaseService, ApiClientService};
 
 final class TagService extends BaseService
 {
