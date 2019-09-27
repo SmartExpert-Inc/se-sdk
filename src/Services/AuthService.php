@@ -68,6 +68,8 @@ final class AuthService extends BaseService
 
     public function loginAs(Request $request): ?\stdClass
     {
+        $this->withAut();
+
         $auth = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
