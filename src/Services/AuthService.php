@@ -74,7 +74,7 @@ final class AuthService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post('/login-as', $request->all())
+            ->post('/users/login-as', $request->all())
             ->getObject();
 
         $cookies = $this->api->getLastCookies();
