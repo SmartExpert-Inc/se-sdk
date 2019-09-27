@@ -42,6 +42,14 @@ abstract class BaseService
 
     protected function withAut(): void
     {
-        $this->headers['Authorization'] = resolve('se_sdk')->auth->getToken();
+        if (request()->headers->has('Authorization')) {
+            $this->headers['Authorization'] = request()->headers->get('Authorization');
+        }
+
+        $token = resolve('se_sdk')->auth->getToken();
+
+        if ($token) {
+            $this->headers['Authorization'] = $token;
+        }
     }
 }
