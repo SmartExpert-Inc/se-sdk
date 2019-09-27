@@ -3,6 +3,7 @@
 namespace SE\SDK\Services\Tags;
 
 use Illuminate\Http\Request;
+use SE\SDK\Services\BaseService;
 
 final class CategoryService extends BaseService
 {
