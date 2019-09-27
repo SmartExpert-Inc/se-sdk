@@ -2,6 +2,8 @@
 
 namespace SE\SDK\Services;
 
+use Illuminate\Http\Request;
+
 abstract class BaseService
 {
     const USER_SESSION_KEY_NAME = "user:session:";
@@ -40,10 +42,10 @@ abstract class BaseService
         return "{$name}{$sessionName}";
     }
 
-    protected function withAut(): void
+    protected function withAut(Request $request=null): void
     {
-        if (request()->headers->has('Authorization')) {
-            $this->headers['Authorization'] = request()->headers->get('Authorization');
+        if ($request and $request->headers->has('Authorization')) {
+            $this->headers['Authorization'] = $request->headers->get('Authorization');
         }
 
         $token = resolve('se_sdk')->auth->getToken();
