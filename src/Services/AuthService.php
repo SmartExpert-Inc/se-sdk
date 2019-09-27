@@ -203,7 +203,7 @@ final class AuthService extends BaseService
             "token_type" => $result->token_type,
             "expires_in" => $result->expires_in,
             "access_token" => $result->access_token,
-            "refresh_token" => $result->refresh_token
+            "refresh_token" => $result->refresh_token ?? null
         ]);
     }
 
