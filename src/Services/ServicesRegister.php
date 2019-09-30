@@ -5,6 +5,7 @@ namespace SE\SDK\Services;
 use Illuminate\Contracts\Foundation\Application;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Handlers\ExceptionHandler;
+use SE\SDK\Services\Todo\{PriorityService, StagesService, TargetsService};
 
 final class ServicesRegister
 {
@@ -32,6 +33,15 @@ final class ServicesRegister
     /** @var TagService $tag */
     public $tag;
 
+    /** @var PriorityService $todoPriority */
+    public $todoPriorit;
+
+    /** @var StagesService $todoStages */
+    public $todoStages;
+
+    /** @var TargetsService $todoTargets */
+    public $todoTargets;
+
     /** @var S3Service $s3 */
     public $s3;
 
@@ -57,6 +67,10 @@ final class ServicesRegister
         $this->chat = app()->make(ChatService::class);
 
         $this->tag = app()->make(TagService::class);
+
+        $this->todoPriorit = app()->make(PriorityService::class);
+        $this->todoStages = app()->make(StagesService::class);
+        $this->todoTargets = app()->make(TargetsService::class);
 
         if (config('filesystems')) {
             $this->s3 = app()->make(S3Service::class);

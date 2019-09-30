@@ -5,20 +5,21 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{
-    ApiClientService,
+use SE\SDK\Services\{ApiClientService,
     BotService,
     ChatService,
     PostService,
     S3Service,
     ServicesRegister,
     TagService,
+    Todo\PriorityService,
+    Todo\StagesService,
+    Todo\TargetsService,
     UserAttributeService,
     UserService,
     AuthService,
     UserSettingService,
-    SocialService
-};
+    SocialService};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;
@@ -102,6 +103,18 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(BotService::class, function () {
             return new BotService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(PriorityService::class, function () {
+            return new PriorityService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(TargetsService::class, function () {
+            return new TargetsService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(StagesService::class, function () {
+            return new StagesService(app(ApiClientService::class));
         });
 
         $this->app->singleton(TagService::class, function () {
