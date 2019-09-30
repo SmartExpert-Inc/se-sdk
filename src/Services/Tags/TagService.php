@@ -1,11 +1,18 @@
 <?php
 
-namespace SE\SDK\Services;
+namespace SE\SDK\Services\Tags;
 
 use Illuminate\Http\Request;
+use SE\SDK\Services\{BaseService, ApiClientService};
 
-final class UserService extends BaseService
+final class TagService extends BaseService
 {
+    public function __construct(ApiClientService $api)
+    {
+        parent::__construct($api);
+
+        $this->host = config('se_sdk.tags.host');
+    }
     public function index(int $page = null): ?\stdClass
     {
         $this->withAut();
@@ -14,11 +21,11 @@ final class UserService extends BaseService
             $page = 1;
         }
 
-        $users = $this->api
+        $tags = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/users', [
+            ->get('/tags', [
                 'page' => $page
             ])
             ->getObject();
@@ -26,106 +33,27 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $users;
-    }
-
-    public function store(Request $request): ?\stdClass
-    {
-        $this->withAut();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->post('/users', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
-    }
-
-    public function update(int $userId, Request $request)
-    {
-        $this->withAut();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->put("/users/{$userId}", $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
+        return $tags;
     }
 
     public function show(int $id): ?\stdClass
     {
         $this->withAut();
 
-        $user = $this->api
+        $tag = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/users/{$id}")
+            ->get("/tags/{$id}")
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $user;
+        return $tag;
     }
 
-    public function find(Request $request): ?\stdClass
-    {
-        $this->withAut($request);
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/users/find', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
-    }
-
-    public function findByIds(Request $request): ?\stdClass
-    {
-        $this->withAut();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/users/find-by-ids', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
-    }
-
-    public function findFirst(Request $request): ?\stdClass
-    {
-        $user = $this->find($request);
-
-        if (! property_exists($user, "data")) {
-            return null;
-        }
-
-        return collect($user->data)->first();
-    }
-
-    public function checkPassword(int $userId, string $password): ?\stdClass
+    public function store(Request $request): ?\stdClass
     {
         $this->withAut();
 
@@ -133,14 +61,63 @@ final class UserService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/users/{$userId}/check-password", [
-                'password' => $password
-            ])
+            ->post("/tags", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
         return $response;
+    }
+
+    public function update(int $id, Request $request): ?\stdClass
+    {
+        $this->withAut();
+
+        $tag = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->put("/tags/{$id}", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $tag;
+    }
+
+    public function delete(int $id): ?\stdClass
+    {
+        $this->withAut();
+
+        $tag = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/tags/{$id}")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $tag;
+    }
+
+    public function find(Request $request): ?\stdClass
+    {
+        $this->withAut();
+
+        $tags = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/tags/find", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $tags;
     }
 }

@@ -68,11 +68,13 @@ final class AuthService extends BaseService
 
     public function loginAs(Request $request): ?\stdClass
     {
+        $this->withAut($request);
+
         $auth = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post('/login-as', $request->all())
+            ->post('/users/login-as', $request->all())
             ->getObject();
 
         $cookies = $this->api->getLastCookies();
@@ -201,7 +203,7 @@ final class AuthService extends BaseService
             "token_type" => $result->token_type,
             "expires_in" => $result->expires_in,
             "access_token" => $result->access_token,
-            "refresh_token" => $result->refresh_token
+            "refresh_token" => $result->refresh_token ?? null
         ]);
     }
 
@@ -278,10 +280,10 @@ final class AuthService extends BaseService
 
     public function clientCredentials(): ?\stdClass
     {
-        $requestArr =  [
+        $requestArr = [
             'grant_type' => self::CLIENT_CREDENTIALS_GRANT_TYPE,
-            'client_id' => config('client_credentials.client_id'),
-            'client_secret' => config('client_credentials.client_secret'),
+            'client_id' => config('se_sdk.auth.client_credentials.client_id'),
+            'client_secret' => config('se_sdk.auth.client_credentials.client_secret'),
         ];
 
         $oauth = $this->api

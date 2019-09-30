@@ -23,9 +23,9 @@ final class SocialService extends BaseService
         return $social;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request=null): ?\stdClass
     {
-        $this->withAut();
+        $this->withAut($request);
 
         $social = $this->api
             ->setHeaders($this->headers)
