@@ -108,8 +108,24 @@ class ServiceProvider extends IlluminateServiceProvider
             return new BotService(app(ApiClientService::class));
         });
 
+        $this->app->singleton(PriorityService::class, function () {
+            return new PriorityService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(TargetsService::class, function () {
+            return new TargetsService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(StagesService::class, function () {
+            return new StagesService(app(ApiClientService::class));
+        });
+
         $this->app->singleton(TagService::class, function () {
             return new TagService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(CategoryService::class, function () {
+            return new CategoryService(app(ApiClientService::class));
         });
 
         if (config('filesystems')) {
