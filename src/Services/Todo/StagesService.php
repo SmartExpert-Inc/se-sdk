@@ -19,7 +19,7 @@ class StagesService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -36,7 +36,7 @@ class StagesService extends BaseService
 
     public function update(Request $request, int $id): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $response = $this->api
             ->setHeaders($this->headers)

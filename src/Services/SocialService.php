@@ -8,7 +8,7 @@ final class SocialService extends BaseService
 {
     public function store(Request $request): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $social = $this->api
             ->setHeaders($this->headers)
@@ -23,9 +23,9 @@ final class SocialService extends BaseService
         return $social;
     }
 
-    public function show(int $id, Request $request=null): ?\stdClass
+    public function show(int $id): ?\stdClass
     {
-        $this->withAut($request);
+        $this->withAuth();
 
         $social = $this->api
             ->setHeaders($this->headers)

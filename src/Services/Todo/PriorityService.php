@@ -17,7 +17,7 @@ class PriorityService extends BaseService
 
     public function update(Request $request, int $id): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $response = $this->api
             ->setHeaders($this->headers)

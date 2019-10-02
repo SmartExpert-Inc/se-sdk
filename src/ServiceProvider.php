@@ -80,7 +80,7 @@ class ServiceProvider extends IlluminateServiceProvider
             return new ApiClientService(new Client());
         });
 
-        $this->app->singleton(UserService::class, function () {
+        $this->app->singleton(AuthService::class, function () {
             return new AuthService(app(ApiClientService::class));
         });
 

@@ -42,16 +42,15 @@ abstract class BaseService
         return "{$name}{$sessionName}";
     }
 
-    protected function withAut(Request $request=null): void
+    protected function withAuth(): void
     {
-        if ($request and $request->headers->has('Authorization')) {
-            $this->headers['Authorization'] = $request->headers->get('Authorization');
+        $auth = resolve(AuthService::class);
+        $token = $auth->getToken();
+
+        if (! $token) {
+            $token = $auth->clientAuthHeader();
         }
 
-        $token = resolve('se_sdk')->auth->getToken();
-
-        if ($token) {
-            $this->headers['Authorization'] = $token;
-        }
+        $this->headers['Authorization'] = $token;
     }
 }

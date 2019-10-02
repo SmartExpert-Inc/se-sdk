@@ -17,7 +17,7 @@ final class TargetsService extends BaseService
 
     public function index(): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $targets = $this->api
             ->setHeaders($this->headers)
@@ -34,7 +34,7 @@ final class TargetsService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -51,7 +51,7 @@ final class TargetsService extends BaseService
 
     public function show(int $id): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $tag = $this->api
             ->setHeaders($this->headers)
@@ -68,7 +68,7 @@ final class TargetsService extends BaseService
 
     public function update(Request $request, int $id): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -85,7 +85,7 @@ final class TargetsService extends BaseService
 
     public function destroy(int $id): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $tag = $this->api
             ->setHeaders($this->headers)

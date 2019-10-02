@@ -8,7 +8,7 @@ final class UserSettingService extends BaseService
 {
     public function get(int $userId): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $userSettings = $this->api
             ->setHeaders($this->headers)
@@ -25,7 +25,7 @@ final class UserSettingService extends BaseService
 
     public function update(int $userId, Request $request): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $userSettings = $this->api
             ->setHeaders($this->headers)
