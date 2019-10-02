@@ -5,6 +5,11 @@ namespace SE\SDK\Services;
 use Illuminate\Contracts\Foundation\Application;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Handlers\ExceptionHandler;
+use SE\SDK\Services\Todo\{
+    PriorityService,
+    StagesService,
+    TargetsService
+};
 use SE\SDK\Services\Tags\CategoryService;
 use SE\SDK\Services\Tags\TagService;
 
@@ -33,6 +38,16 @@ final class ServicesRegister
 
     /** @var TagService $tag */
     public $tag;
+
+    /** @var PriorityService $todoPriority */
+    public $todoPriority;
+
+    /** @var StagesService $todoStages */
+    public $todoStages;
+
+    /** @var TargetsService $todoTargets */
+    public $todoTargets;
+
 
     /** @var S3Service $s3 */
     public $s3;
@@ -63,6 +78,10 @@ final class ServicesRegister
 
         $this->tag = app()->make(TagService::class);
         $this->category = app()->make(CategoryService::class);
+
+        $this->todoPriority = app()->make(PriorityService::class);
+        $this->todoStages = app()->make(StagesService::class);
+        $this->todoTargets = app()->make(TargetsService::class);
 
         if (config('filesystems')) {
             $this->s3 = app()->make(S3Service::class);
