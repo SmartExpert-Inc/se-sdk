@@ -40,7 +40,7 @@ final class ServicesRegister
     public $tag;
 
     /** @var PriorityService $todoPriority */
-    public $todoPriorit;
+    public $todoPriority;
 
     /** @var StagesService $todoStages */
     public $todoStages;
@@ -79,7 +79,7 @@ final class ServicesRegister
         $this->tag = app()->make(TagService::class);
         $this->category = app()->make(CategoryService::class);
 
-        $this->todoPriorit = app()->make(PriorityService::class);
+        $this->todoPriority = app()->make(PriorityService::class);
         $this->todoStages = app()->make(StagesService::class);
         $this->todoTargets = app()->make(TargetsService::class);
 
