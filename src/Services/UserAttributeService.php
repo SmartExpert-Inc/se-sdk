@@ -9,7 +9,7 @@ final class UserAttributeService extends BaseService
 {
     public function get(int $userId): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $userAttributes = $this->api
             ->setHeaders($this->headers)
@@ -26,7 +26,7 @@ final class UserAttributeService extends BaseService
 
     public function update(int $userId, Request $request): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $userAttributes = $this->api
             ->setHeaders($this->headers)

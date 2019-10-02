@@ -68,7 +68,7 @@ final class AuthService extends BaseService
 
     public function loginAs(Request $request): ?\stdClass
     {
-        $this->withAut($request);
+        $this->withAuth();
 
         $auth = $this->api
             ->setHeaders($this->headers)
@@ -296,5 +296,18 @@ final class AuthService extends BaseService
         $this->api->dropUrls();
 
         return (object) $oauth;
+    }
+
+    public function clientAuthHeader(): ?string
+    {
+        $auth = $this->clientCredentials();
+
+        if (! property_exists($auth, "scalar")) {
+            return null;
+        }
+
+        $auth = json_decode($auth->scalar);
+
+        return "{$auth->token_type} {$auth->access_token}";
     }
 }

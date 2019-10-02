@@ -8,7 +8,7 @@ final class UserService extends BaseService
 {
     public function index(int $page = null): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         if (is_null($page)) {
             $page = 1;
@@ -31,7 +31,7 @@ final class UserService extends BaseService
 
     public function store(Request $request): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $users = $this->api
             ->setHeaders($this->headers)
@@ -48,7 +48,7 @@ final class UserService extends BaseService
 
     public function update(int $userId, Request $request)
     {
-        $this->withAut();
+        $this->withAuth();
 
         $users = $this->api
             ->setHeaders($this->headers)
@@ -65,7 +65,7 @@ final class UserService extends BaseService
 
     public function show(int $id): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $user = $this->api
             ->setHeaders($this->headers)
@@ -82,7 +82,7 @@ final class UserService extends BaseService
 
     public function find(Request $request): ?\stdClass
     {
-        $this->withAut($request);
+        $this->withAuth();
 
         $users = $this->api
             ->setHeaders($this->headers)
@@ -99,7 +99,7 @@ final class UserService extends BaseService
 
     public function findByIds(Request $request): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $users = $this->api
             ->setHeaders($this->headers)
@@ -127,7 +127,7 @@ final class UserService extends BaseService
 
     public function checkPassword(int $userId, string $password): ?\stdClass
     {
-        $this->withAut();
+        $this->withAuth();
 
         $response = $this->api
             ->setHeaders($this->headers)
@@ -142,5 +142,22 @@ final class UserService extends BaseService
         $this->api->dropUrls();
 
         return $response;
+    }
+
+    public function findOne(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $users = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get('/users/find', $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $users;
     }
 }
