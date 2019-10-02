@@ -23,7 +23,7 @@ final class SocialService extends BaseService
         return $social;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(string $uid): ?\stdClass
     {
         $this->withAuth();
 
@@ -31,7 +31,7 @@ final class SocialService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/socials/{$id}")
+            ->get("/socials/{$uid}")
             ->getObject();
 
         $this->api->dropState();
