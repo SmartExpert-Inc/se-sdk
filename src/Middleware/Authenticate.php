@@ -4,6 +4,7 @@ namespace SE\SDK\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as BaseAuth;
+use Illuminate\Http\Request;
 
 class Authenticate extends BaseAuth
 {
@@ -18,12 +19,21 @@ class Authenticate extends BaseAuth
     public function handle($request, Closure $next, ...$guards)
     {
         $sdk = resolve('se_sdk');
+        $token = $request->bearerToken();
 
-        if ($sdk->auth->hasToken()) {
+        if (! $token) {
+            return null;
+        }
+
+        $user = $sdk->user->authUser($request);
+
+        if ($user) {
+            session()->put(['user' => $user]);
+
             return $next($request);
         }
 
-        return redirect()->route('login');
+        return null;
     }
 
 }
