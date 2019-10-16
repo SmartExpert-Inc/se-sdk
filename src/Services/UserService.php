@@ -175,6 +175,10 @@ final class UserService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $user;
+        if (! property_exists($user, "data")) {
+            return null;
+        }
+
+        return $user->data;
     }
 }

@@ -20,11 +20,14 @@ class Authenticate extends BaseAuth
     public function handle($request, Closure $next, ...$guards)
     {
         $sdk = resolve('se_sdk');
-        $token = $request->bearerToken();
 
-        if (! $token) {
-            throw new AuthenticationException('Unauthenticated.', $guards);
-        }
+        //        TODO: Use this after SPA
+//        $guard = $this->auth->guard('api');
+//        $token = $request->bearerToken();
+
+//        if (! $token) {
+//            throw new AuthenticationException('Unauthenticated.', $guards);
+//        }
 
         $user = $sdk->user->authUser($request);
 
