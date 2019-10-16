@@ -3,6 +3,7 @@
 namespace SE\SDK\Middleware;
 
 use Closure;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as BaseAuth;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class Authenticate extends BaseAuth
         $token = $request->bearerToken();
 
         if (! $token) {
-            return null;
+            throw new AuthenticationException('Unauthenticated.', $guards);
         }
 
         $user = $sdk->user->authUser($request);
@@ -33,7 +34,7 @@ class Authenticate extends BaseAuth
             return $next($request);
         }
 
-        return null;
+        throw new AuthenticationException('Unauthenticated.', $guards);
     }
 
 }

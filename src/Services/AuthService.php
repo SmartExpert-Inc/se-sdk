@@ -99,8 +99,8 @@ final class AuthService extends BaseService
 
     public function authorise(Request $request, ?array $cookies = []): ?\stdClass
     {
-        $key = $this->getSessionKey();
-        $accessToken = Redis::get($key);
+        $keyName = $this->getSessionKey();
+        $accessToken = Redis::get($keyName);
 
         if ($accessToken) {
             return (object) [
@@ -149,8 +149,8 @@ final class AuthService extends BaseService
 
     public function logout(): ?\stdClass
     {
-        $key = $this->getSessionKey();
-        Redis::del($key);
+        $keyName = $this->getSessionKey();
+        Redis::del($keyName);
         session()->invalidate();
 
         $logout = $this->api
@@ -195,9 +195,9 @@ final class AuthService extends BaseService
 
     private function setTokenToSession(\stdClass $result): void
     {
-        $key = $this->getSessionKey();
+        $keyName = $this->getSessionKey();
 
-        Redis::set($key, $result->access_token, 'EX', $result->expires_in);
+        Redis::set($keyName, $result->access_token, 'EX', $result->expires_in);
 
         session()->put([
             "token_type" => $result->token_type,
@@ -209,17 +209,17 @@ final class AuthService extends BaseService
 
     public function hasToken(): bool
     {
-        $key = $this->getSessionKey();
+        $keyName = $this->getSessionKey();
 
-        if (Redis::ttl($key) == -2) {
+        if (Redis::ttl($keyName) == -2) {
             if (! session()->has('access_token')) {
                 return false;
             }
 
-            Redis::set($key, session()->get('access_token'), 'EX', session()->get('expires_in'));
+            Redis::set($keyName, session()->get('access_token'), 'EX', session()->get('expires_in'));
         }
 
-        if (Redis::ttl($key) == -1) {
+        if (Redis::ttl($keyName) == -1) {
             $cookies = $this->api->getLastCookies();
 
             $this->refreshToken($cookies);
@@ -230,12 +230,12 @@ final class AuthService extends BaseService
 
     public function getToken(): string
     {
-        $key = $this->getSessionKey();
-        $token = Redis::get($key);
+        $keyName = $this->getSessionKey();
+        $accessToken = Redis::get($keyName);
         $tokenType = session()->get('token_type', 'Bearer');
 
         return $this->hasToken()
-            ? "{$tokenType} {$token}"
+            ? "{$tokenType} {$accessToken}"
             : '';
     }
 
