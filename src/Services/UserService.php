@@ -160,4 +160,21 @@ final class UserService extends BaseService
 
         return $users;
     }
+
+    public function authUser(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $user = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get('/users/check', $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $user;
+    }
 }
