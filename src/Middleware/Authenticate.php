@@ -31,13 +31,13 @@ class Authenticate extends BaseAuth
 
         $user = $sdk->user->authUser($request);
 
-        if ($user) {
-            session()->put(['user' => $user]);
-
-            return $next($request);
+        if (! $user) {
+            throw new AuthenticationException('Unauthenticated.', $guards);
         }
 
-        throw new AuthenticationException('Unauthenticated.', $guards);
+        session()->put(['user' => $user]);
+
+        return $next($request);
     }
 
 }
