@@ -51,6 +51,10 @@ abstract class BaseService
             $token = $auth->clientAuthHeader();
         }
 
+        if (! $token) {
+            $token = request()->headers->get('authorization');
+        }
+
         $this->headers['Authorization'] = $token;
     }
 }

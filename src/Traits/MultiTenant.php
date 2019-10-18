@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\DB;
 
 trait MultiTenant
 {
-    public function getCurrentUser(): ?int
+    public function getCurrentUser(): ?object
     {
-        return session()->get('user');
+        return resolve('se_sdk')->user->authUser(request());
     }
 
     /**
