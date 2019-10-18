@@ -8,10 +8,7 @@ trait MultiTenant
 {
     public function getCurrentUser(): ?object
     {
-//        return session()->get('user');
-        $sdk = resolve('se_sdk');
-
-        return $sdk->user->authUser(request());
+        return resolve('se_sdk')->user->authUser(request());
     }
 
     /**
