@@ -48,7 +48,6 @@ final class ServicesRegister
     /** @var TargetsService $todoTargets */
     public $todoTargets;
 
-
     /** @var S3Service $s3 */
     public $s3;
 
@@ -57,6 +56,9 @@ final class ServicesRegister
 
     /** @var CategoryService $category */
     public $category;
+
+    /** @var LandingService $landing */
+    public $landing;
 
     /**
      * ServicesRegister constructor.
@@ -89,5 +91,7 @@ final class ServicesRegister
 
         $this->logger = app()->make(CustomLogger::class);
         $this->exception = app()->make(ExceptionHandler::class);
+
+        $this->landing = app()->make(LandingService::class);
     }
 }

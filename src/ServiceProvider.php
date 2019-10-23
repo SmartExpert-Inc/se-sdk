@@ -5,10 +5,10 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{
-    ApiClientService,
+use SE\SDK\Services\{ApiClientService,
     BotService,
     ChatService,
+    LandingService,
     PostService,
     S3Service,
     ServicesRegister,
@@ -21,8 +21,7 @@ use SE\SDK\Services\{
     UserSettingService,
     SocialService,
     Tags\CategoryService,
-    Tags\TagService
-};
+    Tags\TagService};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;
@@ -126,6 +125,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(CategoryService::class, function () {
             return new CategoryService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(LandingService::class, function () {
+            return new LandingService(app(ApiClientService::class));
         });
 
         if (config('filesystems')) {
