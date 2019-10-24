@@ -169,7 +169,7 @@ final class UserService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/users/check', $request->all())
+            ->get('/users/check', null)
             ->getObject();
 
         $this->api->dropState();
