@@ -14,24 +14,7 @@ final class LandingService extends BaseService
         $this->host = config('se_sdk.landings.host');
     }
 
-    public function index(array $data): ?\stdClass
-    {
-        $this->withAuth();
-
-        $landins = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/landings', $data)
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $landins;
-    }
-
-    public function store(Collection $landing)
+    public function index(): ?\stdClass
     {
         $this->withAuth();
 
@@ -39,7 +22,7 @@ final class LandingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/landings", $landing->all())
+            ->get('/landings')
             ->getObject();
 
         $this->api->dropState();
@@ -48,7 +31,24 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    public function show(int $id)
+    public function store(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/landings", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function show(int $id): ?\stdClass
     {
         $this->withAuth();
 
@@ -65,7 +65,7 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    public function update(Request $request)
+    public function update(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -82,11 +82,11 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    public function delete(int $id)
+    public function delete(int $id): ?\stdClass
     {
         $this->withAuth();
 
-        $landing = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
@@ -96,6 +96,6 @@ final class LandingService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $landing;
+        return $response;
     }
 }
