@@ -6,7 +6,7 @@ namespace SE\SDK\Services\Todo;
 use Illuminate\Http\Request;
 use SE\SDK\Services\{BaseService, ApiClientService};
 
-class PriorityService extends BaseService
+final class PriorityService extends BaseService
 {
     public function __construct(ApiClientService $api)
     {

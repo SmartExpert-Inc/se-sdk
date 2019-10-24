@@ -9,6 +9,7 @@ use SE\SDK\Services\{
     ApiClientService,
     BotService,
     ChatService,
+    LandingService,
     PostService,
     S3Service,
     ServicesRegister,
@@ -126,6 +127,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(CategoryService::class, function () {
             return new CategoryService(app(ApiClientService::class));
+        });
+
+        $this->app->singleton(LandingService::class, function () {
+            return new LandingService(app(ApiClientService::class));
         });
 
         if (config('filesystems')) {

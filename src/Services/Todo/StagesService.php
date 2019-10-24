@@ -7,7 +7,7 @@ namespace SE\SDK\Services\Todo;
 use Illuminate\Http\Request;
 use SE\SDK\Services\{BaseService, ApiClientService};
 
-class StagesService extends BaseService
+final class StagesService extends BaseService
 {
 
     public function __construct(ApiClientService $api)
