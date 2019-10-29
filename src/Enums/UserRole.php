@@ -4,11 +4,11 @@ namespace SE\SDK\Enums;
 
 final class UserRole
 {
-    const Admin = 'admin';
-    const Manager = 'manager';
-    const User = 'user';
-    const Student = 'student';
-    const SuperAuthor = 'super-author';
-    const Coach = 'coach';
-    const AlphaCoach = 'alpha-coach';
+    const Admin = 'Admin';
+    const Manager = 'Manager';
+    const User = 'User';
+    const Student = 'Student';
+    const SuperAuthor = 'Super-author';
+    const Coach = 'Coach';
+    const AlphaCoach = 'Alpha-coach';
 }

@@ -193,6 +193,6 @@ final class UserService extends BaseService
             return false;
         }
 
-        return array_key_exists(ucfirst($roleName), $user->roles);
+        return array_key_exists($roleName, $user->roles);
     }
 }
