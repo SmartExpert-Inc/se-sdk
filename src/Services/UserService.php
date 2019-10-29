@@ -3,6 +3,7 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Http\Request;
+use SE\SDK\Enums\UserRole;
 
 final class UserService extends BaseService
 {
@@ -180,5 +181,16 @@ final class UserService extends BaseService
         }
 
         return $user->data;
+    }
+
+    public function isAdmin(Request $request): bool
+    {
+        $user = $this->authUser($request);
+
+        if (! $user or ! property_exists($user, "roles")) {
+            return false;
+        }
+
+        return array_key_exists(UserRole::Admin, $user->roles);
     }
 }
