@@ -3,6 +3,7 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Http\Request;
+use SE\SDK\Enums\UserRole;
 
 final class UserService extends BaseService
 {
