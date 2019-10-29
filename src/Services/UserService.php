@@ -187,12 +187,10 @@ final class UserService extends BaseService
     {
         $user = $this->authUser($request);
 
-        $roleName = UserRole::Admin;
-
         if (! $user or ! property_exists($user, "roles")) {
             return false;
         }
 
-        return array_key_exists($roleName, $user->roles);
+        return array_key_exists(UserRole::Admin, $user->roles);
     }
 }
