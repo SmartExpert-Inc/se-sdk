@@ -181,4 +181,17 @@ final class UserService extends BaseService
 
         return $user->data;
     }
+
+    public function isAdmin(Request $request): bool
+    {
+        $user = $this->authUser($request);
+
+        $roleName = UserRole::Admin;
+
+        if (! $user or ! property_exists($user, "roles")) {
+            return false;
+        }
+
+        return array_key_exists(ucfirst($roleName), $user->roles);
+    }
 }
