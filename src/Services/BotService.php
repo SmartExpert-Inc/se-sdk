@@ -53,6 +53,27 @@ final class BotService extends BaseService
         return $response;
     }
 
+    public function messageQueued(string $botName, string $message, int $userId, ?int $ownerId): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/{$botName}/messageQueued", [
+                'user_id' => $userId,
+                'message' => $message,
+                'owner_id' => $ownerId
+            ])
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function store(Request $request): ?\stdClass
     {
         $this->withAuth();
