@@ -71,6 +71,9 @@ return [
 
     'logger' => [
         'token' => env('LOGGER_AUTH_TOKEN')
-    ]
+    ],
 
+    'landings' => [
+        'host' => env('LANDINGS_SERVICE_HOST', null),
+    ]
 ];
