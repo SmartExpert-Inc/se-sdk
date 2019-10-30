@@ -50,7 +50,7 @@ return [
                 'use_path_style_endpoint' => true,
                 'key' => env('AWS_KEY'),
                 'secret' => env('AWS_SECRET'),
-                'region' => env('AWS_REGION'),
+                'region' => env('AWS_REGION', 'eu-central-1'),
                 'bucket' => env('AWS_BUCKET'),
             ],
         ],
