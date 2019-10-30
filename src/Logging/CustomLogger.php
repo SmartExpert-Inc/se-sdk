@@ -10,14 +10,15 @@ class CustomLogger
     /**
      * Create a custom Monolog instance.
      *
+     * @param  string $name
      * @param  array $config
      *
      * @return \Monolog\Logger
      */
-    public function __invoke(array $config)
+    public function __invoke(string $name, array $config)
     {
         return new Logger(
-            env('APP_NAME'),
+            $name,
             [
                 new LogToApiHandler(
                     $config['url'],

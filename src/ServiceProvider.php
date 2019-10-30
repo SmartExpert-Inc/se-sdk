@@ -145,7 +145,7 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(CustomLogger::class, function () {
             $logger = new CustomLogger;
-            return $logger(config('logging.channels.api'));
+            return $logger(config('app.name'), config('logging.channels.api'));
         });
 
         $this->app->singleton(ExceptionHandler::class, function () {
