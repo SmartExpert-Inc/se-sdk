@@ -15,7 +15,7 @@ final class TargetsService extends BaseService
         $this->host = config('se_sdk.todo.host');
     }
 
-    public function index(): ?\stdClass
+    public function index(int $page = null): ?\stdClass
     {
         $this->withAuth();
 
@@ -23,7 +23,9 @@ final class TargetsService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/targets')
+            ->get('/targets', [
+                'page' => $page
+            ])
             ->getObject();
 
         $this->api->dropState();
