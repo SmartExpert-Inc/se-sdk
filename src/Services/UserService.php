@@ -193,4 +193,21 @@ final class UserService extends BaseService
 
         return array_key_exists(UserRole::Admin, $user->roles);
     }
+
+    public function delete(int $id): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/users/{$id}")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
