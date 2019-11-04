@@ -48,11 +48,11 @@ abstract class BaseService
         $token = $auth->getToken();
 
         if (! $token) {
-            $token = $auth->clientAuthHeader();
+            $token = request()->headers->get('authorization');
         }
 
         if (! $token) {
-            $token = request()->headers->get('authorization');
+            $token = $auth->clientAuthHeader();
         }
 
         $this->headers['Authorization'] = $token;
