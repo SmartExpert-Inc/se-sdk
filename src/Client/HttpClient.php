@@ -93,7 +93,7 @@ final class HttpClient
     {
         $data = null;
 
-        if (isset($arguments[1]) and is_array($arguments[1])) {
+        if (isset($arguments[1])) {
             $data = $arguments[1];
         }
 
