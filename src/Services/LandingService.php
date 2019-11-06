@@ -99,10 +99,10 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    //TODO: Вынести в отдельный сервис методы: createDomain, updateDomain!
     public function createDomain(Request $request)
     {
         $this->withAuth();
+
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
