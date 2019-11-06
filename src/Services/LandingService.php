@@ -99,23 +99,6 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    public function createDomain(Request $request)
-    {
-        $this->withAuth();
-
-        $response = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->post("/domain/create/{$request->input('id')}", $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $response;
-    }
-
     public function updateDomain(Request $request)
     {
         $this->withAuth();
@@ -124,7 +107,7 @@ final class LandingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("domain/create/{$request->input('id')}", $request->all())
+            ->put("/domain/update/{$request->input('id')}", $request->all())
             ->getObject();
 
         $this->api->dropState();
