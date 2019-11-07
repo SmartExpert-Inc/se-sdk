@@ -162,6 +162,27 @@ final class AuthService extends BaseService
         return $logout;
     }
 
+    public function credentials(Request $request): ?\stdClass
+    {
+        $this->headers['Authorization'] = $request->headers->get('authorization');
+
+        $credentials = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post('/credentials')
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        if (! property_exists($credentials, "data")) {
+            return null;
+        }
+
+        return $credentials->data;
+    }
+
     private function refreshToken($cookies = []): ?\stdClass
     {
         $refreshToken = $this->api
