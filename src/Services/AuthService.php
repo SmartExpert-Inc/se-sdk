@@ -162,9 +162,9 @@ final class AuthService extends BaseService
         return $logout;
     }
 
-    public function credentials(): ?\stdClass
+    public function credentials(Request $request): ?\stdClass
     {
-        $this->withAuth();
+        $this->headers['Authorization'] = $request->headers->get('authorization');
 
         $credentials = $this->api
             ->setHeaders($this->headers)

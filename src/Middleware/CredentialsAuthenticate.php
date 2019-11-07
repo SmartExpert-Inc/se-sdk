@@ -29,7 +29,7 @@ class CredentialsAuthenticate extends BaseAuth
 //            throw new AuthenticationException('Unauthenticated.', $guards);
 //        }
 
-        $credentials = $sdk->auth->credentials();
+        $credentials = $sdk->auth->credentials($request);
 
         if (! $credentials) {
             throw new AuthenticationException('Unauthenticated.', $guards);
