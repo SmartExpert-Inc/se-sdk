@@ -115,4 +115,21 @@ final class LandingService extends BaseService
 
         return $response;
     }
+
+    public function showLanding(string $subdomain)
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/display/{$subdomain}")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
