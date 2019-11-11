@@ -65,7 +65,7 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    public function update(Request $request): ?\stdClass
+    public function update(int $landingId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -73,7 +73,7 @@ final class LandingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/landings/{$request->get('id')}", $request->all())
+            ->put("/landings/{$landingId}", $request->all())
             ->getObject();
 
         $this->api->dropState();

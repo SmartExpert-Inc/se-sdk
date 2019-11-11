@@ -51,7 +51,7 @@ final class ServicesRegister
     /** @var S3Service $s3 */
     public $s3;
 
-    /** @var SE\SDK\Logging\CustomLogger $logger */
+    /** @var CustomLogger $logger */
     public $logger;
 
     /** @var CategoryService $category */
@@ -60,10 +60,6 @@ final class ServicesRegister
     /** @var LandingService $landing */
     public $landing;
 
-    /**
-     * ServicesRegister constructor.
-     * @param Application $app
-     */
     public function __construct()
     {
         $this->auth = app()->make(AuthService::class);
