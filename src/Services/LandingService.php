@@ -124,7 +124,7 @@ final class LandingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/display/{$subdomain}")
+            ->get("/landing/{$subdomain}")
             ->getObject();
 
         $this->api->dropState();
