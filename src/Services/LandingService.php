@@ -48,7 +48,7 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    public function show(int $id): ?\stdClass
+    public function showById(int $id): ?\stdClass
     {
         $this->withAuth();
 
@@ -108,6 +108,23 @@ final class LandingService extends BaseService
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->put("/domain/update/{$request->input('id')}", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function showBySubDomain(string $subdomain)
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/landing/{$subdomain}")
             ->getObject();
 
         $this->api->dropState();
