@@ -48,7 +48,7 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    public function show(int $id): ?\stdClass
+    public function showById(int $id): ?\stdClass
     {
         $this->withAuth();
 
