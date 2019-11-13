@@ -116,7 +116,7 @@ final class LandingService extends BaseService
         return $response;
     }
 
-    public function showLanding(string $subdomain)
+    public function showBySubDomain(string $subdomain)
     {
         $this->withAuth();
 
