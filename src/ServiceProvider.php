@@ -10,7 +10,7 @@ use SE\SDK\Services\{
     BotService,
     ChatService,
     LandingService,
-    PostService,
+    Posts\PostService,
     S3Service,
     ServicesRegister,
     Todo\PriorityService,
