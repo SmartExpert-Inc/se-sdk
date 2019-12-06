@@ -6,23 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Services\{
-    ApiClientService,
-    BotService,
-    ChatService,
-    LandingService,
-    Posts\PostService,
-    S3Service,
-    ServicesRegister,
-    Todo\PriorityService,
-    Todo\StagesService,
-    Todo\TargetsService,
-    UserAttributeService,
-    UserService,
-    AuthService,
-    UserSettingService,
-    SocialService,
-    Tags\CategoryService,
-    Tags\TagService
+    ApiClientService, BotService, ChatService, Comments\CommentService, Comments\LikeService, Comments\RepostService, Comments\ViewService, LandingService, Posts\PostService, Posts\StatisticService, S3Service, ServicesRegister, Todo\PriorityService, Todo\StagesService, Todo\TargetsService, UserAttributeService, UserService, AuthService, UserSettingService, SocialService, Tags\CategoryService, Tags\TagService
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -115,6 +99,10 @@ class ServiceProvider extends IlluminateServiceProvider
             return new PostService();
         });
 
+        $this->app->singleton(StatisticService::class, function () {
+            return new StatisticService(app(ApiClientService::class));
+        });
+
         $this->app->singleton(BotService::class, function () {
             return new BotService();
         });
@@ -156,6 +144,22 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(ExceptionHandler::class, function () {
             return new ExceptionHandler();
+        });
+
+        $this->app->singleton(CommentService::class, function () {
+            return new CommentService();
+        });
+
+        $this->app->singleton(ViewService::class, function () {
+            return new ViewService();
+        });
+
+        $this->app->singleton(LikeService::class, function () {
+            return new LikeService();
+        });
+
+        $this->app->singleton(RepostService::class, function () {
+            return new RepostService();
         });
 
         /* Bind requests helper */
