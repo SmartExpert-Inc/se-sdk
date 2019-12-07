@@ -3,6 +3,9 @@
 namespace SE\SDK\Services\Posts;
 
 use Illuminate\Http\Request;
+use SE\SDK\Services\{
+    ApiClientService, BaseService
+};
 
 final class StatisticService extends BaseService
 {
