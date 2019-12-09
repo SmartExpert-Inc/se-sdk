@@ -7,6 +7,13 @@ use SE\SDK\Enums\UserRole;
 
 final class UserService extends BaseService
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->host = config('se_sdk.auth.host');
+    }
+
     public function index(int $page = null): ?\stdClass
     {
         $this->withAuth();

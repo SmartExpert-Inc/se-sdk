@@ -62,32 +62,32 @@ final class ServicesRegister
 
     public function __construct()
     {
-        $this->auth = app()->make(AuthService::class);
+        $this->auth = app(AuthService::class);
 
-        $this->user = app()->make(UserService::class);
-        $this->userAttributes = app()->make(UserAttributeService::class);
-        $this->userSettings = app()->make(UserSettingService::class);
-        $this->social = app()->make(SocialService::class);
+        $this->user = app(UserService::class);
+        $this->userAttributes = app(UserAttributeService::class);
+        $this->userSettings = app(UserSettingService::class);
+        $this->social = app(SocialService::class);
 
-        $this->post = app()->make(PostService::class);
+        $this->post = app(PostService::class);
 
-        $this->bot = app()->make(BotService::class);
-        $this->chat = app()->make(ChatService::class);
+        $this->bot = app(BotService::class);
+        $this->chat = app(ChatService::class);
 
-        $this->tag = app()->make(TagService::class);
-        $this->category = app()->make(CategoryService::class);
+        $this->tag = app(TagService::class);
+        $this->category = app(CategoryService::class);
 
-        $this->todoPriority = app()->make(PriorityService::class);
-        $this->todoStages = app()->make(StagesService::class);
-        $this->todoTargets = app()->make(TargetsService::class);
+        $this->todoPriority = app(PriorityService::class);
+        $this->todoStages = app(StagesService::class);
+        $this->todoTargets = app(TargetsService::class);
 
         if (config('filesystems')) {
-            $this->s3 = app()->make(S3Service::class);
+            $this->s3 = app(S3Service::class);
         }
 
-        $this->logger = app()->make(CustomLogger::class);
-        $this->exception = app()->make(ExceptionHandler::class);
+        $this->logger = app(CustomLogger::class);
+        $this->exception = app(ExceptionHandler::class);
 
-        $this->landing = app()->make(LandingService::class);
+        $this->landing = app(LandingService::class);
     }
 }

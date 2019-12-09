@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 
 final class UserSettingService extends BaseService
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->host = config('se_sdk.auth.host');
+    }
+
     public function get(int $userId): ?\stdClass
     {
         $this->withAuth();

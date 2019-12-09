@@ -7,9 +7,9 @@ use Illuminate\Support\Collection;
 
 final class LandingService extends BaseService
 {
-    public function __construct(ApiClientService $api)
+    public function __construct()
     {
-        parent::__construct($api);
+        parent::__construct();
 
         $this->host = config('se_sdk.landings.host');
     }
