@@ -100,7 +100,7 @@ class ServiceProvider extends IlluminateServiceProvider
         });
 
         $this->app->singleton(StatisticService::class, function () {
-            return new StatisticService(app(ApiClientService::class));
+            return new StatisticService();
         });
 
         $this->app->singleton(BotService::class, function () {

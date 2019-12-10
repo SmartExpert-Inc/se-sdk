@@ -3,18 +3,16 @@
 namespace SE\SDK\Services\Comments;
 
 use Illuminate\Http\Request;
-use SE\SDK\Services\{
-    ApiClientService, BaseService
-};
+use SE\SDK\Services\BaseService;
 
 final class CommentService extends BaseService
 {
     /** @var array $headers */
     protected $headers;
 
-    public function __construct(ApiClientService $api)
+    public function __construct()
     {
-        parent::__construct($api);
+        parent::__construct();
 
         $this->host = config('se_sdk.comments.host');
     }
