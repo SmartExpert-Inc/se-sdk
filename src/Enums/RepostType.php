@@ -2,12 +2,10 @@
 
 namespace SE\SDK\Enums;
 
-use BenSampo\Enum\Enum;
-
-final class RepostType extends Enum
+final class RepostType
 {
     const Facebook = 0;
-    const VK = 1;
+    const Vk = 1;
     const Twitter = 2;
     const Linkedin = 3;
     const Odnoklassniki = 4;
