@@ -5,13 +5,20 @@ namespace SE\SDK\Services;
 use Illuminate\Contracts\Foundation\Application;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Handlers\ExceptionHandler;
+use SE\SDK\Services\Comments\{
+    CommentService, LikeService, RepostService, ViewService
+};
+use SE\SDK\Services\Posts\{
+    PostService, StatisticService
+};
 use SE\SDK\Services\Todo\{
     PriorityService,
     StagesService,
     TargetsService
 };
-use SE\SDK\Services\Tags\CategoryService;
-use SE\SDK\Services\Tags\TagService;
+use SE\SDK\Services\Tags\{
+    CategoryService, TagService
+};
 
 final class ServicesRegister
 {
@@ -27,8 +34,14 @@ final class ServicesRegister
     /** @var UserSettingService $userSettings */
     public $userSettings;
 
+    /** @var SocialService $social */
+    public $social;
+
     /** @var PostService $post */
     public $post;
+
+    /** @var StatisticService $postStatistic */
+    public $postStatistic;
 
     /** @var BotService $bots */
     public $bot;
@@ -60,6 +73,18 @@ final class ServicesRegister
     /** @var LandingService $landing */
     public $landing;
 
+    /** @var CommentService $comment */
+    public $comment;
+
+    /** @var LikeService $like */
+    public $like;
+
+    /** @var RepostService $repost */
+    public $repost;
+
+    /** @var ViewService $view */
+    public $view;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -70,6 +95,7 @@ final class ServicesRegister
         $this->social = app(SocialService::class);
 
         $this->post = app(PostService::class);
+        $this->postStatistic = app(StatisticService::class);
 
         $this->bot = app(BotService::class);
         $this->chat = app(ChatService::class);
@@ -89,5 +115,10 @@ final class ServicesRegister
         $this->exception = app(ExceptionHandler::class);
 
         $this->landing = app(LandingService::class);
+
+        $this->comment = app(CommentService::class);
+        $this->like = app(LikeService::class);
+        $this->repost = app(RepostService::class);
+        $this->view = app(ViewService::class);
     }
 }

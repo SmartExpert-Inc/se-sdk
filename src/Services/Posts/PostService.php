@@ -1,8 +1,11 @@
 <?php
 
-namespace SE\SDK\Services;
+namespace SE\SDK\Services\Posts;
 
 use Illuminate\Http\Request;
+use SE\SDK\Services\{
+    ApiClientService, BaseService
+};
 
 final class PostService extends BaseService
 {
