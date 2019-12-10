@@ -1,123 +1,104 @@
 <?php
 
-namespace SE\SDK\Services\Tags;
+namespace SE\SDK\Services\Comments;
 
 use Illuminate\Http\Request;
-use SE\SDK\Services\{BaseService, ApiClientService};
+use SE\SDK\Services\BaseService;
 
-final class TagService extends BaseService
+final class CommentService extends BaseService
 {
+    /** @var array $headers */
+    protected $headers;
+
     public function __construct()
     {
         parent::__construct();
 
-        $this->host = config('se_sdk.tags.host');
+        $this->host = config('se_sdk.comments.host');
     }
-    public function index(int $page = null): ?\stdClass
+
+    public function index(Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        if (is_null($page)) {
-            $page = 1;
-        }
-
-        $tags = $this->api
+        $comments = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/tags', [
-                'page' => $page
-            ])
+            ->get('/comments', $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $tags;
+        return $comments;
     }
 
-    public function show(int $id): ?\stdClass
+    public function update(int $commentId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $tag = $this->api
+        $comment = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/tags/{$id}")
+            ->put("/comments/{$commentId}", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $tag;
+        return $comment;
     }
 
     public function store(Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $response = $this->api
+        $comment = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/tags", $request->all())
+            ->post("/comments", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $response;
+        return $comment;
     }
 
-    public function update(int $id, Request $request): ?\stdClass
+    public function show(int $id): ?\stdClass
     {
         $this->withAuth();
 
-        $tag = $this->api
+        $comment = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/tags/{$id}", $request->all())
+            ->get("/comments/{$id}")
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $tag;
+        return $comment;
     }
 
     public function delete(int $id): ?\stdClass
     {
         $this->withAuth();
 
-        $tag = $this->api
+        $comment = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->delete("/tags/{$id}")
+            ->delete("/comments/{$id}")
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $tag;
-    }
-
-    public function find(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $tags = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get("/tags/find", $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $tags;
+        return $comment;
     }
 }

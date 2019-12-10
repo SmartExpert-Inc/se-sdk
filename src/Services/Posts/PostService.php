@@ -1,17 +1,20 @@
 <?php
 
-namespace SE\SDK\Services;
+namespace SE\SDK\Services\Posts;
 
 use Illuminate\Http\Request;
+use SE\SDK\Services\{
+    ApiClientService, BaseService
+};
 
 final class PostService extends BaseService
 {
     /** @var array $headers */
     protected $headers;
 
-    public function __construct(ApiClientService $api)
+    public function __construct()
     {
-        parent::__construct($api);
+        parent::__construct();
 
         $this->host = config('se_sdk.posts.host');
     }

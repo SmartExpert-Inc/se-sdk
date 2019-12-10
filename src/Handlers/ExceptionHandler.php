@@ -32,7 +32,11 @@ class ExceptionHandler
                 'form_params' => $this->getFormatedData($exception),
             ]);
         } catch (Exception $e) {
-            dump($e->getMessage());
+            if (app()->environment() != 'production') {
+                dump($e->getMessage());
+            }
+
+            logger()->error("{$e->getMessage()}, \n{$e->getFile()} in {$e->getLine()}");
         }
     }
 

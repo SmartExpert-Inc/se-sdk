@@ -10,6 +10,13 @@ final class AuthService extends BaseService
     const PASSWORD_GRANT_TYPE = 'password';
     const CLIENT_CREDENTIALS_GRANT_TYPE = 'client_credentials';
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->host = config('se_sdk.auth.host');
+    }
+
     public function register(Request $request): ?\stdClass
     {
         $registered = $this->api

@@ -3,6 +3,6 @@
 if (! function_exists('requests')) {
     function requests()
     {
-        return app()->make('requests');
+        return app('requests');
     }
 }

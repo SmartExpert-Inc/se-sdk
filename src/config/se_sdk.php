@@ -75,5 +75,9 @@ return [
 
     'landings' => [
         'host' => env('LANDINGS_SERVICE_HOST', null),
-    ]
+    ],
+
+    'comments' => [
+        'host' => env('COMMENTS_SERVICE_HOST', null),
+    ],
 ];

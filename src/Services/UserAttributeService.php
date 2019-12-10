@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Redis;
 
 final class UserAttributeService extends BaseService
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->host = config('se_sdk.auth.host');
+    }
+
     public function get(int $userId): ?\stdClass
     {
         $this->withAuth();

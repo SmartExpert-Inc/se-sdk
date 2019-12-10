@@ -6,23 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Services\{
-    ApiClientService,
-    BotService,
-    ChatService,
-    LandingService,
-    PostService,
-    S3Service,
-    ServicesRegister,
-    Todo\PriorityService,
-    Todo\StagesService,
-    Todo\TargetsService,
-    UserAttributeService,
-    UserService,
-    AuthService,
-    UserSettingService,
-    SocialService,
-    Tags\CategoryService,
-    Tags\TagService
+    ApiClientService, BotService, ChatService, Comments\CommentService, Comments\LikeService, Comments\RepostService, Comments\ViewService, LandingService, Posts\PostService, Posts\StatisticService, S3Service, ServicesRegister, Todo\PriorityService, Todo\StagesService, Todo\TargetsService, UserAttributeService, UserService, AuthService, UserSettingService, SocialService, Tags\CategoryService, Tags\TagService
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -65,9 +49,11 @@ class ServiceProvider extends IlluminateServiceProvider
 
         if (config('se_sdk.s3')) {
             $disk = config('se_sdk.s3.cloud');
+
             if (config('filesystems.cloud')) {
                 Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
             }
+
             if (config("filesystems.disks")) {
                 Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
             }
@@ -77,74 +63,82 @@ class ServiceProvider extends IlluminateServiceProvider
             Config::set("logging.channels.api", config("se_sdk.channels.api"));
         }
 
-        $this->app->singleton(ApiClientService::class, function () {
-            return new ApiClientService(new Client());
-        });
-
-        $this->app->singleton(AuthService::class, function () {
-            return new AuthService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(UserService::class, function () {
-            return new UserService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(UserAttributeService::class, function () {
-            return new UserAttributeService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(UserSettingService::class, function () {
-            return new UserSettingService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(SocialService::class, function () {
-            return new SocialService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(PostService::class, function () {
-            return new PostService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(BotService::class, function () {
-            return new BotService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(PriorityService::class, function () {
-            return new PriorityService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(TargetsService::class, function () {
-            return new TargetsService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(StagesService::class, function () {
-            return new StagesService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(TagService::class, function () {
-            return new TagService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(CategoryService::class, function () {
-            return new CategoryService(app(ApiClientService::class));
-        });
-
-        $this->app->singleton(LandingService::class, function () {
-            return new LandingService(app(ApiClientService::class));
-        });
-
         if (config('filesystems')) {
             $this->app->singleton(S3Service::class, function () {
                 return new S3Service;
             });
         }
 
-        $this->app->singleton(ChatService::class, function () {
-            return new ChatService(app(ApiClientService::class));
+        $this->app->singleton(ApiClientService::class, function () {
+            $httpClient = new Client;
+
+            return new ApiClientService($httpClient);
         });
 
+        $this->app->singleton(AuthService::class, function () {
+            return new AuthService();
+        });
+
+        $this->app->singleton(UserService::class, function () {
+            return new UserService();
+        });
+
+        $this->app->singleton(UserAttributeService::class, function () {
+            return new UserAttributeService();
+        });
+
+        $this->app->singleton(UserSettingService::class, function () {
+            return new UserSettingService();
+        });
+
+        $this->app->singleton(SocialService::class, function () {
+            return new SocialService();
+        });
+
+        $this->app->singleton(PostService::class, function () {
+            return new PostService();
+        });
+
+        $this->app->singleton(StatisticService::class, function () {
+            return new StatisticService();
+        });
+
+        $this->app->singleton(BotService::class, function () {
+            return new BotService();
+        });
+
+        $this->app->singleton(PriorityService::class, function () {
+            return new PriorityService();
+        });
+
+        $this->app->singleton(TargetsService::class, function () {
+            return new TargetsService();
+        });
+
+        $this->app->singleton(StagesService::class, function () {
+            return new StagesService();
+        });
+
+        $this->app->singleton(TagService::class, function () {
+            return new TagService();
+        });
+
+        $this->app->singleton(CategoryService::class, function () {
+            return new CategoryService();
+        });
+
+        $this->app->singleton(LandingService::class, function () {
+            return new LandingService();
+        });
+
+        $this->app->singleton(ChatService::class, function () {
+            return new ChatService();
+        });
+
+        /* Bind remote logger */
         $this->app->singleton(CustomLogger::class, function () {
             $logger = new CustomLogger;
+
             return $logger(config('app.name'), config('logging.channels.api'));
         });
 
@@ -152,12 +146,30 @@ class ServiceProvider extends IlluminateServiceProvider
             return new ExceptionHandler();
         });
 
-        $this->app->bind(static::$abstract, function () {
-            return new ServicesRegister();
+        $this->app->singleton(CommentService::class, function () {
+            return new CommentService();
         });
 
+        $this->app->singleton(ViewService::class, function () {
+            return new ViewService();
+        });
+
+        $this->app->singleton(LikeService::class, function () {
+            return new LikeService();
+        });
+
+        $this->app->singleton(RepostService::class, function () {
+            return new RepostService();
+        });
+
+        /* Bind requests helper */
         $this->app->bind('requests', function () {
             return new HttpClient();
+        });
+
+        /* Bind services registrator */
+        $this->app->bind(static::$abstract, function () {
+            return new ServicesRegister();
         });
     }
 }

@@ -20,16 +20,15 @@ abstract class BaseService
     /** @var string $prefix */
     protected $prefix;
 
-    public function __construct(ApiClientService $api)
+    public function __construct()
     {
-        $this->api = $api;
+        $this->api = app(ApiClientService::class);
 
         $this->headers = [
             'User-Agent' => 'testing/1.0',
             'Accept' => 'application/json',
         ];
 
-        $this->host = config('se_sdk.auth.host');
         $this->prefix = "/api/v1";
     }
 

@@ -1,49 +1,53 @@
 <?php
 
-namespace SE\SDK\Services;
+namespace SE\SDK\Services\Comments;
 
 use Illuminate\Http\Request;
+use SE\SDK\Services\BaseService;
 
-final class ChatService extends BaseService
+final class RepostService extends BaseService
 {
+    /** @var array $headers */
+    protected $headers;
+
     public function __construct()
     {
         parent::__construct();
 
-        $this->host = config('se_sdk.bots.host');
+        $this->host = config('se_sdk.comments.host');
     }
 
     public function store(Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $response = $this->api
+        $repost = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/chats", $request->all())
+            ->post("/reposts", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $response;
+        return $repost;
     }
 
-    public function find(Request $request): ?\stdClass
+    public function delete(int $id): ?\stdClass
     {
         $this->withAuth();
 
-        $chats = $this->api
+        $repost = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/chats/find', $request->all())
+            ->delete("/reposts/{$id}")
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $chats;
+        return $repost;
     }
 }
