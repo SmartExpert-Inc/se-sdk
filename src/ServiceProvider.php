@@ -5,7 +5,8 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{ApiClientService,
+use SE\SDK\Services\{
+    ApiClientService,
     BotService,
     ChatService,
     Comments\CommentService,
@@ -35,7 +36,8 @@ use SE\SDK\Services\{ApiClientService,
     UserSettingService,
     SocialService,
     Tags\CategoryService,
-    Tags\TagService};
+    Tags\TagService
+};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;

@@ -19,15 +19,17 @@ use SE\SDK\Services\Todo\{
 use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
-use SE\SDK\Services\Products\LessonService;
-use SE\SDK\Services\Products\ModuleService;
-use SE\SDK\Services\Products\PracticeService;
-use SE\SDK\Services\Products\ProductService;
-use SE\SDK\Services\Products\QuestionService;
-use SE\SDK\Services\Products\ReviewService;
-use SE\SDK\Services\Products\TestService;
-use SE\SDK\Services\Products\TextService;
-use SE\SDK\Services\Products\VideoService;
+use SE\SDK\Services\Products\{
+    LessonService,
+    ModuleService,
+    PracticeService,
+    ProductService,
+    QuestionService,
+    ReviewService,
+    TestService,
+    TextService,
+    VideoService
+};
 
 final class ServicesRegister
 {
