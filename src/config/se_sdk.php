@@ -80,4 +80,8 @@ return [
     'comments' => [
         'host' => env('COMMENTS_SERVICE_HOST', null),
     ],
+
+    'products' => [
+        'host' => env('PRODUCTS_SERVICE_HOST', null),
+    ],
 ];
