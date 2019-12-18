@@ -19,6 +19,17 @@ use SE\SDK\Services\Todo\{
 use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
+use SE\SDK\Services\Products\{
+    LessonService,
+    ModuleService,
+    PracticeService,
+    ProductService,
+    QuestionService,
+    ReviewService,
+    TestService,
+    TextService,
+    VideoService
+};
 
 final class ServicesRegister
 {
@@ -85,6 +96,33 @@ final class ServicesRegister
     /** @var ViewService $view */
     public $view;
 
+    /** @var ProductService $product */
+    public $product;
+
+    /** @var LessonService $lesson */
+    public $lesson;
+
+    /** @var ModuleService $module */
+    public $module;
+
+    /** @var PracticeService $lessonPractice */
+    public $lessonPractice;
+
+    /** @var QuestionService $lessonQuestion */
+    public $lessonQuestion;
+
+    /** @var ReviewService $lessonReview */
+    public $lessonReview;
+
+    /** @var TestService $lessonTest */
+    public $lessonTest;
+
+    /** @var TextService $lessonText */
+    public $lessonText;
+
+    /** @var VideoService $lessonVideo */
+    public $lessonVideo;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -120,5 +158,15 @@ final class ServicesRegister
         $this->like = app(LikeService::class);
         $this->repost = app(RepostService::class);
         $this->view = app(ViewService::class);
+
+        $this->product = app(ProductService::class);
+        $this->module = app(ModuleService::class);
+        $this->lesson = app(LessonService::class);
+        $this->lessonPractice = app(PracticeService::class);
+        $this->lessonQuestion = app(QuestionService::class);
+        $this->lessonReview = app(ReviewService::class);
+        $this->lessonTest = app(TestService::class);
+        $this->lessonText = app(TextService::class);
+        $this->lessonVideo = app(VideoService::class);
     }
 }
