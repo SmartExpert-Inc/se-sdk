@@ -5,8 +5,7 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{
-    ApiClientService,
+use SE\SDK\Services\{ApiClientService,
     BotService,
     ChatService,
     Comments\CommentService,
@@ -17,6 +16,7 @@ use SE\SDK\Services\{
     Posts\PostService,
     Posts\StatisticService,
     Products\LessonService,
+    Products\LibraryService,
     Products\ModuleService,
     Products\PracticeService,
     Products\ProductService,
@@ -36,8 +36,7 @@ use SE\SDK\Services\{
     UserSettingService,
     SocialService,
     Tags\CategoryService,
-    Tags\TagService
-};
+    Tags\TagService};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;
@@ -236,6 +235,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(VideoService::class, function () {
             return new VideoService();
+        });
+
+        $this->app->singleton(LibraryService::class, function () {
+            return new LibraryService();
         });
     }
 }

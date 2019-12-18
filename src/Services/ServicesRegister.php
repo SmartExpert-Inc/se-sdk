@@ -19,8 +19,8 @@ use SE\SDK\Services\Todo\{
 use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
-use SE\SDK\Services\Products\{
-    LessonService,
+use SE\SDK\Services\Products\{LessonService,
+    LibraryService,
     ModuleService,
     PracticeService,
     ProductService,
@@ -28,8 +28,7 @@ use SE\SDK\Services\Products\{
     ReviewService,
     TestService,
     TextService,
-    VideoService
-};
+    VideoService};
 
 final class ServicesRegister
 {
@@ -168,5 +167,6 @@ final class ServicesRegister
         $this->lessonTest = app(TestService::class);
         $this->lessonText = app(TextService::class);
         $this->lessonVideo = app(VideoService::class);
+        $this->lessonLibrary = app(LibraryService::class);
     }
 }
