@@ -19,7 +19,8 @@ use SE\SDK\Services\Todo\{
 use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
-use SE\SDK\Services\Products\{LessonService,
+use SE\SDK\Services\Products\{
+    LessonService,
     LibraryService,
     ModuleService,
     PracticeService,
@@ -28,7 +29,8 @@ use SE\SDK\Services\Products\{LessonService,
     ReviewService,
     TestService,
     TextService,
-    VideoService};
+    VideoService
+};
 
 final class ServicesRegister
 {
