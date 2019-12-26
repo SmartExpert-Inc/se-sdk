@@ -2,9 +2,10 @@
 
 namespace SE\SDK\Services;
 
+use SE\SDK\Contracts\ServiceInterface;
 use Illuminate\Http\Request;
 
-abstract class BaseService
+abstract class BaseService implements ServiceInterface
 {
     const USER_SESSION_KEY_NAME = "user:session:";
 
