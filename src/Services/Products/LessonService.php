@@ -14,7 +14,7 @@ final class LessonService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function index(int $page = null): ?\stdClass
+    public function index(int $moduleId, int $page = null): ?\stdClass
     {
         $this->withAuth();
 
@@ -22,7 +22,7 @@ final class LessonService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/lessons', [
+            ->get("/modules/{$moduleId}/lessons", [
                 'page' => $page
             ])
             ->getObject();

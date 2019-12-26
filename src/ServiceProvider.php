@@ -17,6 +17,7 @@ use SE\SDK\Services\{
     Posts\PostService,
     Posts\StatisticService,
     Products\LessonService,
+    Products\LibraryService,
     Products\ModuleService,
     Products\PracticeService,
     Products\ProductService,
@@ -236,6 +237,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(VideoService::class, function () {
             return new VideoService();
+        });
+
+        $this->app->singleton(LibraryService::class, function () {
+            return new LibraryService();
         });
     }
 }
