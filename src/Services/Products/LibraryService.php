@@ -5,32 +5,13 @@ namespace SE\SDK\Services\Products;
 use Illuminate\Http\Request;
 use SE\SDK\Services\BaseService;
 
-final class ModuleService extends BaseService
+final class LibraryService extends BaseService
 {
     public function __construct()
     {
         parent::__construct();
 
         $this->host = config('se_sdk.products.host');
-    }
-
-    public function index(int $productId, int $page = null): ?\stdClass
-    {
-        $this->withAuth();
-
-        $modules = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get("/products/{$productId}/modules", [
-                'page' => $page
-            ])
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $modules;
     }
 
     public function store(Request $request): ?\stdClass
@@ -41,7 +22,7 @@ final class ModuleService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/modules", $request->all())
+            ->post("/libraries", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -50,41 +31,41 @@ final class ModuleService extends BaseService
         return $response;
     }
 
-    public function update(int $moduleId, Request $request): ?\stdClass
+    public function update(int $libraryId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $module = $this->api
+        $library = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/modules/{$moduleId}", $request->except(["_token", "_method"]))
+            ->put("/libraries/{$libraryId}", $request->except(["_token", "_method"]))
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $module;
+        return $library;
     }
 
     public function show(int $id): ?\stdClass
     {
         $this->withAuth();
 
-        $module = $this->api
+        $library = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/modules/{$id}")
+            ->get("/libraries/{$id}")
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $module;
+        return $library;
     }
 
-    public function delete(int $moduleId): ?\stdClass
+    public function delete(int $libraryId): ?\stdClass
     {
         $this->withAuth();
 
@@ -92,7 +73,7 @@ final class ModuleService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->delete("/modules/{$moduleId}")
+            ->delete("/libraries/{$libraryId}")
             ->getObject();
 
         $this->api->dropState();
