@@ -23,8 +23,10 @@ use SE\SDK\Services\{
     Products\ProductService,
     Products\QuestionService,
     Products\ReviewService,
+    Products\TeacherLinkService,
     Products\TestService,
     Products\TextService,
+    Products\UserLinkService,
     Products\VideoService,
     S3Service,
     ServicesRegister,
@@ -241,6 +243,14 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(LibraryService::class, function () {
             return new LibraryService();
+        });
+
+        $this->app->singleton(UserLinkService::class, function () {
+            return new UserLinkService();
+        });
+
+        $this->app->singleton(TeacherLinkService::class, function () {
+            return new TeacherLinkService();
         });
     }
 }
