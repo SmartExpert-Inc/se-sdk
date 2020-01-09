@@ -100,4 +100,21 @@ final class LessonService extends BaseService
 
         return $response;
     }
+
+    public function order(int $moduleId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/modules/{$moduleId}/lessons/order", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }

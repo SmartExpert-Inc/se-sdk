@@ -17,6 +17,7 @@ use SE\SDK\Services\{
     Posts\PostService,
     Posts\StatisticService,
     Products\LessonService,
+    Products\LessonableService,
     Products\LibraryService,
     Products\ModuleService,
     Products\PracticeService,
@@ -215,6 +216,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(LessonService::class, function () {
             return new LessonService();
+        });
+
+        $this->app->singleton(LessonableService::class, function () {
+            return new LessonableService();
         });
 
         $this->app->singleton(PracticeService::class, function () {

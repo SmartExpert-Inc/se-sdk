@@ -21,6 +21,7 @@ use SE\SDK\Services\Tags\{
 };
 use SE\SDK\Services\Products\{
     LessonService,
+    LessonableService,
     LibraryService,
     ModuleService,
     PracticeService,
@@ -135,6 +136,9 @@ final class ServicesRegister
     /** @var TeacherLinkService $productTeacher */
     public $productTeacher;
 
+    /** @var LessonableService $lessonable */
+    public $lessonable;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -174,6 +178,7 @@ final class ServicesRegister
         $this->product = app(ProductService::class);
         $this->module = app(ModuleService::class);
         $this->lesson = app(LessonService::class);
+        $this->lessonable = app(LessonableService::class);
         $this->lessonPractice = app(PracticeService::class);
         $this->lessonQuestion = app(QuestionService::class);
         $this->lessonReview = app(ReviewService::class);
