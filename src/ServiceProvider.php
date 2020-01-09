@@ -17,14 +17,17 @@ use SE\SDK\Services\{
     Posts\PostService,
     Posts\StatisticService,
     Products\LessonService,
+    Products\LessonableService,
     Products\LibraryService,
     Products\ModuleService,
     Products\PracticeService,
     Products\ProductService,
     Products\QuestionService,
     Products\ReviewService,
+    Products\TeacherLinkService,
     Products\TestService,
     Products\TextService,
+    Products\UserLinkService,
     Products\VideoService,
     S3Service,
     ServicesRegister,
@@ -215,6 +218,10 @@ class ServiceProvider extends IlluminateServiceProvider
             return new LessonService();
         });
 
+        $this->app->singleton(LessonableService::class, function () {
+            return new LessonableService();
+        });
+
         $this->app->singleton(PracticeService::class, function () {
             return new PracticeService();
         });
@@ -241,6 +248,14 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(LibraryService::class, function () {
             return new LibraryService();
+        });
+
+        $this->app->singleton(UserLinkService::class, function () {
+            return new UserLinkService();
+        });
+
+        $this->app->singleton(TeacherLinkService::class, function () {
+            return new TeacherLinkService();
         });
     }
 }
