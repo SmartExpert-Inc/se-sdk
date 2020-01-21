@@ -14,7 +14,7 @@ final class UserLinkService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function index(int $productId, int $page = null): ?\stdClass
+    public function index(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -22,9 +22,7 @@ final class UserLinkService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/products/{$productId}/users", [
-                'page' => $page
-            ])
+            ->get("/products/{$productId}/users", $request->all())
             ->getObject();
 
         $this->api->dropState();
