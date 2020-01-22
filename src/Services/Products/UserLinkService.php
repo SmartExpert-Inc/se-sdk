@@ -5,7 +5,7 @@ namespace SE\SDK\Services\Products;
 use Illuminate\Http\Request;
 use SE\SDK\Services\BaseService;
 
-final class LessonService extends BaseService
+final class UserLinkService extends BaseService
 {
     public function __construct()
     {
@@ -14,21 +14,21 @@ final class LessonService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function index(int $moduleId): ?\stdClass
+    public function index(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $lessons = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/modules/{$moduleId}/lessons")
+            ->get("/products/{$productId}/users", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $lessons;
+        return $response;
     }
 
     public function store(Request $request): ?\stdClass
@@ -39,7 +39,7 @@ final class LessonService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/lessons", $request->all())
+            ->post("/users", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -48,49 +48,32 @@ final class LessonService extends BaseService
         return $response;
     }
 
-    public function update(int $lessonId, Request $request): ?\stdClass
+    public function update(int $userId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $lesson = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/lessons/{$lessonId}", $request->except(["_token", "_method"]))
+            ->put("/users/{$userId}", $request->except(["_token", "_method"]))
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $lesson;
+        return $response;
     }
 
     public function show(int $id): ?\stdClass
     {
         $this->withAuth();
 
-        $lesson = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get("/lessons/{$id}")
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $lesson;
-    }
-
-    public function delete(int $lessonId): ?\stdClass
-    {
-        $this->withAuth();
-
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->delete("/lessons/{$lessonId}")
+            ->get("/users/{$id}")
             ->getObject();
 
         $this->api->dropState();
@@ -99,7 +82,7 @@ final class LessonService extends BaseService
         return $response;
     }
 
-    public function order(int $moduleId, Request $request): ?\stdClass
+    public function delete(int $id): ?\stdClass
     {
         $this->withAuth();
 
@@ -107,7 +90,41 @@ final class LessonService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/modules/{$moduleId}/lessons/order", $request->all())
+            ->delete("/users/{$id}")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function import(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/users/import", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function findByUserIds(int $productId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("products/{$productId}/users/find-by-user-ids", $request->all())
             ->getObject();
 
         $this->api->dropState();

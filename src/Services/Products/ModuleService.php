@@ -14,7 +14,7 @@ final class ModuleService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function index(int $productId, int $page = null): ?\stdClass
+    public function index(int $productId): ?\stdClass
     {
         $this->withAuth();
 
@@ -22,9 +22,7 @@ final class ModuleService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/products/{$productId}/modules", [
-                'page' => $page
-            ])
+            ->get("/products/{$productId}/modules")
             ->getObject();
 
         $this->api->dropState();
@@ -93,6 +91,23 @@ final class ModuleService extends BaseService
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->delete("/modules/{$moduleId}")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function order(int $productId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/products/{$productId}/modules/order", $request->all())
             ->getObject();
 
         $this->api->dropState();

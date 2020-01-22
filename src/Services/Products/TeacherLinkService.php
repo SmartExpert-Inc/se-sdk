@@ -5,7 +5,7 @@ namespace SE\SDK\Services\Products;
 use Illuminate\Http\Request;
 use SE\SDK\Services\BaseService;
 
-final class LessonService extends BaseService
+final class TeacherLinkService extends BaseService
 {
     public function __construct()
     {
@@ -14,21 +14,23 @@ final class LessonService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function index(int $moduleId): ?\stdClass
+    public function index(int $productId, int $page = null): ?\stdClass
     {
         $this->withAuth();
 
-        $lessons = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/modules/{$moduleId}/lessons")
+            ->get("/products/{$productId}/teachers", [
+                'page' => $page
+            ])
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $lessons;
+        return $response;
     }
 
     public function store(Request $request): ?\stdClass
@@ -39,7 +41,7 @@ final class LessonService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/lessons", $request->all())
+            ->post("/teachers", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -48,49 +50,32 @@ final class LessonService extends BaseService
         return $response;
     }
 
-    public function update(int $lessonId, Request $request): ?\stdClass
+    public function update(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $lesson = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/lessons/{$lessonId}", $request->except(["_token", "_method"]))
+            ->put("/teachers/{$id}", $request->except(["_token", "_method"]))
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $lesson;
+        return $response;
     }
 
     public function show(int $id): ?\stdClass
     {
         $this->withAuth();
 
-        $lesson = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get("/lessons/{$id}")
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $lesson;
-    }
-
-    public function delete(int $lessonId): ?\stdClass
-    {
-        $this->withAuth();
-
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->delete("/lessons/{$lessonId}")
+            ->get("/teachers/{$id}")
             ->getObject();
 
         $this->api->dropState();
@@ -99,7 +84,7 @@ final class LessonService extends BaseService
         return $response;
     }
 
-    public function order(int $moduleId, Request $request): ?\stdClass
+    public function delete(int $id): ?\stdClass
     {
         $this->withAuth();
 
@@ -107,7 +92,7 @@ final class LessonService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/modules/{$moduleId}/lessons/order", $request->all())
+            ->delete("/teachers/{$id}")
             ->getObject();
 
         $this->api->dropState();
