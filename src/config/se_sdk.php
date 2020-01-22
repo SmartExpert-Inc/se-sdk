@@ -41,9 +41,17 @@ return [
     ],
 
     's3' => [
-        'default' => env('FILESYSTEM_CLOUD', 'minio'),
-        'cloud' => env('FILESYSTEM_CLOUD', 'minio'),
+        'default' => env('FILESYSTEM_CLOUD', 'do_spaces'),
+        'cloud' => env('FILESYSTEM_CLOUD', 'do_spaces'),
         'disks' => [
+            'do_spaces' => [
+                'driver' => 's3',
+                'key' => env('DO_SPACES_KEY'),
+                'secret' => env('DO_SPACES_SECRET'),
+                'region' => env('DO_SPACES_REGION'), // can be anything
+                'bucket' => env('DO_SPACES_BUCKET'),// your space name
+                'endpoint' => env('DO_SPACES_ENDPOINT') // spaces endpoint (currently : `https://nyc3.digitaloceanspaces.com`)
+            ],
             'minio' => [
                 'driver' => 's3',
                 'endpoint' => env('MINIO_ENDPOINT', 'http://127.0.0.1:9005'),

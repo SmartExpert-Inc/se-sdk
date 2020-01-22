@@ -13,6 +13,7 @@ final class S3Service
 {
     const DEFAULT_DIRECTORY = 'temp';
     const DEFAULT_EXTENSION = 'jpg';
+    const DEFAULT_ACCESS = 'public';
 
     /** @var Storage $storage*/
     private $storage;
@@ -22,7 +23,8 @@ final class S3Service
 
     public function __construct()
     {
-        $this->storage = Storage::cloud();
+//        $this->storage = Storage::cloud();
+        $this->storage = Storage::disk('do_spaces');
         $this->env = config('app.env');
     }
 
@@ -38,7 +40,7 @@ final class S3Service
     public function putFiles(array $files, $directory = self::DEFAULT_DIRECTORY): array
     {
         $return = [];
-        
+
         foreach ($files as $file) {
             $return[] = $this->putFile($file, $directory);
         }
@@ -50,7 +52,7 @@ final class S3Service
     {
         $directory = $this->getDirectory($directory);
         $filename = $this->getUniqueFileName($file);
-        $this->storage->putFileAs($directory, $file, $filename);
+        $this->storage->putFileAs($directory, $file, $filename, self::DEFAULT_ACCESS);
 
         return $this->storage->url("{$directory}{$filename}");
     }
@@ -76,7 +78,7 @@ final class S3Service
 
         $uploadedFile = new UploadedFile($file, $info['basename']);
 
-        return $this->putFile($uploadedFile, $directory);
+        return $this->putFile($uploadedFile, $directory, self::DEFAULT_ACCESS);
     }
 
     public function putFileFromBase64(string $base64data, $directory = self::DEFAULT_DIRECTORY): ?string
@@ -101,7 +103,7 @@ final class S3Service
             $filename .= ".{$extension}";
 
             // put file
-            $this->storage->put("{$directory}{$filename}", $file);
+            $this->storage->put("{$directory}{$filename}", $file, self::DEFAULT_ACCESS);
 
             return $this->storage->url("{$directory}{$filename}");
         }
@@ -143,7 +145,7 @@ final class S3Service
             $file = File::get($tmpFile);
 
             // put file
-            $this->storage->put("{$directory}{$filename}", $file);
+            $this->storage->put("{$directory}{$filename}", $file, self::DEFAULT_ACCESS);
 
             return $this->storage->url("{$directory}{$filename}");
         }
