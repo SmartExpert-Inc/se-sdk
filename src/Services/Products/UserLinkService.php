@@ -116,7 +116,7 @@ final class UserLinkService extends BaseService
         return $response;
     }
 
-    public function findByUserIds(int $productId, Request $request): ?\stdClass
+    public function findForUser(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -124,7 +124,7 @@ final class UserLinkService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("products/{$productId}/users/find-by-user-ids", $request->all())
+            ->get("users/find-for-user", $request->all())
             ->getObject();
 
         $this->api->dropState();
