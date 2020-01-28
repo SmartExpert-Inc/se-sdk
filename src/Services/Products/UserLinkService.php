@@ -124,7 +124,7 @@ final class UserLinkService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("users/find-for-user", $request->all())
+            ->get("/users/find-for-user", $request->all())
             ->getObject();
 
         $this->api->dropState();
