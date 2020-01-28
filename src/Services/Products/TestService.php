@@ -90,7 +90,7 @@ final class TestService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("study/tests", $request->all())
+            ->post("/study/tests", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -107,7 +107,7 @@ final class TestService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("study/tests/{$id}")
+            ->get("/study/tests/{$id}")
             ->getObject();
 
         $this->api->dropState();
@@ -124,7 +124,7 @@ final class TestService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("study/tests/{$id}")
+            ->put("/study/tests/{$id}")
             ->getObject();
 
         $this->api->dropState();

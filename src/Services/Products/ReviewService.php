@@ -90,7 +90,7 @@ final class ReviewService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("study/reviews", $request->all())
+            ->post("/study/reviews", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -107,7 +107,7 @@ final class ReviewService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("study/reviews/{$id}")
+            ->get("/study/reviews/{$id}")
             ->getObject();
 
         $this->api->dropState();
@@ -124,7 +124,7 @@ final class ReviewService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("study/reviews/{$id}")
+            ->put("/study/reviews/{$id}")
             ->getObject();
 
         $this->api->dropState();
