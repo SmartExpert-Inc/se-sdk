@@ -39,7 +39,7 @@ final class LessonableService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("study/status", $request->all())
+            ->post("/study/status", $request->all())
             ->getObject();
 
         $this->api->dropState();
