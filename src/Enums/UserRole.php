@@ -11,4 +11,5 @@ final class UserRole
     const SuperAuthor = 'Super-author';
     const Coach = 'Coach';
     const AlphaCoach = 'Alpha-coach';
+    const Author = 'Author';
 }
