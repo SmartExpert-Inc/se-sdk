@@ -24,6 +24,7 @@ use SE\SDK\Services\{
     Products\ProductService,
     Products\QuestionService,
     Products\ReviewService,
+    Products\StudyService,
     Products\TeacherLinkService,
     Products\TestService,
     Products\TextService,
@@ -256,6 +257,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(TeacherLinkService::class, function () {
             return new TeacherLinkService();
+        });
+
+        $this->app->singleton(StudyService::class, function () {
+            return new StudyService();
         });
     }
 }
