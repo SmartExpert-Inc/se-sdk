@@ -28,6 +28,7 @@ use SE\SDK\Services\Products\{
     ProductService,
     QuestionService,
     ReviewService,
+    StudyService,
     TeacherLinkService,
     TestService,
     TextService,
@@ -139,6 +140,9 @@ final class ServicesRegister
     /** @var LessonableService $lessonable */
     public $lessonable;
 
+    /** @var StudyService $study */
+    public $study;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -189,5 +193,7 @@ final class ServicesRegister
 
         $this->productUser = app(UserLinkService::class);
         $this->productTeacher = app(TeacherLinkService::class);
+
+        $this->study = app(StudyService::class);
     }
 }
