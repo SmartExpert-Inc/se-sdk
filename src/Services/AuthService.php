@@ -143,15 +143,16 @@ final class AuthService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-//        TODO: Check scalar field in $oauth response
-        $results = [
-            'response' => json_decode($oauth->scalar),
-            'cookies' => $cookies
-        ];
+        if (property_exists($oauth, 'scalar')) {
+            $results = [
+                'response' => json_decode($oauth->scalar),
+                'cookies' => $cookies
+            ];
 
-        $this->setTokenToSession(json_decode($oauth->scalar));
+            $this->setTokenToSession(json_decode($oauth->scalar));
+        }
 
-        return (object) $results;
+        return (object) ($results ?? []);
     }
 
     public function logout(): ?\stdClass
