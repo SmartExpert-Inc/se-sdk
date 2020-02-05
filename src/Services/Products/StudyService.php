@@ -47,6 +47,23 @@ final class StudyService extends BaseService
         return $lessons;
     }
 
+    public function indexModule(int $id): ?\stdClass
+    {
+        $this->withAuth();
+
+        $modules = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/study/products/{$id}/modules")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $modules;
+    }
+
     public function getActiveProducts(): ?\stdClass
     {
         $this->withAuth();

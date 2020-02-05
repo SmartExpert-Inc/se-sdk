@@ -107,7 +107,7 @@ final class UserLinkService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/users/import", $request->all())
+            ->post("/users/import", $request->all())
             ->getObject();
 
         $this->api->dropState();
