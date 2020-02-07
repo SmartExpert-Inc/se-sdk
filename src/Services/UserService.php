@@ -187,7 +187,13 @@ final class UserService extends BaseService
             return null;
         }
 
-        return $user->data;
+        $user = $user->data;
+
+        if (property_exists($user, "roles")) {
+            $user->roles = array_column($user->roles, null, 'name');
+        }
+
+        return $user;
     }
 
     public function isAdmin(Request $request): bool
