@@ -20,6 +20,7 @@ use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
 use SE\SDK\Services\Products\{
+    GradeService,
     LessonService,
     LessonableService,
     LibraryService,
@@ -200,5 +201,6 @@ final class ServicesRegister
 
         $this->study = app(StudyService::class);
         $this->teacherCabinet = app(TeacherService::class);
+        $this->grade = app(GradeService::class);
     }
 }

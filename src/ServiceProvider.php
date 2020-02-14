@@ -31,6 +31,7 @@ use SE\SDK\Services\{
     Products\TextService,
     Products\UserLinkService,
     Products\VideoService,
+    Products\GradeService,
     S3Service,
     ServicesRegister,
     Todo\PriorityService,
@@ -266,6 +267,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(TeacherService::class, function () {
             return new TeacherService();
+        });
+
+        $this->app->singleton(GradeService::class, function () {
+            return new GradeService();
         });
     }
 }
