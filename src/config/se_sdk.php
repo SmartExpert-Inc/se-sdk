@@ -92,4 +92,8 @@ return [
     'products' => [
         'host' => env('PRODUCTS_SERVICE_HOST', null),
     ],
+
+    'todo' => [
+        'host' => env('TODO_SERVICE_HOST', null),
+    ],
 ];
