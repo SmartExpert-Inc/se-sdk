@@ -2,6 +2,7 @@
 
 namespace SE\SDK\Services\Products;
 
+use Illuminate\Http\Request;
 use SE\SDK\Services\BaseService;
 
 final class StudyService extends BaseService
@@ -13,7 +14,7 @@ final class StudyService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function showLesson(int $id): ?\stdClass
+    public function showLesson(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -21,7 +22,7 @@ final class StudyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/study/lessons/{$id}")
+            ->get("/study/lessons/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
