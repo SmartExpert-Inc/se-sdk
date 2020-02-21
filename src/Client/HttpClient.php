@@ -25,7 +25,7 @@ final class HttpClient
     private $maxRedirects = 4;
 
     /** @var int $connectTimeout */
-    private $connectTimeout = 20;
+    private $connectTimeout = 30;
 
     /** @var array $methods */
     private $methods = [
