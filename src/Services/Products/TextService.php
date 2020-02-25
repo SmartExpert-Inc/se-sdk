@@ -48,7 +48,7 @@ final class TextService extends BaseService
         return $text;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -56,7 +56,7 @@ final class TextService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/texts/{$id}")
+            ->get("/texts/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();

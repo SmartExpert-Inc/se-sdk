@@ -48,7 +48,7 @@ final class PracticeService extends BaseService
         return $practice;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -56,7 +56,7 @@ final class PracticeService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/practices/{$id}")
+            ->get("/practices/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
