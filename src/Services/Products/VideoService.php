@@ -48,7 +48,7 @@ final class VideoService extends BaseService
         return $video;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -56,7 +56,7 @@ final class VideoService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/videos/{$id}")
+            ->get("/videos/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();

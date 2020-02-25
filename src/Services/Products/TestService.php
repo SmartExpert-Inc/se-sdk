@@ -48,7 +48,7 @@ final class TestService extends BaseService
         return $test;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -56,7 +56,7 @@ final class TestService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/tests/{$id}")
+            ->get("/tests/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();

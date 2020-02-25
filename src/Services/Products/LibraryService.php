@@ -48,7 +48,7 @@ final class LibraryService extends BaseService
         return $library;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -56,7 +56,7 @@ final class LibraryService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/libraries/{$id}")
+            ->get("/libraries/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();

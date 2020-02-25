@@ -48,7 +48,7 @@ final class ReviewService extends BaseService
         return $review;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -56,7 +56,7 @@ final class ReviewService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/reviews/{$id}")
+            ->get("/reviews/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
