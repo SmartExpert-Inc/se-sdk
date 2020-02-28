@@ -124,7 +124,7 @@ final class PracticeService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/study/practices/{$id}")
+            ->put("/study/practices/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();

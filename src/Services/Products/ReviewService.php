@@ -124,7 +124,7 @@ final class ReviewService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/study/reviews/{$id}")
+            ->put("/study/reviews/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();

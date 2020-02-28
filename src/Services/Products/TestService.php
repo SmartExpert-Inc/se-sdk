@@ -124,7 +124,7 @@ final class TestService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/study/tests/{$id}")
+            ->put("/study/tests/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
