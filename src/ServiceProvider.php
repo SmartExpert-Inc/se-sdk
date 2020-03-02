@@ -43,7 +43,8 @@ use SE\SDK\Services\{
     UserSettingService,
     SocialService,
     Tags\CategoryService,
-    Tags\TagService
+    Tags\TagService,
+    NotificationService
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -271,6 +272,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(GradeService::class, function () {
             return new GradeService();
+        });
+
+        $this->app->singleton(NotificationService::class, function () {
+            return new NotificationService();
         });
     }
 }

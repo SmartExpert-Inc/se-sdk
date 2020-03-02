@@ -96,4 +96,8 @@ return [
     'todo' => [
         'host' => env('TODO_SERVICE_HOST', null),
     ],
+
+    'platform' => [
+        'host' => env('PLATFORM_SERVICE_HOST', null),
+    ],
 ];
