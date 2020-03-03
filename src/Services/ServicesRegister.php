@@ -148,6 +148,12 @@ final class ServicesRegister
     /** @var TeacherService $teacherCabinet */
     public $teacherCabinet;
 
+    /** @var GradeService $grade */
+    public $grade;
+
+    /** @var NotificationService $notification */
+    public $notification;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -202,5 +208,7 @@ final class ServicesRegister
         $this->study = app(StudyService::class);
         $this->teacherCabinet = app(TeacherService::class);
         $this->grade = app(GradeService::class);
+
+        $this->notification = app(NotificationService::class);
     }
 }
