@@ -21,7 +21,7 @@ final class NotificationService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("notifications/send", $request->all())
+            ->post("/notifications/send", $request->all())
             ->getObject();
 
         $this->api->dropState();
