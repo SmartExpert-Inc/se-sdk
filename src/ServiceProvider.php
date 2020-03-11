@@ -33,6 +33,7 @@ use SE\SDK\Services\{
     Products\UserLinkService,
     Products\VideoService,
     Products\GradeService,
+    Products\PrizeService,
     S3Service,
     ServicesRegister,
     Todo\PriorityService,
@@ -281,6 +282,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(GamificationService::class, function () {
             return new GamificationService();
+        });
+
+        $this->app->singleton(PrizeService::class, function () {
+            return new PrizeService();
         });
     }
 }

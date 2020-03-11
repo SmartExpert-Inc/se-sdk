@@ -27,6 +27,7 @@ use SE\SDK\Services\Products\{
     LibraryService,
     ModuleService,
     PracticeService,
+    PrizeService,
     ProductService,
     QuestionService,
     ReviewService,
@@ -158,6 +159,9 @@ final class ServicesRegister
     /** @var GamificationService $gamification */
     public $gamification;
 
+    /** @var PrizeService $prize */
+    public $prize;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -212,7 +216,9 @@ final class ServicesRegister
         $this->study = app(StudyService::class);
         $this->teacherCabinet = app(TeacherService::class);
         $this->grade = app(GradeService::class);
+
         $this->gamification = app(GamificationService::class);
+        $this->prize = app(PrizeService::class);
 
         $this->notification = app(NotificationService::class);
     }
