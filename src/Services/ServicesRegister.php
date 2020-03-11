@@ -20,6 +20,7 @@ use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
 use SE\SDK\Services\Products\{
+    GamificationService,
     GradeService,
     LessonService,
     LessonableService,
@@ -154,6 +155,9 @@ final class ServicesRegister
     /** @var NotificationService $notification */
     public $notification;
 
+    /** @var GamificationService $gamification */
+    public $gamification;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -208,6 +212,7 @@ final class ServicesRegister
         $this->study = app(StudyService::class);
         $this->teacherCabinet = app(TeacherService::class);
         $this->grade = app(GradeService::class);
+        $this->gamification = app(GamificationService::class);
 
         $this->notification = app(NotificationService::class);
     }
