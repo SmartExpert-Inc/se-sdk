@@ -16,6 +16,7 @@ use SE\SDK\Services\{
     LandingService,
     Posts\PostService,
     Posts\StatisticService,
+    Products\GamificationService,
     Products\LessonService,
     Products\LessonableService,
     Products\LibraryService,
@@ -276,6 +277,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(NotificationService::class, function () {
             return new NotificationService();
+        });
+
+        $this->app->singleton(GamificationService::class, function () {
+            return new GamificationService();
         });
     }
 }
