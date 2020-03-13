@@ -34,6 +34,7 @@ use SE\SDK\Services\{
     Products\VideoService,
     Products\GradeService,
     Products\PrizeService,
+    Products\RatingService,
     S3Service,
     ServicesRegister,
     Todo\PriorityService,
@@ -46,7 +47,8 @@ use SE\SDK\Services\{
     SocialService,
     Tags\CategoryService,
     Tags\TagService,
-    NotificationService
+    NotificationService,
+    GlobalRatingService
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -286,6 +288,14 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(PrizeService::class, function () {
             return new PrizeService();
+        });
+
+        $this->app->singleton(RatingService::class, function () {
+            return new RatingService();
+        });
+
+        $this->app->singleton(GlobalRatingService::class, function () {
+            return new GlobalRatingService();
         });
     }
 }

@@ -37,7 +37,8 @@ use SE\SDK\Services\Products\{
     TestService,
     TextService,
     UserLinkService,
-    VideoService
+    VideoService,
+    RatingService
 };
 
 final class ServicesRegister
@@ -162,6 +163,12 @@ final class ServicesRegister
     /** @var PrizeService $prize */
     public $prize;
 
+    /** @var RatingService $productRating */
+    public $productRating;
+
+    /** @var GlobalRatingService $globalRating */
+    public $globalRating;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -219,7 +226,9 @@ final class ServicesRegister
 
         $this->gamification = app(GamificationService::class);
         $this->prize = app(PrizeService::class);
+        $this->productRating = app(RatingService::class);
 
         $this->notification = app(NotificationService::class);
+        $this->globalRating = app(GlobalRatingService::class);
     }
 }
