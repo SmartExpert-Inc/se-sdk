@@ -4,6 +4,7 @@ namespace SE\SDK\Enums;
 
 final class RatingLogAction
 {
+    // global rating action
     const CreateHelpPost = 0;
     const DeleteHelpPost = 1;
     const PutThanks = 2;
@@ -21,6 +22,18 @@ final class RatingLogAction
     const ActiveMonth = 14;
     const TwoMonthsActive = 15;
 
+    // product rating action
+    const PracticeDone = 16;
+    const LessonReviewed = 17;
+    const TestDone = 18;
+    const LessonCommented = 19;
+    const FiveLessonDone = 20;
+    const TenLessonDone = 20;
+    const SaveAllLives = 21;
+
+    // lives count * points
+    const SaveSomeLives = 22;
+
     public static function getAmount($value): int
     {
         switch ($value) {
@@ -30,6 +43,10 @@ final class RatingLogAction
             case self::DeleteHelpPost
                 || self::DeleteThanks:
                 return -25;
+            case self::PracticeDone
+                || self::LessonReviewed
+                || self::LessonCommented:
+                return 50;
             case self::GetThanks:
                 return 75;
             case self::DeleteGettingThanks:
@@ -39,13 +56,19 @@ final class RatingLogAction
                 || self::SelectedTags
                 || self::ActiveWeek:
                 return 100;
-            case self::FilledOutProfile:
+            case self::FiveLessonDone:
+                return 150;
+            case self::FilledOutProfile
+                || self::SaveSomeLives:
                 return 200;
+            case self::TenLessonDone:
+                return 300;
             case self::FirstProductFinished
                 || self::ActiveMonth:
                 return 500;
             case self::SecondProductFinished
-                || self::TwoMonthsActive:
+                || self::TwoMonthsActive
+                || self::SaveAllLives:
                 return 1000;
             case self::ThirdProductFinished:
                 return 2000;
@@ -106,8 +129,34 @@ final class RatingLogAction
                 return 'The user takes an active action every day for a month';
             case self::TwoMonthsActive:
                 return 'The user takes an active action every day for a two months';
+            case self::PracticeDone:
+                return 'The user completed a practical task in lesson';
+            case self::LessonReviewed:
+                return 'The user left review in lesson';
+            case self::TestDone:
+                return 'The user completed test in lesson';
+            case self::LessonCommented:
+                return 'The user left comment in lesson';
+            case self::FiveLessonDone:
+                return 'The user completed five lesson in product';
+            case self::TenLessonDone:
+                return 'The user completed ten lesson in product';
+            case self::SaveAllLives:
+                return 'The user save all lives by the end of product';
+            case self::SaveSomeLives:
+                return 'The user save some lives by the end of product';
             default:
                 return '';
         }
+    }
+
+    public static function isTestDone($value): bool
+    {
+        return $value == self::TestDone;
+    }
+
+    public static function isSaveSomeLives($value): bool
+    {
+        return $value == self::SaveSomeLives;
     }
 }

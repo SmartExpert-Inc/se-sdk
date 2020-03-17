@@ -22,7 +22,7 @@ final class RatingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/rating-setting/{$settingId}", $request->except(["_token", "_method"]))
+            ->put("/rating-settings/{$settingId}", $request->except(["_token", "_method"]))
             ->getObject();
 
         $this->api->dropState();
