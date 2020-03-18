@@ -39,7 +39,7 @@ final class RatingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("products/{$productId}/rating-settings")
+            ->get("/products/{$productId}/rating-settings")
             ->getObject();
 
         $this->api->dropState();
@@ -56,7 +56,7 @@ final class RatingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("ratings/lesson-commented", $request->all())
+            ->post("/ratings/lesson-commented", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -73,7 +73,7 @@ final class RatingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("products/{$productId}/ratings", $request->all())
+            ->get("/products/{$productId}/ratings", $request->all())
             ->getObject();
 
         $this->api->dropState();
