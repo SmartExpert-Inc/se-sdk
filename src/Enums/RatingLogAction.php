@@ -33,6 +33,7 @@ final class RatingLogAction
 
     // lives count * points
     const SaveSomeLives = 22;
+    const LessonDone = 23;
 
     public static function getAmount($value): int
     {
@@ -135,6 +136,8 @@ final class RatingLogAction
                 return 'The user left review in lesson';
             case self::TestDone:
                 return 'The user completed test in lesson';
+            case self::LessonDone:
+                return 'The user completed lesson';
             case self::LessonCommented:
                 return 'The user left comment in lesson';
             case self::FiveLessonDone:
@@ -153,6 +156,11 @@ final class RatingLogAction
     public static function isTestDone($value): bool
     {
         return $value == self::TestDone;
+    }
+
+    public static function isLessonDone($value): bool
+    {
+        return $value == self::LessonDone;
     }
 
     public static function isSaveSomeLives($value): bool
