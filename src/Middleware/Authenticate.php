@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as BaseAuth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class Authenticate extends BaseAuth
 {
@@ -35,6 +36,7 @@ class Authenticate extends BaseAuth
             throw new AuthenticationException('Unauthenticated.', $guards);
         }
 
+        App::setLocale($user->locale ?? config('app.locale'));
         session()->put(['user' => $user]);
 
         return $next($request);
