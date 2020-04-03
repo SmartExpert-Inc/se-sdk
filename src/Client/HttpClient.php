@@ -197,9 +197,9 @@ final class HttpClient
             }
         }
 
-        if (app()->environment() !== "production") {
-            Log::debug(print_r($body, true));
-        }
+//        if (app()->environment() !== "production") {
+//            Log::debug(print_r($body, true));
+//        }
 
         $response = new \stdClass();
         $response->body = $body;

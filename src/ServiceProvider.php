@@ -35,6 +35,7 @@ use SE\SDK\Services\{
     Products\GradeService,
     Products\PrizeService,
     Products\RatingService,
+    Products\HelpOtherService,
     S3Service,
     ServicesRegister,
     Todo\PriorityService,
@@ -296,6 +297,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(GlobalRatingService::class, function () {
             return new GlobalRatingService();
+        });
+
+        $this->app->singleton(HelpOtherService::class, function () {
+            return new HelpOtherService();
         });
     }
 }
