@@ -14,7 +14,7 @@ final class ProductService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function index(int $page = null): ?\stdClass
+    public function index(int $page = 1): ?\stdClass
     {
         $this->withAuth();
 

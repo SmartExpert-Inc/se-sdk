@@ -65,7 +65,7 @@ final class StudyService extends BaseService
         return $modules;
     }
 
-    public function getActiveProducts(): ?\stdClass
+    public function getActiveProducts(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -73,7 +73,7 @@ final class StudyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/study/products/active")
+            ->get("/study/products/active", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -82,7 +82,7 @@ final class StudyService extends BaseService
         return $response;
     }
 
-    public function getFinishedProducts(): ?\stdClass
+    public function getFinishedProducts(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -90,7 +90,7 @@ final class StudyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/study/products/finished")
+            ->get("/study/products/finished", $request->all())
             ->getObject();
 
         $this->api->dropState();
