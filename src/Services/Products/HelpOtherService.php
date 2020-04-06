@@ -5,7 +5,7 @@ namespace SE\SDK\Services\Products;
 use Illuminate\Http\Request;
 use SE\SDK\Services\BaseService;
 
-final class StudyService extends BaseService
+final class HelpOtherService extends BaseService
 {
     public function __construct()
     {
@@ -14,58 +14,7 @@ final class StudyService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function showLesson(int $id, Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $lesson = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get("/study/lessons/{$id}", $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $lesson;
-    }
-
-    public function indexLesson(int $id): ?\stdClass
-    {
-        $this->withAuth();
-
-        $lessons = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get("/study/modules/{$id}/lessons")
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $lessons;
-    }
-
-    public function indexModule(int $id): ?\stdClass
-    {
-        $this->withAuth();
-
-        $modules = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get("/study/products/{$id}/modules")
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $modules;
-    }
-
-    public function getActiveProducts(Request $request): ?\stdClass
+    public function store(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -73,7 +22,7 @@ final class StudyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/study/products/active", $request->all())
+            ->post("/help-others", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -82,7 +31,7 @@ final class StudyService extends BaseService
         return $response;
     }
 
-    public function getFinishedProducts(Request $request): ?\stdClass
+    public function update(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -90,7 +39,41 @@ final class StudyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/study/products/finished", $request->all())
+            ->put("/help-others/{$id}", $request->except(["_token", "_method"]))
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function show(int $id, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/help-others/{$id}", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function delete(int $id): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/help-others/{$id}")
             ->getObject();
 
         $this->api->dropState();

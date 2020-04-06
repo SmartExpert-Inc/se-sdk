@@ -35,41 +35,41 @@ final class RatingLogAction
     const SaveSomeLives = 22;
     const LessonDone = 23;
 
-    public static function getAmount($value): int
+    public static function getAmount(int $value): int
     {
         switch ($value) {
-            case self::CreateHelpPost
-                || self::PutThanks:
+            case self::CreateHelpPost:
+            case self::PutThanks:
                 return 25;
-            case self::DeleteHelpPost
-                || self::DeleteThanks:
+            case self::DeleteHelpPost:
+            case self::DeleteThanks:
                 return -25;
-            case self::PracticeDone
-                || self::LessonReviewed
-                || self::LessonCommented:
+            case self::PracticeDone:
+            case self::LessonReviewed:
+            case self::LessonCommented:
                 return 50;
             case self::GetThanks:
                 return 75;
             case self::DeleteGettingThanks:
                 return -75;
-            case self::RepostHelpPost
-                || self::AvatarLoaded
-                || self::SelectedTags
-                || self::ActiveWeek:
+            case self::RepostHelpPost:
+            case self::AvatarLoaded:
+            case self::SelectedTags:
+            case self::ActiveWeek:
                 return 100;
             case self::FiveLessonDone:
                 return 150;
-            case self::FilledOutProfile
-                || self::SaveSomeLives:
+            case self::FilledOutProfile:
+            case self::SaveSomeLives:
                 return 200;
             case self::TenLessonDone:
                 return 300;
-            case self::FirstProductFinished
-                || self::ActiveMonth:
+            case self::FirstProductFinished:
+            case self::ActiveMonth:
                 return 500;
-            case self::SecondProductFinished
-                || self::TwoMonthsActive
-                || self::SaveAllLives:
+            case self::SecondProductFinished:
+            case self::TwoMonthsActive:
+            case self::SaveAllLives:
                 return 1000;
             case self::ThirdProductFinished:
                 return 2000;
@@ -81,12 +81,12 @@ final class RatingLogAction
     public static function getMaxRepeatingPerDay($value): ?int
     {
         switch ($value) {
-            case self::CreateHelpPost
-                || self::PutThanks
-                || self::GetThanks
-                || self::DeleteGettingThanks
-                || self::DeleteThanks
-                || self::DeleteHelpPost:
+            case self::CreateHelpPost:
+            case self::PutThanks:
+            case self::GetThanks:
+            case self::DeleteGettingThanks:
+            case self::DeleteThanks:
+            case self::DeleteHelpPost:
                 return 3;
             case self::RepostHelpPost:
                 return 1;
