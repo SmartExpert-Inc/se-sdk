@@ -109,7 +109,7 @@ final class TeacherLinkService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("teachers/find-for-user", $request->all())
+            ->get("/teachers/find-for-user", $request->all())
             ->getObject();
 
         $this->api->dropState();
