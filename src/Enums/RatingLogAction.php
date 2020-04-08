@@ -30,12 +30,12 @@ final class RatingLogAction extends Enum
     const TestDone = 18;
     const LessonCommented = 19;
     const FiveLessonDone = 20;
-    const TenLessonDone = 20;
-    const SaveAllLives = 21;
+    const TenLessonDone = 21;
+    const SaveAllLives = 22;
 
     // lives count * points
-    const SaveSomeLives = 22;
-    const LessonDone = 23;
+    const SaveSomeLives = 23;
+    const LessonDone = 24;
 
     public static function getAmount(int $value): int
     {
