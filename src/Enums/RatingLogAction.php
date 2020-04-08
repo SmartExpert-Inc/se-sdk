@@ -2,7 +2,9 @@
 
 namespace SE\SDK\Enums;
 
-final class RatingLogAction
+use BenSampo\Enum\Enum;
+
+final class RatingLogAction extends Enum
 {
     // global rating action
     const CreateHelpPost = 0;
