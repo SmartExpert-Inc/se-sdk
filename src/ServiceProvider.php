@@ -36,6 +36,7 @@ use SE\SDK\Services\{
     Products\PrizeService,
     Products\RatingService,
     Products\HelpOtherService,
+    Products\PresentationService,
     S3Service,
     ServicesRegister,
     Todo\PriorityService,
@@ -301,6 +302,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(HelpOtherService::class, function () {
             return new HelpOtherService();
+        });
+
+        $this->app->singleton(PresentationService::class, function () {
+            return new PresentationService();
         });
     }
 }
