@@ -39,7 +39,8 @@ use SE\SDK\Services\Products\{
     UserLinkService,
     VideoService,
     RatingService,
-    HelpOtherService
+    HelpOtherService,
+    PresentationService
 };
 
 final class ServicesRegister
@@ -140,6 +141,9 @@ final class ServicesRegister
     /** @var HelpOtherService $lessonHelpOther */
     public $lessonHelpOther;
 
+    /** @var PresentationService $lessonPresentation */
+    public $lessonPresentation;
+
     /** @var UserLinkService $productUser */
     public $productUser;
 
@@ -221,6 +225,7 @@ final class ServicesRegister
         $this->lessonVideo = app(VideoService::class);
         $this->lessonLibrary = app(LibraryService::class);
         $this->lessonHelpOther = app(HelpOtherService::class);
+        $this->lessonPresentation = app(PresentationService::class);
 
         $this->productUser = app(UserLinkService::class);
         $this->productTeacher = app(TeacherLinkService::class);
