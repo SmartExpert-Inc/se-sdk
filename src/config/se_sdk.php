@@ -101,6 +101,10 @@ return [
         'host' => env('PLATFORM_HOST', null),
     ],
 
+    'community' => [
+        'host' => env('COMMUNITY_SERVICE_HOST', null),
+    ],
+
     'artisan' => [
         'user_email' => env('ARTISAN_USER_EMAIL', 'artisan@app.com'),
         'user_password' => env('ARTISAN_USER_PASSWORD', '12345678'),

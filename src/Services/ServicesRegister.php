@@ -42,6 +42,7 @@ use SE\SDK\Services\Products\{
     HelpOtherService,
     PresentationService
 };
+use SE\SDK\Services\Community\PostService as CommunityPostService;
 
 final class ServicesRegister
 {
@@ -177,6 +178,9 @@ final class ServicesRegister
     /** @var GlobalRatingService $globalRating */
     public $globalRating;
 
+    /** @var CommunityPostService $communityPost */
+    public $communityPost;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -240,5 +244,7 @@ final class ServicesRegister
 
         $this->notification = app(NotificationService::class);
         $this->globalRating = app(GlobalRatingService::class);
+
+        $this->communityPost = app(CommunityPostService::class);
     }
 }

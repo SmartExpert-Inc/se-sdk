@@ -50,7 +50,8 @@ use SE\SDK\Services\{
     Tags\CategoryService,
     Tags\TagService,
     NotificationService,
-    GlobalRatingService
+    GlobalRatingService,
+    Community\PostService as CommunityPostService,
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -306,6 +307,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(PresentationService::class, function () {
             return new PresentationService();
+        });
+
+        $this->app->singleton(CommunityPostService::class, function () {
+            return new CommunityPostService();
         });
     }
 }
