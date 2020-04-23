@@ -13,6 +13,7 @@ use SE\SDK\Services\{
     Comments\LikeService,
     Comments\RepostService,
     Comments\ViewService,
+    Community\GroupService,
     LandingService,
     Posts\PostService,
     Posts\StatisticService,
@@ -51,7 +52,7 @@ use SE\SDK\Services\{
     Tags\TagService,
     NotificationService,
     GlobalRatingService,
-    Community\PostService as CommunityPostService,
+    Community\PostService as CommunityPostService
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -311,6 +312,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(CommunityPostService::class, function () {
             return new CommunityPostService();
+        });
+
+        $this->app->singleton(GroupService::class, function () {
+            return new GroupService();
         });
     }
 }
