@@ -6,6 +6,6 @@ use BenSampo\Enum\Enum;
 
 final class GroupType extends Enum
 {
-    const OPENED = 1;
-    const CLOSED = 2;
+    const Opened = 1;
+    const Closed = 2;
 }

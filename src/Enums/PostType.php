@@ -6,6 +6,6 @@ use BenSampo\Enum\Enum;
 
 final class PostType extends Enum
 {
-    const DEFAULT = 1;
-    const HELP = 2;
+    const Default = 1;
+    const Help = 2;
 }
