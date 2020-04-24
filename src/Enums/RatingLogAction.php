@@ -37,6 +37,9 @@ final class RatingLogAction extends Enum
     const SaveSomeLives = 23;
     const LessonDone = 24;
 
+    const DeleteOldTestGrade = 25;
+    const DeleteOldLessonGrade = 26;
+
     public static function getAmount(int $value): int
     {
         switch ($value) {
@@ -150,6 +153,10 @@ final class RatingLogAction extends Enum
                 return 'The user save all lives by the end of product';
             case self::SaveSomeLives:
                 return 'The user save some lives by the end of product';
+            case self::DeleteOldTestGrade:
+                return 'Delete old test result';
+            case self::DeleteOldLessonGrade:
+                return 'Delete old lesson result';
             default:
                 return '';
         }
@@ -163,6 +170,16 @@ final class RatingLogAction extends Enum
     public static function isLessonDone($value): bool
     {
         return $value == self::LessonDone;
+    }
+
+    public static function isDeleteOldTestGrade($value): bool
+    {
+        return $value == self::DeleteOldTestGrade;
+    }
+
+    public static function isDeleteOldLessonGrade($value): bool
+    {
+        return $value == self::DeleteOldLessonGrade;
     }
 
     public static function isSaveSomeLives($value): bool
