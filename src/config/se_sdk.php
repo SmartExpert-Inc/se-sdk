@@ -52,15 +52,15 @@ return [
                 'bucket' => env('DO_SPACES_BUCKET'),// your space name
                 'endpoint' => env('DO_SPACES_ENDPOINT') // spaces endpoint (currently : `https://nyc3.digitaloceanspaces.com`)
             ],
-            'minio' => [
-                'driver' => 's3',
-                'endpoint' => env('MINIO_ENDPOINT', 'http://127.0.0.1:9005'),
-                'use_path_style_endpoint' => true,
-                'key' => env('AWS_KEY'),
-                'secret' => env('AWS_SECRET'),
-                'region' => env('AWS_REGION', 'eu-central-1'),
-                'bucket' => env('AWS_BUCKET'),
-            ],
+//            'minio' => [
+//                'driver' => 's3',
+//                'endpoint' => env('MINIO_ENDPOINT', 'http://127.0.0.1:9005'),
+//                'use_path_style_endpoint' => true,
+//                'key' => env('AWS_KEY'),
+//                'secret' => env('AWS_SECRET'),
+//                'region' => env('AWS_REGION', 'eu-central-1'),
+//                'bucket' => env('AWS_BUCKET'),
+//            ],
         ],
         'thumb' => [
             'width' => 250,
