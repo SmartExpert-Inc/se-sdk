@@ -14,6 +14,23 @@ final class PostService extends BaseService
         $this->host = config('se_sdk.community.host');
     }
 
+    public function index(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/posts", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function store(Request $request): ?\stdClass
     {
         $this->withAuth();
@@ -65,7 +82,7 @@ final class PostService extends BaseService
         return $post;
     }
 
-    public function delete(int $id): ?\stdClass
+    public function delete(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -73,7 +90,7 @@ final class PostService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->delete("/posts/{$id}")
+            ->delete("/posts/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -81,4 +98,6 @@ final class PostService extends BaseService
 
         return $response;
     }
+
+
 }
