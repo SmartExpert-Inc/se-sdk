@@ -99,5 +99,54 @@ final class PostService extends BaseService
         return $response;
     }
 
+    public function indexHelp(Request $request): ?\stdClass
+    {
+        $this->withAuth();
 
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/posts/help", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function indexDesc(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/posts/desc", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function indexHelpDesc(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/posts/help/desc", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
