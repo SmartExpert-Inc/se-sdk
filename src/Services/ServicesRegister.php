@@ -42,7 +42,7 @@ use SE\SDK\Services\Products\{
     HelpOtherService,
     PresentationService
 };
-use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService};
+use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
 
 final class ServicesRegister
 {
@@ -184,6 +184,9 @@ final class ServicesRegister
     /** @var GroupService $communityGroup */
     public $communityGroup;
 
+    /** @var FriendService $communityFriend */
+    public $communityFriend;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -250,5 +253,6 @@ final class ServicesRegister
 
         $this->communityPost = app(CommunityPostService::class);
         $this->communityGroup = app(GroupService::class);
+        $this->communityFriend = app(FriendService::class);
     }
 }

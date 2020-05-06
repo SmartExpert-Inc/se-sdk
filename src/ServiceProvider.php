@@ -52,7 +52,8 @@ use SE\SDK\Services\{
     Tags\TagService,
     NotificationService,
     GlobalRatingService,
-    Community\PostService as CommunityPostService
+    Community\PostService as CommunityPostService,
+    Community\FriendService
 };
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
@@ -316,6 +317,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(GroupService::class, function () {
             return new GroupService();
+        });
+
+        $this->app->singleton(FriendService::class, function () {
+            return new FriendService();
         });
     }
 }
