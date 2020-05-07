@@ -32,7 +32,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function message(string $botName, string $message, int $userId, ?int $ownerId): ?\stdClass
+    public function message(string $botName, string $message, int $userId, int $ownerId = null): ?\stdClass
     {
         $this->withAuth();
 
