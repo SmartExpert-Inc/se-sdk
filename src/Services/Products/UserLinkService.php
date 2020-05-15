@@ -133,23 +133,6 @@ final class UserLinkService extends BaseService
         return $response;
     }
 
-    public function import(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $response = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->post("/users/import", $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $response;
-    }
-
     public function findForUser(Request $request): ?\stdClass
     {
         $this->withAuth();
