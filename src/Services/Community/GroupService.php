@@ -65,7 +65,7 @@ final class GroupService extends BaseService
         return $response;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -73,7 +73,7 @@ final class GroupService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/groups/{$id}")
+            ->get("/groups/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -82,7 +82,7 @@ final class GroupService extends BaseService
         return $response;
     }
 
-    public function delete(int $id): ?\stdClass
+    public function delete(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -90,7 +90,7 @@ final class GroupService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->delete("/groups/{$id}")
+            ->delete("/groups/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
