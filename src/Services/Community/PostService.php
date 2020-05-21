@@ -124,7 +124,7 @@ final class PostService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/posts/desc", $request->all())
+            ->get("/posts/desk", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -141,7 +141,7 @@ final class PostService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/posts/help/desc", $request->all())
+            ->get("/posts/help/desk", $request->all())
             ->getObject();
 
         $this->api->dropState();
