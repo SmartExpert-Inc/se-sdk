@@ -67,4 +67,38 @@ final class LikeService extends BaseService
 
         return $like;
     }
+
+    public function getAuthUserLikesForCommunityPosts(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $likes = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/likes/auth-user-community-posts", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $likes;
+    }
+
+    public function getLikesForCommunityPosts(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $likes = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/likes/community-posts", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $likes;
+    }
 }
