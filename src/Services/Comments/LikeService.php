@@ -50,4 +50,21 @@ final class LikeService extends BaseService
 
         return $like;
     }
+
+    public function deleteByType(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $like = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/likes/delete-by-type", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $like;
+    }
 }
