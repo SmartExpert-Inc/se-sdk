@@ -21,6 +21,7 @@ use SE\SDK\Services\{
     Products\LessonService,
     Products\LessonableService,
     Products\LibraryService,
+    Products\LiveStreamService,
     Products\ModuleService,
     Products\PracticeService,
     Products\ProductService,
@@ -309,6 +310,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(PresentationService::class, function () {
             return new PresentationService();
+        });
+
+        $this->app->singleton(LiveStreamService::class, function () {
+            return new LiveStreamService();
         });
 
         $this->app->singleton(CommunityPostService::class, function () {
