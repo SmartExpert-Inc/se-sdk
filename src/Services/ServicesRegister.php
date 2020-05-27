@@ -25,6 +25,7 @@ use SE\SDK\Services\Products\{
     LessonService,
     LessonableService,
     LibraryService,
+    LiveStreamService,
     ModuleService,
     PracticeService,
     PrizeService,
@@ -145,6 +146,9 @@ final class ServicesRegister
     /** @var PresentationService $lessonPresentation */
     public $lessonPresentation;
 
+    /** @var LiveStreamService $lessonLiveStream */
+    public $lessonLiveStream;
+
     /** @var UserLinkService $productUser */
     public $productUser;
 
@@ -236,6 +240,7 @@ final class ServicesRegister
         $this->lessonLibrary = app(LibraryService::class);
         $this->lessonHelpOther = app(HelpOtherService::class);
         $this->lessonPresentation = app(PresentationService::class);
+        $this->lessonLiveStream = app(LiveStreamService::class);
 
         $this->productUser = app(UserLinkService::class);
         $this->productTeacher = app(TeacherLinkService::class);
