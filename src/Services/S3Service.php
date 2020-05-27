@@ -6,6 +6,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\{File, Storage};
+use Illuminate\Support\Str;
 use Spatie\Image\{Image, Manipulations};
 use Webpatser\Uuid\Uuid;
 
@@ -172,10 +173,26 @@ final class S3Service
         $filename = Uuid::generate()->string;
 
         if (! is_null($file)) {
-            $filename .= $file->getClientOriginalExtension()
-                ? ".{$file->getClientOriginalExtension()}" // extension
-                : null;
+            $filename = $this->getOriginalName($file);
+//            $filename .= $file->getClientOriginalExtension()
+//                ? ".{$file->getClientOriginalExtension()}" // extension
+//                : null;
         }
+
+        return $filename;
+    }
+
+    private function getOriginalName(UploadedFile $file): string
+    {
+        $filename = $file->getClientOriginalName();
+        $fileNameArr = explode('.', $filename);
+        array_pop($fileNameArr);
+        $filename = implode('_', $fileNameArr);
+        $filename = str_replace(' ', '_', $filename);
+        $filename = Str::slug($filename, '_');
+        $filename .= $file->getClientOriginalExtension()
+            ? ".{$file->getClientOriginalExtension()}" // extension
+            : null;
 
         return $filename;
     }
