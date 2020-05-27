@@ -133,7 +133,7 @@ final class TeacherService extends BaseService
         return $response;
     }
 
-    public function getLessonsForProduct(int $productId): ?\stdClass
+    public function getLessonsForProduct(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -141,7 +141,24 @@ final class TeacherService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/teacher/products/{$productId}/lessons")
+            ->get("/teacher/products/{$productId}/lessons", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function getGradesForProduct(int $productId): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/teacher/products/{$productId}/grades")
             ->getObject();
 
         $this->api->dropState();
