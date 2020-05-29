@@ -101,4 +101,21 @@ final class CommentService extends BaseService
 
         return $comment;
     }
+
+    public function getCommentsCountForCommunityPosts(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $likes = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/comments/community-posts", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $likes;
+    }
 }

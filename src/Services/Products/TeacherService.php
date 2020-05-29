@@ -31,7 +31,7 @@ final class TeacherService extends BaseService
         return $lessons;
     }
 
-    public function getLessonsOnCheck(): ?\stdClass
+    public function getLessonsOnCheck(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -39,7 +39,7 @@ final class TeacherService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/teacher/lessons-on-check")
+            ->get("/teacher/lessons-on-check", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -142,6 +142,23 @@ final class TeacherService extends BaseService
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->get("/teacher/products/{$productId}/lessons", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function getLessonsAttendanceForProduct(int $productId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/teacher/products/{$productId}/lessons-attendance", $request->all())
             ->getObject();
 
         $this->api->dropState();
