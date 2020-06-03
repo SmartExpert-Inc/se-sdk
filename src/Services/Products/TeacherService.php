@@ -217,4 +217,21 @@ final class TeacherService extends BaseService
 
         return $response;
     }
+
+    public function getTestsResultsForLesson(int $lessonId): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/teacher/lessons/{$lessonId}/tests-results")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
