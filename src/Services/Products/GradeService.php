@@ -50,6 +50,23 @@ final class GradeService extends BaseService
         return $response;
     }
 
+    public function autoSave(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/teacher/grades/autosave", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function update(int $gradeId, Request $request): ?\stdClass
     {
         $this->withAuth();
