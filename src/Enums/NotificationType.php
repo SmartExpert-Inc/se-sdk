@@ -15,4 +15,5 @@ final class NotificationType
     const UserInactive = 'App\Notifications\UserInactive';
     const UserRegistered = 'App\Notifications\UserRegistered';
     const NewHelpPost = 'App\Notifications\NewHelpPost';
+    const RatingNotification = 'App\Notifications\RatingNotification';
 }

@@ -102,64 +102,9 @@ final class RatingLogAction extends Enum
 
     public static function getDescription($value): string
     {
-        switch ($value) {
-            case self::CreateHelpPost:
-                return 'Create help post';
-            case self::DeleteHelpPost:
-                return 'Delete help post';
-            case self::PutThanks:
-                return 'Put thanks under your help post';
-            case self::DeleteThanks:
-                return 'Delete thanks under your help post';
-            case self::GetThanks:
-                return 'Get thanks under your answer on help post';
-            case self::DeleteGettingThanks:
-                return 'Delete thanks under your answer on help post';
-            case self::RepostHelpPost:
-                return 'Repost help post';
-            case self::FirstProductFinished:
-                return 'First product finished';
-            case self::SecondProductFinished:
-                return 'Second product finished';
-            case self::ThirdProductFinished:
-                return 'Third product finished';
-            case self::AvatarLoaded:
-                return 'Avatar loaded';
-            case self::SelectedTags:
-                return 'Selected tags';
-            case self::FilledOutProfile:
-                return 'Filled out a full profile';
-            case self::ActiveWeek:
-                return 'The user takes an active action every day for a week';
-            case self::ActiveMonth:
-                return 'The user takes an active action every day for a month';
-            case self::TwoMonthsActive:
-                return 'The user takes an active action every day for a two months';
-            case self::PracticeDone:
-                return 'The user completed a practical task in lesson';
-            case self::LessonReviewed:
-                return 'The user left review in lesson';
-            case self::TestDone:
-                return 'The user completed test in lesson';
-            case self::LessonDone:
-                return 'The user completed lesson';
-            case self::LessonCommented:
-                return 'The user left comment in lesson';
-            case self::FiveLessonDone:
-                return 'The user completed five lesson in product';
-            case self::TenLessonDone:
-                return 'The user completed ten lesson in product';
-            case self::SaveAllLives:
-                return 'The user save all lives by the end of product';
-            case self::SaveSomeLives:
-                return 'The user save some lives by the end of product';
-            case self::DeleteOldTestGrade:
-                return 'Delete old test result';
-            case self::DeleteOldLessonGrade:
-                return 'Delete old lesson result';
-            default:
-                return '';
-        }
+        $key = self::getKey($value);
+
+        return _("ratingLogs.{$key}");
     }
 
     public static function isTestDone($value): bool
