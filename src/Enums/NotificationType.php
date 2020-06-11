@@ -2,7 +2,9 @@
 
 namespace SE\SDK\Enums;
 
-final class NotificationType
+use BenSampo\Enum\Enum;
+
+final class NotificationType extends Enum
 {
     const LessonOnCheck = 'App\Notifications\LessonOnCheck';
     const LessonOnCheckForTeacher = 'App\Notifications\LessonOnCheckForTeacher';
@@ -16,4 +18,9 @@ final class NotificationType
     const UserRegistered = 'App\Notifications\UserRegistered';
     const NewHelpPost = 'App\Notifications\NewHelpPost';
     const RatingNotification = 'App\Notifications\RatingNotification';
+
+    public static function isRatingNotification($value): bool
+    {
+        return $value == self::RatingNotification;
+    }
 }
