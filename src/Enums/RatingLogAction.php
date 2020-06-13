@@ -40,9 +40,13 @@ final class RatingLogAction extends Enum
     const DeleteOldTestGrade = 25;
     const DeleteOldLessonGrade = 26;
 
+    const CommentedHelpPost = 27;
+
     public static function getAmount(int $value): int
     {
         switch ($value) {
+            case self::CommentedHelpPost:
+                return 10;
             case self::CreateHelpPost:
             case self::PutThanks:
                 return 25;
@@ -92,11 +96,22 @@ final class RatingLogAction extends Enum
             case self::DeleteGettingThanks:
             case self::DeleteThanks:
             case self::DeleteHelpPost:
+            case self::CommentedHelpPost:
                 return 3;
             case self::RepostHelpPost:
                 return 1;
             default:
                 return null;
+        }
+    }
+
+    public static function getMaxRepeatingPerRateable($value): int
+    {
+        switch ($value) {
+            case self::CommentedHelpPost:
+                return 3;
+            default:
+                return 1;
         }
     }
 
@@ -130,5 +145,10 @@ final class RatingLogAction extends Enum
     public static function isSaveSomeLives($value): bool
     {
         return $value == self::SaveSomeLives;
+    }
+
+    public static function isCommentedHelpPost($value): bool
+    {
+        return $value == self::CommentedHelpPost;
     }
 }
