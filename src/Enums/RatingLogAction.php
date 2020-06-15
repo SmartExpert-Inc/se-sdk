@@ -132,6 +132,12 @@ final class RatingLogAction extends Enum
         return $value == self::LessonDone;
     }
 
+    public static function isLessonOrTestDone($value): bool
+    {
+        return $value == self::LessonDone
+            || $value == self::TestDone;
+    }
+
     public static function isDeleteOldTestGrade($value): bool
     {
         return $value == self::DeleteOldTestGrade;
