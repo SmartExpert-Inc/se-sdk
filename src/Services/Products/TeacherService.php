@@ -184,6 +184,23 @@ final class TeacherService extends BaseService
         return $response;
     }
 
+    public function getLessonsTestsForProduct(int $productId): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/teacher/products/{$productId}/lessons-tests")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function showStudent(int $studentId, Request $request): ?\stdClass
     {
         $this->withAuth();
