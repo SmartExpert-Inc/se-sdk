@@ -218,6 +218,17 @@ final class UserService extends BaseService
         return array_key_exists(UserRole::Author, $user->roles);
     }
 
+    public function isDemoAuthor(Request $request): bool
+    {
+        $user = $this->authUser($request);
+
+        if (! $user or ! property_exists($user, "roles")) {
+            return false;
+        }
+
+        return array_key_exists(UserRole::DemoAuthor, $user->roles);
+    }
+
     public function delete(int $id): ?\stdClass
     {
         $this->withAuth();
