@@ -119,7 +119,7 @@ final class RatingLogAction extends Enum
     {
         $key = self::getKey($value);
 
-        return _("ratingLogs.{$key}");
+        return __("ratingLogs.{$key}");
     }
 
     public static function isTestDone($value): bool
