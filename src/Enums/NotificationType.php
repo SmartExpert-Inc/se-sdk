@@ -18,9 +18,25 @@ final class NotificationType extends Enum
     const UserRegistered = 'App\Notifications\UserRegistered';
     const NewHelpPost = 'App\Notifications\NewHelpPost';
     const RatingNotification = 'App\Notifications\RatingNotification';
+    const LiveStreamNotification = 'App\Notifications\LiveStreamNotification';
 
     public static function isRatingNotification($value): bool
     {
         return $value == self::RatingNotification;
+    }
+
+    public static function isLiveStreamNotification($value): bool
+    {
+        return $value == self::LiveStreamNotification;
+    }
+
+    public static function isLessonPassed($value): bool
+    {
+        return $value == self::LessonPassed;
+    }
+
+    public static function isLessonReturned($value): bool
+    {
+        return $value == self::LessonReturned;
     }
 }
