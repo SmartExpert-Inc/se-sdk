@@ -5,8 +5,9 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{
-    ApiClientService,
+use SE\SDK\Services\{ApiClientService,
+    Billing\CredentialService,
+    Billing\CurrencyService,
     BotService,
     ChatService,
     Comments\CommentService,
@@ -54,8 +55,7 @@ use SE\SDK\Services\{
     NotificationService,
     GlobalRatingService,
     Community\PostService as CommunityPostService,
-    Community\FriendService
-};
+    Community\FriendService};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;
@@ -326,6 +326,14 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(FriendService::class, function () {
             return new FriendService();
+        });
+
+        $this->app->singleton(CurrencyService::class, function () {
+            return new CurrencyService();
+        });
+
+        $this->app->singleton(CredentialService::class, function () {
+            return new CredentialService();
         });
     }
 }
