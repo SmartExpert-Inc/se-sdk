@@ -105,6 +105,10 @@ return [
         'host' => env('COMMUNITY_SERVICE_HOST', null),
     ],
 
+    'billing' => [
+        'host' => env('BILLING_SERVICE_HOST', null),
+    ],
+
     'artisan' => [
         'user_email' => env('ARTISAN_USER_EMAIL', 'artisan@app.com'),
         'user_password' => env('ARTISAN_USER_PASSWORD', '12345678'),

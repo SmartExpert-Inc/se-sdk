@@ -44,6 +44,7 @@ use SE\SDK\Services\Products\{
     PresentationService
 };
 use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
+use SE\SDK\Services\Billing\{CredentialService, CurrencyService};
 
 final class ServicesRegister
 {
@@ -191,6 +192,12 @@ final class ServicesRegister
     /** @var FriendService $communityFriend */
     public $communityFriend;
 
+    /** @var CurrencyService $currency */
+    public $currency;
+
+    /** @var CredentialService $credential*/
+    public $credential;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -259,5 +266,9 @@ final class ServicesRegister
         $this->communityPost = app(CommunityPostService::class);
         $this->communityGroup = app(GroupService::class);
         $this->communityFriend = app(FriendService::class);
+
+        //billing
+        $this->currency = app(CurrencyService::class);
+        $this->credential = app(CredentialService::class);
     }
 }
