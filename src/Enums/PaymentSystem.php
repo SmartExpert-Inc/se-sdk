@@ -6,7 +6,6 @@ use BenSampo\Enum\Enum;
 
 final class PaymentSystem extends Enum
 {
-    const Fondy = 0;
-    const WayForPay = 1;
-    const CloudPayments = 2;
+    const WayForPay = 0;
+    const CloudPayments = 1;
 }
