@@ -19,8 +19,7 @@ use SE\SDK\Services\Todo\{
 use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
-use SE\SDK\Services\Products\{
-    GamificationService,
+use SE\SDK\Services\Products\{GamificationService,
     GradeService,
     LessonService,
     LessonableService,
@@ -33,6 +32,7 @@ use SE\SDK\Services\Products\{
     QuestionService,
     ReviewService,
     StudyService,
+    TariffService,
     TeacherLinkService,
     TeacherService,
     TestService,
@@ -41,10 +41,9 @@ use SE\SDK\Services\Products\{
     VideoService,
     RatingService,
     HelpOtherService,
-    PresentationService
-};
+    PresentationService};
 use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
-use SE\SDK\Services\Billing\{CredentialService, CurrencyService};
+use SE\SDK\Services\Billing\{CredentialService};
 
 final class ServicesRegister
 {
@@ -192,11 +191,11 @@ final class ServicesRegister
     /** @var FriendService $communityFriend */
     public $communityFriend;
 
-    /** @var CurrencyService $currency */
-    public $currency;
-
     /** @var CredentialService $credential*/
     public $credential;
+
+    /** @var TariffService $productTariff*/
+    public $productTariff;
 
     public function __construct()
     {
@@ -251,6 +250,7 @@ final class ServicesRegister
 
         $this->productUser = app(UserLinkService::class);
         $this->productTeacher = app(TeacherLinkService::class);
+        $this->productTariff = app(TariffService::class);
 
         $this->study = app(StudyService::class);
         $this->teacherCabinet = app(TeacherService::class);
@@ -268,7 +268,6 @@ final class ServicesRegister
         $this->communityFriend = app(FriendService::class);
 
         //billing
-        $this->currency = app(CurrencyService::class);
         $this->credential = app(CredentialService::class);
     }
 }
