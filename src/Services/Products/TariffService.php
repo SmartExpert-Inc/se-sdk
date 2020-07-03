@@ -1,34 +1,34 @@
 <?php
 
-namespace SE\SDK\Services\Billing;
+namespace SE\SDK\Services\Products;
 
 use Illuminate\Http\Request;
 use SE\SDK\Services\BaseService;
 
-final class CurrencyService extends BaseService
+final class TariffService extends BaseService
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->host = config('se_sdk.billing.host');
+        $this->host = config('se_sdk.products.host');
     }
 
-    public function index(): ?\stdClass
+    public function index(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $response = $this->api
+        $tariffs = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/currencies")
+            ->get("/products/{$productId}/tariffs", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $response;
+        return $tariffs;
     }
 
     public function store(Request $request): ?\stdClass
@@ -39,7 +39,7 @@ final class CurrencyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/currencies", $request->all())
+            ->post("/tariffs", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -48,41 +48,41 @@ final class CurrencyService extends BaseService
         return $response;
     }
 
-    public function update(int $currencyId, Request $request): ?\stdClass
+    public function update(int $tariffId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $currency = $this->api
+        $tariff = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/currencies/{$currencyId}", $request->except(["_token", "_method"]))
+            ->put("/tariffs/{$tariffId}", $request->except(["_token", "_method"]))
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $currency;
+        return $tariff;
     }
 
-    public function show(int $id, Request $request): ?\stdClass
+    public function show(int $id): ?\stdClass
     {
         $this->withAuth();
 
-        $currency = $this->api
+        $tariff = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/currencies/{$id}", $request->all())
+            ->get("/tariffs/{$id}")
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $currency;
+        return $tariff;
     }
 
-    public function delete(int $currencyId): ?\stdClass
+    public function delete(int $tariffId): ?\stdClass
     {
         $this->withAuth();
 
@@ -90,7 +90,7 @@ final class CurrencyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->delete("/currencies/{$currencyId}")
+            ->delete("/tariffs/{$tariffId}")
             ->getObject();
 
         $this->api->dropState();
