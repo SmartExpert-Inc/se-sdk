@@ -65,7 +65,7 @@ final class CredentialService extends BaseService
         return $credential;
     }
 
-    public function show(int $id, Request $request): ?\stdClass
+    public function show(int $id): ?\stdClass
     {
         $this->withAuth();
 
@@ -73,7 +73,7 @@ final class CredentialService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/credentials/{$id}", $request->all())
+            ->get("/credentials/{$id}")
             ->getObject();
 
         $this->api->dropState();
