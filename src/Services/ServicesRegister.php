@@ -43,7 +43,7 @@ use SE\SDK\Services\Products\{GamificationService,
     HelpOtherService,
     PresentationService};
 use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
-use SE\SDK\Services\Billing\{CredentialService};
+use SE\SDK\Services\Billing\{CredentialService, PaymentService};
 
 final class ServicesRegister
 {
@@ -197,6 +197,9 @@ final class ServicesRegister
     /** @var TariffService $productTariff*/
     public $productTariff;
 
+    /** @var PaymentService $payments*/
+    public $payments;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -269,5 +272,6 @@ final class ServicesRegister
 
         //billing
         $this->credential = app(CredentialService::class);
+        $this->payments = app(PaymentService::class);
     }
 }
