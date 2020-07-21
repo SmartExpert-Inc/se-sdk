@@ -16,7 +16,7 @@ final class TariffService extends BaseService
 
     public function index(int $productId, Request $request): ?\stdClass
     {
-        $this->withAuth();
+//        $this->withAuth();
 
         $tariffs = $this->api
             ->setHeaders($this->headers)
@@ -67,7 +67,7 @@ final class TariffService extends BaseService
 
     public function show(int $id): ?\stdClass
     {
-        $this->withAuth();
+//        $this->withAuth();
 
         $tariff = $this->api
             ->setHeaders($this->headers)
