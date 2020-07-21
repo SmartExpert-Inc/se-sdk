@@ -16,7 +16,7 @@ final class PaymentService extends BaseService
 
     public function getRedirectUrl(string $paymentSystem, Request $request): ?\stdClass
     {
-        $this->withAuth();
+//        $this->withAuth();
 
         $response = $this->api
             ->setHeaders($this->headers)
