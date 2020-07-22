@@ -22,7 +22,24 @@ final class PaymentService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("{$paymentSystem}/get-redirect-url", $request->all())
+            ->get("/{$paymentSystem}/get-redirect-url", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function callback(string $paymentSystem, Request $request): ?\stdClass
+    {
+//        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/{$paymentSystem}/callback", $request->all())
             ->getObject();
 
         $this->api->dropState();
