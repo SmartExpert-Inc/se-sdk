@@ -14,7 +14,7 @@ final class ProductService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function index(int $page = 1): ?\stdClass
+    public function index(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -22,9 +22,7 @@ final class ProductService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/products', [
-                'page' => $page
-            ])
+            ->get('/products', $request->all())
             ->getObject();
 
         $this->api->dropState();
