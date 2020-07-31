@@ -19,7 +19,6 @@ final class NotificationType extends Enum
     const NewHelpPost = 'App\Notifications\NewHelpPost';
     const RatingNotification = 'App\Notifications\RatingNotification';
     const LiveStreamNotification = 'App\Notifications\LiveStreamNotification';
-    const Certification = 'App\Notifications\Certification';
     const NewPublishedLesson = 'App\Notifications\NewPublishedLesson';
     const ProductPassed = 'App\Notifications\ProductPassed';
 
