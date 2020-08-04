@@ -133,7 +133,7 @@ final class ProductService extends BaseService
         return $response;
     }
 
-    public function duplicate(int $productId): ?\stdClass
+    public function duplicate(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -141,7 +141,7 @@ final class ProductService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/products/$productId/duplicate")
+            ->get("/products/$productId/duplicate", $request->all())
             ->getObject();
 
         $this->api->dropState();
