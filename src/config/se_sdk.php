@@ -91,6 +91,9 @@ return [
 
     'products' => [
         'host' => env('PRODUCTS_SERVICE_HOST', null),
+        'author_training_product' => env('AUTHOR_TRAINING_PRODUCT', null),
+        'template_product' => env('TEMPLATE_PRODUCT', null),
+        'student_training_product' => env('STUDENT_TRAINING_PRODUCT', null),
     ],
 
     'todo' => [
@@ -113,4 +116,9 @@ return [
         'user_email' => env('ARTISAN_USER_EMAIL', 'artisan@app.com'),
         'user_password' => env('ARTISAN_USER_PASSWORD', '12345678'),
     ],
+
+    /**
+     *  Use this value for all pagination places
+     */
+    'default_per_page' => env('DEFAULT_PER_PAGE', 20),
 ];
