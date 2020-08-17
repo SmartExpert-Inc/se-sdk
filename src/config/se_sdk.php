@@ -8,7 +8,8 @@ return [
         'client_credentials' => [
             'client_id' => env('AUTH_CLIENT_ID', null),
             'client_secret' => env('AUTH_CLIENT_SECRET', null),
-        ]
+        ],
+        'trial_access_days_count' => env('TRIAL_ACCESS_DAYS_COUNT', 30),
     ],
 
     'posts' => [
