@@ -70,6 +70,23 @@ final class BotService extends BaseService
         return $response;
     }
 
+    public function update(int $botId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->put("/bots/{$botId}", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function find(Request $request): ?\stdClass
     {
         $this->withAuth();
