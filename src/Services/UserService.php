@@ -3,7 +3,7 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Http\Request;
-use SE\SDK\Enums\UserRole;
+use SE\SDK\Enums\UserRoleType;
 
 class UserService extends BaseService
 {
@@ -204,7 +204,7 @@ class UserService extends BaseService
             return false;
         }
 
-        return array_key_exists(UserRole::Admin, $user->roles);
+        return array_key_exists(UserRoleType::Admin, $user->roles);
     }
 
     public function isAuthor(Request $request): bool
@@ -215,7 +215,7 @@ class UserService extends BaseService
             return false;
         }
 
-        return array_key_exists(UserRole::Author, $user->roles);
+        return array_key_exists(UserRoleType::Author, $user->roles);
     }
 
     public function isDemoAuthor(Request $request): bool
@@ -226,7 +226,7 @@ class UserService extends BaseService
             return false;
         }
 
-        return array_key_exists(UserRole::DemoAuthor, $user->roles);
+        return array_key_exists(UserRoleType::DemoAuthor, $user->roles);
     }
 
     public function isTrial(Request $request): bool
@@ -237,7 +237,7 @@ class UserService extends BaseService
             return false;
         }
 
-        return array_key_exists(UserRole::Trial, $user->roles);
+        return array_key_exists(UserRoleType::Trial, $user->roles);
     }
 
     public function delete(int $id): ?\stdClass
