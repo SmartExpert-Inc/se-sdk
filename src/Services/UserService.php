@@ -14,21 +14,15 @@ class UserService extends BaseService
         $this->host = config('se_sdk.auth.host');
     }
 
-    public function index(int $page = null): ?\stdClass
+    public function index(Request $request): ?\stdClass
     {
         $this->withAuth();
-
-        if (is_null($page)) {
-            $page = 1;
-        }
 
         $users = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/users', [
-                'page' => $page
-            ])
+            ->get('/users', $request->all())
             ->getObject();
 
         $this->api->dropState();
