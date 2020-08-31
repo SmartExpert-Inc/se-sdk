@@ -8,4 +8,5 @@ final class PaymentSystem extends Enum
 {
     const WayForPay = 0;
     const CloudPayments = 1;
+    const LiqPay = 2;
 }

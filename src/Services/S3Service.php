@@ -84,7 +84,7 @@ final class S3Service
 
     public function putFileFromBase64(string $base64data, $directory = self::DEFAULT_DIRECTORY): ?string
     {
-        if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
+        if (preg_match('/^data:image\/([\w+.]+);base64,/', $base64data)) {
             // directory
             $directory = $this->getDirectory($directory);
 
@@ -96,7 +96,7 @@ final class S3Service
             $filename = $this->getUniqueFileName();
 
             // extension
-            preg_match("/^data\:image\/([a-z]+)\;base64*./", $base64data, $matches);
+            preg_match("/^data:image\/([\w+.]+);base64*./", $base64data, $matches);
             $extension = self::DEFAULT_EXTENSION;
             if ($matches) {
                 $extension = $matches[1];
