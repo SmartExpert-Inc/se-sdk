@@ -2,9 +2,10 @@
 
 namespace SE\SDK\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-final class UserRoleType extends Enum
+final class UserRoleType extends Enum implements LocalizedEnum
 {
     const Admin = "Admin";
     const User = "User";
