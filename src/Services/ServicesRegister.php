@@ -31,6 +31,7 @@ use SE\SDK\Services\Products\{GamificationService,
     ProductService,
     QuestionService,
     ReviewService,
+    StatisticService as ProductStatisticService,
     StudyService,
     TariffService,
     TeacherLinkService,
@@ -200,6 +201,9 @@ final class ServicesRegister
     /** @var PaymentService $payments*/
     public $payments;
 
+    /** @var ProductStatisticService $productStatistic */
+    public $productStatistic;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -237,6 +241,7 @@ final class ServicesRegister
         $this->view = app(ViewService::class);
 
         $this->product = app(ProductService::class);
+        $this->productStatistic = app(ProductStatisticService::class);
         $this->module = app(ModuleService::class);
         $this->lesson = app(LessonService::class);
         $this->lessonable = app(LessonableService::class);

@@ -1,0 +1,67 @@
+<?php
+
+namespace SE\SDK\Services\Products;
+
+use Illuminate\Http\Request;
+use SE\SDK\Services\BaseService;
+
+final class StatisticService extends BaseService
+{
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->host = config('se_sdk.products.host');
+    }
+
+    public function index(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/statistics", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function getDiagramDataForProducts(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $video = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/diagram-products-statistics", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $video;
+    }
+
+    public function getDiagramDataForStudents(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $video = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/diagram-students-statistics", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $video;
+    }
+}
