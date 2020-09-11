@@ -28,6 +28,7 @@ use SE\SDK\Services\{ApiClientService,
     Products\ProductService,
     Products\QuestionService,
     Products\ReviewService,
+    Products\StatisticService as ProductStatisticService,
     Products\StudyService,
     Products\TariffService,
     Products\TeacherLinkService,
@@ -339,6 +340,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(PaymentService::class, function () {
             return new PaymentService();
+        });
+
+        $this->app->singleton(ProductStatisticService::class, function () {
+            return new ProductStatisticService();
         });
     }
 }
