@@ -8,8 +8,7 @@ final class BotType extends Enum
 {
     const Telegram = 0;
     const Viber = 1;
-//    const Facebook = 2;
-    const Slack = 3;
+    const Slack = 2;
 
     static public function isTelegram(int $value): bool
     {
@@ -20,11 +19,6 @@ final class BotType extends Enum
     {
         return $value == self::Viber;
     }
-
-//    static public function isFacebook(int $value): bool
-//    {
-//        return $value == self::Facebook;
-//    }
 
     static public function isSlack(int $value): bool
     {
