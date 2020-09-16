@@ -64,4 +64,21 @@ final class StatisticService extends BaseService
 
         return $video;
     }
+
+    public function getProductsStat(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $video = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/products-statistics", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $video;
+    }
 }
