@@ -82,43 +82,9 @@ class UserService extends BaseService
         return $user;
     }
 
-    public function find(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/users/find', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
-    }
-
-    public function findByIds(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/users/find-by-ids', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
-    }
-
     public function findFirst(Request $request): ?\stdClass
     {
-        $user = $this->find($request);
+        $user = $this->index($request);
 
         if (! property_exists($user, "data")) {
             return null;
@@ -144,23 +110,6 @@ class UserService extends BaseService
         $this->api->dropUrls();
 
         return $response;
-    }
-
-    public function findOne(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/users/find', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
     }
 
     public function authUser(Request $request): ?\stdClass
@@ -210,17 +159,6 @@ class UserService extends BaseService
         }
 
         return array_key_exists(UserRoleType::Author, $user->roles);
-    }
-
-    public function isDemoAuthor(Request $request): bool
-    {
-        $user = $this->authUser($request);
-
-        if (! $user or ! property_exists($user, "roles")) {
-            return false;
-        }
-
-        return array_key_exists(UserRoleType::DemoAuthor, $user->roles);
     }
 
     public function isTrial(Request $request): bool
