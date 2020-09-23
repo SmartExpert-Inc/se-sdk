@@ -35,7 +35,7 @@ final class StatisticService extends BaseService
     {
         $this->withAuth();
 
-        $video = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
@@ -45,14 +45,14 @@ final class StatisticService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $video;
+        return $response;
     }
 
     public function getDiagramDataForStudents(Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $video = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
@@ -62,14 +62,14 @@ final class StatisticService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $video;
+        return $response;
     }
 
     public function getProductsStat(Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $video = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
@@ -79,6 +79,23 @@ final class StatisticService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $video;
+        return $response;
+    }
+
+    public function getStudentsStat(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/students-statistics", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
     }
 }

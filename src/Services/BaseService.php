@@ -56,13 +56,5 @@ abstract class BaseService implements ServiceInterface
         }
 
         $this->headers['Authorization'] = $token;
-        $this->withLocale();
-    }
-
-    protected function withLocale(): void
-    {
-        request()->merge([
-            'locale' => optional(session('user'))->locale ?? config('app.locale'),
-        ]);
     }
 }
