@@ -39,7 +39,7 @@ final class StatisticService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/diagram-products-statistics", $request->all())
+            ->get("/statistics/diagram-products", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -56,7 +56,7 @@ final class StatisticService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/diagram-students-statistics", $request->all())
+            ->get("/statistics/diagram-students", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -73,7 +73,7 @@ final class StatisticService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/products-statistics", $request->all())
+            ->get("/statistics/products", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -90,7 +90,7 @@ final class StatisticService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/students-statistics", $request->all())
+            ->get("/statistics/students", $request->all())
             ->getObject();
 
         $this->api->dropState();
