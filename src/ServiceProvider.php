@@ -5,9 +5,11 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{
-    ApiClientService,
+use SE\SDK\Services\{ApiClientService,
+    Billing\CredentialService,
+    Billing\PaymentService,
     BotService,
+    CarrotQuestService,
     ChatService,
     Comments\CommentService,
     Comments\LikeService,
@@ -27,7 +29,9 @@ use SE\SDK\Services\{
     Products\ProductService,
     Products\QuestionService,
     Products\ReviewService,
+    Products\StatisticService as ProductStatisticService,
     Products\StudyService,
+    Products\TariffService,
     Products\TeacherLinkService,
     Products\TeacherService,
     Products\TestService,
@@ -54,8 +58,7 @@ use SE\SDK\Services\{
     NotificationService,
     GlobalRatingService,
     Community\PostService as CommunityPostService,
-    Community\FriendService
-};
+    Community\FriendService};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 use GuzzleHttp\Client;
@@ -76,6 +79,7 @@ class ServiceProvider extends IlluminateServiceProvider
     {
         $this->publishes([
             __DIR__.'/config/se_sdk.php' => config_path('se_sdk.php'),
+            __DIR__.'/config/carrot_quest.php' => config_path('carrot_quest.php'),
         ]);
     }
 
@@ -88,6 +92,9 @@ class ServiceProvider extends IlluminateServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__.'/config/se_sdk.php', 'se_sdk'
+        );
+        $this->mergeConfigFrom(
+            __DIR__.'/config/carrot_quest.php', 'carrot_quest'
         );
 
         /* Require helpers */
@@ -326,6 +333,26 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(FriendService::class, function () {
             return new FriendService();
+        });
+
+        $this->app->singleton(TariffService::class, function () {
+            return new TariffService();
+        });
+
+        $this->app->singleton(CredentialService::class, function () {
+            return new CredentialService();
+        });
+
+        $this->app->singleton(PaymentService::class, function () {
+            return new PaymentService();
+        });
+
+        $this->app->singleton(ProductStatisticService::class, function () {
+            return new ProductStatisticService();
+        });
+
+        $this->app->singleton(CarrotQuestService::class, function () {
+            return new CarrotQuestService();
         });
     }
 }

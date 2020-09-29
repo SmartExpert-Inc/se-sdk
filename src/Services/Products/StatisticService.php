@@ -1,19 +1,20 @@
 <?php
 
-namespace SE\SDK\Services;
+namespace SE\SDK\Services\Products;
 
 use Illuminate\Http\Request;
+use SE\SDK\Services\BaseService;
 
-final class BotService extends BaseService
+final class StatisticService extends BaseService
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->host = config('se_sdk.bots.host');
+        $this->host = config('se_sdk.products.host');
     }
 
-    public function unlink($botName, $userId): ?\stdClass
+    public function index(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -21,9 +22,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/{$botName}/unlink", [
-                'user_id' => $userId
-            ])
+            ->get("/statistics", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -32,7 +31,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function message(string $botName, string $message, int $userId, int $ownerId = null): ?\stdClass
+    public function getDiagramDataForProducts(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -40,11 +39,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/{$botName}/message", [
-                'user_id' => $userId,
-                'message' => $message,
-                'owner_id' => $ownerId
-            ])
+            ->get("/statistics/diagram-products", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -53,7 +48,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function store(Request $request): ?\stdClass
+    public function getDiagramDataForStudents(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -61,7 +56,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/bots", $request->all())
+            ->get("/statistics/diagram-students", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -70,7 +65,7 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function update(int $botId, Request $request): ?\stdClass
+    public function getProductsStat(Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -78,7 +73,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/bots/{$botId}", $request->all())
+            ->get("/statistics/products", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -87,20 +82,20 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function find(Request $request): ?\stdClass
+    public function getStudentsStat(Request $request): ?\stdClass
     {
         $this->withAuth();
 
-        $bots = $this->api
+        $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/bots/find', $request->all())
+            ->get("/statistics/students", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $bots;
+        return $response;
     }
 }

@@ -3,9 +3,9 @@
 namespace SE\SDK\Services;
 
 use Illuminate\Http\Request;
-use SE\SDK\Enums\UserRole;
+use SE\SDK\Enums\UserRoleType;
 
-final class UserService extends BaseService
+class UserService extends BaseService
 {
     public function __construct()
     {
@@ -14,21 +14,15 @@ final class UserService extends BaseService
         $this->host = config('se_sdk.auth.host');
     }
 
-    public function index(int $page = null): ?\stdClass
+    public function index(Request $request): ?\stdClass
     {
         $this->withAuth();
-
-        if (is_null($page)) {
-            $page = 1;
-        }
 
         $users = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get('/users', [
-                'page' => $page
-            ])
+            ->get('/users', $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -88,43 +82,9 @@ final class UserService extends BaseService
         return $user;
     }
 
-    public function find(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/users/find', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
-    }
-
-    public function findByIds(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/users/find-by-ids', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
-    }
-
     public function findFirst(Request $request): ?\stdClass
     {
-        $user = $this->find($request);
+        $user = $this->index($request);
 
         if (! property_exists($user, "data")) {
             return null;
@@ -150,23 +110,6 @@ final class UserService extends BaseService
         $this->api->dropUrls();
 
         return $response;
-    }
-
-    public function findOne(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $users = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/users/find', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $users;
     }
 
     public function authUser(Request $request): ?\stdClass
@@ -204,7 +147,7 @@ final class UserService extends BaseService
             return false;
         }
 
-        return array_key_exists(UserRole::Admin, $user->roles);
+        return array_key_exists(UserRoleType::Admin, $user->roles);
     }
 
     public function isAuthor(Request $request): bool
@@ -215,10 +158,10 @@ final class UserService extends BaseService
             return false;
         }
 
-        return array_key_exists(UserRole::Author, $user->roles);
+        return array_key_exists(UserRoleType::Author, $user->roles);
     }
 
-    public function isDemoAuthor(Request $request): bool
+    public function isTrial(Request $request): bool
     {
         $user = $this->authUser($request);
 
@@ -226,7 +169,7 @@ final class UserService extends BaseService
             return false;
         }
 
-        return array_key_exists(UserRole::DemoAuthor, $user->roles);
+        return array_key_exists(UserRoleType::Trial, $user->roles);
     }
 
     public function delete(int $id): ?\stdClass

@@ -19,8 +19,7 @@ use SE\SDK\Services\Todo\{
 use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
-use SE\SDK\Services\Products\{
-    GamificationService,
+use SE\SDK\Services\Products\{GamificationService,
     GradeService,
     LessonService,
     LessonableService,
@@ -32,7 +31,9 @@ use SE\SDK\Services\Products\{
     ProductService,
     QuestionService,
     ReviewService,
+    StatisticService as ProductStatisticService,
     StudyService,
+    TariffService,
     TeacherLinkService,
     TeacherService,
     TestService,
@@ -41,9 +42,9 @@ use SE\SDK\Services\Products\{
     VideoService,
     RatingService,
     HelpOtherService,
-    PresentationService
-};
+    PresentationService};
 use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
+use SE\SDK\Services\Billing\{CredentialService, PaymentService};
 
 final class ServicesRegister
 {
@@ -191,6 +192,18 @@ final class ServicesRegister
     /** @var FriendService $communityFriend */
     public $communityFriend;
 
+    /** @var CredentialService $credential*/
+    public $credential;
+
+    /** @var TariffService $productTariff*/
+    public $productTariff;
+
+    /** @var PaymentService $payments*/
+    public $payments;
+
+    /** @var ProductStatisticService $productStatistic */
+    public $productStatistic;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -228,6 +241,7 @@ final class ServicesRegister
         $this->view = app(ViewService::class);
 
         $this->product = app(ProductService::class);
+        $this->productStatistic = app(ProductStatisticService::class);
         $this->module = app(ModuleService::class);
         $this->lesson = app(LessonService::class);
         $this->lessonable = app(LessonableService::class);
@@ -244,6 +258,7 @@ final class ServicesRegister
 
         $this->productUser = app(UserLinkService::class);
         $this->productTeacher = app(TeacherLinkService::class);
+        $this->productTariff = app(TariffService::class);
 
         $this->study = app(StudyService::class);
         $this->teacherCabinet = app(TeacherService::class);
@@ -259,5 +274,11 @@ final class ServicesRegister
         $this->communityPost = app(CommunityPostService::class);
         $this->communityGroup = app(GroupService::class);
         $this->communityFriend = app(FriendService::class);
+
+        //billing
+        $this->credential = app(CredentialService::class);
+        $this->payments = app(PaymentService::class);
+
+        $this->carrotQuest = app(CarrotQuestService::class);
     }
 }

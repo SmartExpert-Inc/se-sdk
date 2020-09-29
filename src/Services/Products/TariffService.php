@@ -1,56 +1,34 @@
 <?php
 
-namespace SE\SDK\Services;
+namespace SE\SDK\Services\Products;
 
 use Illuminate\Http\Request;
+use SE\SDK\Services\BaseService;
 
-final class BotService extends BaseService
+final class TariffService extends BaseService
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->host = config('se_sdk.bots.host');
+        $this->host = config('se_sdk.products.host');
     }
 
-    public function unlink($botName, $userId): ?\stdClass
+    public function index(int $productId, Request $request): ?\stdClass
     {
-        $this->withAuth();
+//        $this->withAuth();
 
-        $response = $this->api
+        $tariffs = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/{$botName}/unlink", [
-                'user_id' => $userId
-            ])
+            ->get("/products/{$productId}/tariffs", $request->all())
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $response;
-    }
-
-    public function message(string $botName, string $message, int $userId, int $ownerId = null): ?\stdClass
-    {
-        $this->withAuth();
-
-        $response = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->post("/{$botName}/message", [
-                'user_id' => $userId,
-                'message' => $message,
-                'owner_id' => $ownerId
-            ])
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $response;
+        return $tariffs;
     }
 
     public function store(Request $request): ?\stdClass
@@ -61,7 +39,7 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/bots", $request->all())
+            ->post("/tariffs", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -70,7 +48,41 @@ final class BotService extends BaseService
         return $response;
     }
 
-    public function update(int $botId, Request $request): ?\stdClass
+    public function update(int $tariffId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $tariff = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->put("/tariffs/{$tariffId}", $request->except(["_token", "_method"]))
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $tariff;
+    }
+
+    public function show(int $id): ?\stdClass
+    {
+//        $this->withAuth();
+
+        $tariff = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/tariffs/{$id}")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $tariff;
+    }
+
+    public function delete(int $tariffId): ?\stdClass
     {
         $this->withAuth();
 
@@ -78,29 +90,12 @@ final class BotService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/bots/{$botId}", $request->all())
+            ->delete("/tariffs/{$tariffId}")
             ->getObject();
 
         $this->api->dropState();
         $this->api->dropUrls();
 
         return $response;
-    }
-
-    public function find(Request $request): ?\stdClass
-    {
-        $this->withAuth();
-
-        $bots = $this->api
-            ->setHeaders($this->headers)
-            ->setBaseUrl($this->host)
-            ->setPrefix($this->prefix)
-            ->get('/bots/find', $request->all())
-            ->getObject();
-
-        $this->api->dropState();
-        $this->api->dropUrls();
-
-        return $bots;
     }
 }
