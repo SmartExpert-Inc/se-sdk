@@ -278,5 +278,7 @@ final class ServicesRegister
         //billing
         $this->credential = app(CredentialService::class);
         $this->payments = app(PaymentService::class);
+
+        $this->carrotQuest = app(CarrotQuestService::class);
     }
 }

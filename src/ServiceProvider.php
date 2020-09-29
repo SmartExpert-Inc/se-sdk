@@ -9,6 +9,7 @@ use SE\SDK\Services\{ApiClientService,
     Billing\CredentialService,
     Billing\PaymentService,
     BotService,
+    CarrotQuestService,
     ChatService,
     Comments\CommentService,
     Comments\LikeService,
@@ -78,6 +79,7 @@ class ServiceProvider extends IlluminateServiceProvider
     {
         $this->publishes([
             __DIR__.'/config/se_sdk.php' => config_path('se_sdk.php'),
+            __DIR__.'/config/carrot_quest.php' => config_path('carrot_quest.php'),
         ]);
     }
 
@@ -90,6 +92,9 @@ class ServiceProvider extends IlluminateServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__.'/config/se_sdk.php', 'se_sdk'
+        );
+        $this->mergeConfigFrom(
+            __DIR__.'/config/carrot_quest.php', 'carrot_quest'
         );
 
         /* Require helpers */
@@ -344,6 +349,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(ProductStatisticService::class, function () {
             return new ProductStatisticService();
+        });
+
+        $this->app->singleton(CarrotQuestService::class, function () {
+            return new CarrotQuestService();
         });
     }
 }
