@@ -32,6 +32,6 @@ final class CarrotQuestService
             ],
         ]);
 
-        return $response->getBody()->getContent();
+        return $response->getBody()->getContents();
     }
 }
