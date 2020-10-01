@@ -21,6 +21,7 @@ final class NotificationType extends Enum
     const LiveStreamNotification = 'App\Notifications\LiveStreamNotification';
     const NewPublishedLesson = 'App\Notifications\NewPublishedLesson';
     const ProductPassed = 'App\Notifications\ProductPassed';
+    const SkippedTaskNotification = 'App\Notifications\SkippedTaskNotification';
 
     public static function isRatingNotification($value): bool
     {
