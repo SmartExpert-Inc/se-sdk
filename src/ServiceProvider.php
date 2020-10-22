@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Services\{ApiClientService,
+    Auth\GroupService as AuthGroupService,
     Billing\CredentialService,
     Billing\PaymentService,
     BotService,
@@ -353,6 +354,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(CarrotQuestService::class, function () {
             return new CarrotQuestService();
+        });
+
+        $this->app->singleton(AuthGroupService::class, function () {
+            return new AuthGroupService();
         });
     }
 }

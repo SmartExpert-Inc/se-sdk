@@ -204,11 +204,15 @@ final class ServicesRegister
     /** @var ProductStatisticService $productStatistic */
     public $productStatistic;
 
+    /** @var \SE\SDK\Services\Auth\GroupService $group */
+    public $group;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
 
         $this->user = app(UserService::class);
+        $this->group = app(Auth\GroupService::class);
         $this->userAttributes = app(UserAttributeService::class);
         $this->userSettings = app(UserSettingService::class);
         $this->social = app(SocialService::class);
