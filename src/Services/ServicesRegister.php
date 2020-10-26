@@ -21,6 +21,7 @@ use SE\SDK\Services\Tags\{
 };
 use SE\SDK\Services\Products\{GamificationService,
     GradeService,
+    GroupLinkService,
     LessonService,
     LessonableService,
     LibraryService,
@@ -207,6 +208,9 @@ final class ServicesRegister
     /** @var \SE\SDK\Services\Auth\GroupService $group */
     public $group;
 
+    /** @var GroupLinkService $productGroup */
+    public $productGroup;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -262,6 +266,7 @@ final class ServicesRegister
 
         $this->productUser = app(UserLinkService::class);
         $this->productTeacher = app(TeacherLinkService::class);
+        $this->productGroup = app(GroupLinkService::class);
         $this->productTariff = app(TariffService::class);
 
         $this->study = app(StudyService::class);

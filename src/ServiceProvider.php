@@ -21,6 +21,7 @@ use SE\SDK\Services\{ApiClientService,
     Posts\PostService,
     Posts\StatisticService,
     Products\GamificationService,
+    Products\GroupLinkService,
     Products\LessonService,
     Products\LessonableService,
     Products\LibraryService,
@@ -358,6 +359,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(AuthGroupService::class, function () {
             return new AuthGroupService();
+        });
+
+        $this->app->singleton(GroupLinkService::class, function () {
+            return new GroupLinkService();
         });
     }
 }

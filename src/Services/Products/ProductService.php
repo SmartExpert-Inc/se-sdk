@@ -133,6 +133,23 @@ final class ProductService extends BaseService
         return $response;
     }
 
+    public function findByAuthGroup(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/products/find-for-auth-group", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function duplicate(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
