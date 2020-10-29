@@ -31,6 +31,23 @@ final class GroupService extends BaseService
         return $response;
     }
 
+    public function getActiveGroups(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/active-groups", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function store(Request $request): ?\stdClass
     {
         $this->withAuth();

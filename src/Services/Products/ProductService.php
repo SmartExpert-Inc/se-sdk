@@ -150,6 +150,23 @@ final class ProductService extends BaseService
         return $response;
     }
 
+    public function getActiveFullList(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/active-products", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function duplicate(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
