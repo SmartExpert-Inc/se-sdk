@@ -132,4 +132,21 @@ final class GroupService extends BaseService
 
         return $response;
     }
+
+    public function deleteParticipants(int $id, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/groups/{$id}/delete-participants", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
