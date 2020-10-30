@@ -14,7 +14,7 @@ final class GroupLinkService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function index(Request $request): ?\stdClass
+    public function massSync(Request $request): ?\stdClass
     {
         $this->withAuth();
 
