@@ -22,6 +22,7 @@ final class ProductType extends Enum implements LocalizedEnum
 {
     const Course = 0;
     const Marathon = 1;
+    const Event = 2;
 
     public static function isCourse(int $value): bool
     {
@@ -31,5 +32,10 @@ final class ProductType extends Enum implements LocalizedEnum
     public static function isMarathon(int $value): bool
     {
         return $value == self::Marathon;
+    }
+
+    public static function isEvent(int $value): bool
+    {
+        return $value == self::Event;
     }
 }

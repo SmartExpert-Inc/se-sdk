@@ -19,7 +19,9 @@ use SE\SDK\Services\Todo\{
 use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
-use SE\SDK\Services\Products\{GamificationService,
+use SE\SDK\Services\Products\{
+    BannerService,
+    GamificationService,
     GradeService,
     GroupLinkService,
     LessonService,
@@ -43,7 +45,8 @@ use SE\SDK\Services\Products\{GamificationService,
     VideoService,
     RatingService,
     HelpOtherService,
-    PresentationService};
+    PresentationService
+};
 use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
 use SE\SDK\Services\Billing\{CredentialService, PaymentService};
 
@@ -211,6 +214,9 @@ final class ServicesRegister
     /** @var GroupLinkService $productGroup */
     public $productGroup;
 
+    /** @var BannerService $banner */
+    public $banner;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -252,6 +258,7 @@ final class ServicesRegister
         $this->productStatistic = app(ProductStatisticService::class);
         $this->module = app(ModuleService::class);
         $this->lesson = app(LessonService::class);
+        $this->banner = app(BannerService::class);
         $this->lessonable = app(LessonableService::class);
         $this->lessonPractice = app(PracticeService::class);
         $this->lessonQuestion = app(QuestionService::class);
