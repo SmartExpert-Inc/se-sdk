@@ -15,6 +15,7 @@ final class S3Service
     const DEFAULT_DIRECTORY = 'temp';
     const DEFAULT_EXTENSION = 'jpg';
     const DEFAULT_ACCESS = 'public';
+    const PRIVATE_ACCESS = 'private';
 
     /** @var Storage $storage*/
     private $storage;
@@ -38,27 +39,27 @@ final class S3Service
         return $this->storage->$method(...$parameters);
     }
 
-    public function putFiles(array $files, $directory = self::DEFAULT_DIRECTORY): array
+    public function putFiles(array $files, $directory = self::DEFAULT_DIRECTORY, $access = self::DEFAULT_ACCESS): array
     {
         $return = [];
 
         foreach ($files as $file) {
-            $return[] = $this->putFile($file, $directory);
+            $return[] = $this->putFile($file, $directory, $access);
         }
 
         return $return;
     }
 
-    public function putFile(UploadedFile $file, $directory = self::DEFAULT_DIRECTORY): string
+    public function putFile(UploadedFile $file, $directory = self::DEFAULT_DIRECTORY, $access = self::DEFAULT_ACCESS): string
     {
         $directory = $this->getDirectory($directory);
         $filename = $this->getUniqueFileName($file);
-        $this->storage->putFileAs($directory, $file, $filename, self::DEFAULT_ACCESS);
+        $this->storage->putFileAs($directory, $file, $filename, $access);
 
         return $this->storage->url("{$directory}{$filename}");
     }
 
-    public function putFileFromUrl(string $url, $directory = self::DEFAULT_DIRECTORY): ?string
+    public function putFileFromUrl(string $url, $directory = self::DEFAULT_DIRECTORY, $access = self::DEFAULT_ACCESS): ?string
     {
         $url = preg_replace_callback('/[^\x20-\x7f]/', function($match) {
             return urlencode($match[0]);
@@ -79,10 +80,10 @@ final class S3Service
 
         $uploadedFile = new UploadedFile($file, $info['basename']);
 
-        return $this->putFile($uploadedFile, $directory, self::DEFAULT_ACCESS);
+        return $this->putFile($uploadedFile, $directory, $access);
     }
 
-    public function putFileFromBase64(string $base64data, $directory = self::DEFAULT_DIRECTORY): ?string
+    public function putFileFromBase64(string $base64data, $directory = self::DEFAULT_DIRECTORY, $access = self::DEFAULT_ACCESS): ?string
     {
         if (preg_match('/^data:image\/([\w+.]+);base64,/', $base64data)) {
             // directory
@@ -104,7 +105,7 @@ final class S3Service
             $filename .= ".{$extension}";
 
             // put file
-            $this->storage->put("{$directory}{$filename}", $file, self::DEFAULT_ACCESS);
+            $this->storage->put("{$directory}{$filename}", $file, $access);
 
             return $this->storage->url("{$directory}{$filename}");
         }
@@ -112,7 +113,7 @@ final class S3Service
         return null;
     }
 
-    public function putFileThumbFromBase64(string $base64data, $directory = self::DEFAULT_DIRECTORY): ?string
+    public function putFileThumbFromBase64(string $base64data, $directory = self::DEFAULT_DIRECTORY, $access = self::DEFAULT_ACCESS): ?string
     {
         if (preg_match('/^data:image\/(\w+);base64,/', $base64data)) {
             // directory
@@ -146,7 +147,7 @@ final class S3Service
             $file = File::get($tmpFile);
 
             // put file
-            $this->storage->put("{$directory}{$filename}", $file, self::DEFAULT_ACCESS);
+            $this->storage->put("{$directory}{$filename}", $file, $access);
 
             return $this->storage->url("{$directory}{$filename}");
         }
