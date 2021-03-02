@@ -133,6 +133,23 @@ final class UserLinkService extends BaseService
         return $response;
     }
 
+    public function reset(int $id): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/users/{$id}/reset")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function findForUser(Request $request): ?\stdClass
     {
         $this->withAuth();
