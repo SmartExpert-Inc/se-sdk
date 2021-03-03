@@ -65,6 +65,23 @@ final class StudyService extends BaseService
         return $modules;
     }
 
+    public function getCatalog(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/study/products/catalog", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function getActiveProducts(Request $request): ?\stdClass
     {
         $this->withAuth();
