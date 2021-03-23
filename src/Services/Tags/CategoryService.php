@@ -37,6 +37,23 @@ final class CategoryService extends BaseService
         return $categories;
     }
 
+    public function adminIndex(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $categories = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get('/admin/categories', $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $categories;
+    }
+
     public function show(int $id): ?\stdClass
     {
         $this->withAuth();
