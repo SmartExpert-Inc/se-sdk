@@ -15,7 +15,8 @@
     "webpatser/laravel-uuid": "^3.0",
     "spatie/image": "^1.4",
     "ext-curl": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "laravel/framework": "6"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.5"

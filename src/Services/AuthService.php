@@ -41,7 +41,7 @@ final class AuthService extends BaseService
             'user' => $registered->data->user
         ]);
 
-        return $this->authorise($request, $cookies);
+        return $this->authorize($request, $cookies);
     }
 
     public function login(Request $request): ?\stdClass
@@ -70,7 +70,7 @@ final class AuthService extends BaseService
             ]);
         }
 
-        return $this->authorise($request, $cookies);
+        return $this->authorize($request, $cookies);
     }
 
     public function loginAs(Request $request): ?\stdClass
@@ -101,10 +101,11 @@ final class AuthService extends BaseService
             ]);
         }
 
-        return $this->authorise($request, $cookies);
+        return $this->authorize($request, $cookies);
     }
 
-    public function authorise(Request $request, ?array $cookies = []): ?\stdClass
+    // Refactor this miracle
+    private function authorize(Request $request, ?array $cookies = []): ?\stdClass
     {
         $keyName = $this->getSessionKey();
         $accessToken = Redis::get($keyName);

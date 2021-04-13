@@ -112,8 +112,12 @@ class UserService extends BaseService
         return $response;
     }
 
-    public function authUser(Request $request): ?\stdClass
+    public function authUser(): ?\stdClass
     {
+        if (session()->has('user')) {
+            return session('user');
+        }
+
         $this->withAuth();
 
         $user = $this->api
@@ -136,12 +140,14 @@ class UserService extends BaseService
             $user->roles = array_column($user->roles, null, 'name');
         }
 
+        session()->put('user', $user);
+
         return $user;
     }
 
-    public function isAdmin(Request $request): bool
+    public function isAdmin(): bool
     {
-        $user = $this->authUser($request);
+        $user = $this->authUser();
 
         if (! $user or ! property_exists($user, "roles")) {
             return false;
@@ -150,9 +156,9 @@ class UserService extends BaseService
         return array_key_exists(UserRoleType::Admin, $user->roles);
     }
 
-    public function isAuthor(Request $request): bool
+    public function isAuthor(): bool
     {
-        $user = $this->authUser($request);
+        $user = $this->authUser();
 
         if (! $user or ! property_exists($user, "roles")) {
             return false;
@@ -161,9 +167,9 @@ class UserService extends BaseService
         return array_key_exists(UserRoleType::Author, $user->roles);
     }
 
-    public function isTrial(Request $request): bool
+    public function isTrial(): bool
     {
-        $user = $this->authUser($request);
+        $user = $this->authUser();
 
         if (! $user or ! property_exists($user, "roles")) {
             return false;

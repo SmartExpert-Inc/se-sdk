@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as BaseAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use SE\SDK\Services\UserService;
 
 class Authenticate extends BaseAuth
 {
@@ -20,26 +21,18 @@ class Authenticate extends BaseAuth
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        $sdk = resolve('se_sdk');
+        /** @var UserService $userService */
+        $userService = resolve(UserService::class);
 
-        //        TODO: Use this after SPA
-//        $guard = $this->auth->guard('api');
-//        $token = $request->bearerToken();
-
-//        if (! $token) {
-//            throw new AuthenticationException('Unauthenticated.', $guards);
-//        }
-
-        $user = $sdk->user->authUser($request);
+        $user = $userService->authUser();
 
         if (! $user) {
             throw new AuthenticationException('Unauthenticated.', $guards);
         }
 
-        App::setLocale($user->locale ?? config('app.locale'));
-        session()->put(['user' => $user]);
+        App::setLocale($user->locale
+            ?? $request->input('locale', config('app.locale')));
 
         return $next($request);
     }
-
 }
