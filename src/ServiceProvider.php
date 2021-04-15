@@ -47,7 +47,7 @@ use SE\SDK\Services\{ApiClientService,
     Products\HelpOtherService,
     Products\PresentationService,
     S3Service,
-    ServicesRegister,
+    SmartExpertSDK,
     Todo\PriorityService,
     Todo\StagesService,
     Todo\TargetsService,
@@ -64,7 +64,6 @@ use SE\SDK\Services\{ApiClientService,
     Community\FriendService};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
-use GuzzleHttp\Client;
 
 class ServiceProvider extends IlluminateServiceProvider
 {
@@ -128,9 +127,7 @@ class ServiceProvider extends IlluminateServiceProvider
         }
 
         $this->app->singleton(ApiClientService::class, function () {
-            $httpClient = new Client;
-
-            return new ApiClientService($httpClient);
+            return new ApiClientService();
         });
 
         $this->app->singleton(AuthService::class, function () {
@@ -226,8 +223,8 @@ class ServiceProvider extends IlluminateServiceProvider
         });
 
         /* Bind services registrator */
-        $this->app->bind(static::$abstract, function () {
-            return new ServicesRegister();
+        $this->app->singleton(static::$abstract, function () {
+            return new SmartExpertSDK();
         });
 
         $this->app->singleton(ProductService::class, function () {

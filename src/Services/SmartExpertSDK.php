@@ -50,7 +50,7 @@ use SE\SDK\Services\Products\{
 use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
 use SE\SDK\Services\Billing\{CredentialService, PaymentService};
 
-final class ServicesRegister
+final class SmartExpertSDK
 {
     /** @var UserService $user */
     public $user;

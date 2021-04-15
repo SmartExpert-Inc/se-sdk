@@ -31,6 +31,23 @@ final class TeacherService extends BaseService
         return $lessons;
     }
 
+    public function showLesson(int $lessonId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $lesson = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/teacher/lessons/{$lessonId}", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $lesson;
+    }
+
     public function getLessonsOnCheck(Request $request): ?\stdClass
     {
         $this->withAuth();
