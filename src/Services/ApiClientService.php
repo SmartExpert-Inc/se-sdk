@@ -2,13 +2,14 @@
 
 namespace SE\SDK\Services;
 
+use SE\SDK\Client\HttpClient;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Illuminate\Support\Facades\Log;
 
 final class ApiClientService
 {
-    /** @var Client $client */
+    /** @var HttpClient $client */
     private $client;
 
     /** @var array $methods */
@@ -30,6 +31,9 @@ final class ApiClientService
 
     /** @var array $cookies */
     private $cookies;
+
+    /** @var bool $isSystemModeOn*/
+    private $isSystemModeOn = false;
 
     public function __construct()
     {
@@ -85,6 +89,13 @@ final class ApiClientService
         return $this;
     }
 
+    public function activateSystemMode(): self
+    {
+        $this->isSystemModeOn = true;
+
+        return $this;
+    }
+
     public function dropUrls()
     {
         $this->baseUrl = null;
@@ -100,10 +111,6 @@ final class ApiClientService
 
     public function getObject()
     {
-//        if (property_exists($this->response, "message") or property_exists($this->response, "error")) {
-//            return null;
-//        }
-
         return $this->response;
     }
 
@@ -125,6 +132,11 @@ final class ApiClientService
         }
 
         $payload = $this->getParams($arguments);
+
+        if ($this->isSystemModeOn) {
+            $this->addSystemApiKey($payload);
+        }
+
         $headers = $this->headers;
         $path = $this->getPath($arguments);
         $url = "{$this->baseUrl}{$this->prefix}{$path}";
@@ -134,10 +146,15 @@ final class ApiClientService
         $res = (object) $results->body;
         $this->setResults($res);
 
-        if (app()->environment() !== "production") {
+        if (! app()->isProduction()) {
             Log::debug($url . ': ' . print_r($res, true));
         }
 
         return $this;
+    }
+
+    private function addSystemApiKey(array &$arguments): void
+    {
+        $arguments['system_api_key'] = config('se_sdk.auth.system_api_key');
     }
 }

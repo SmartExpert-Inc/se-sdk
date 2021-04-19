@@ -21,6 +21,11 @@ class Authenticate extends BaseAuth
      */
     public function handle($request, Closure $next, ...$guards)
     {
+        if ($request->has('system_api_key')
+            && $request->input('system_api_key') == config('se_sdk.auth.system_api_key')) {
+            return $next($request);
+        }
+
         /** @var UserService $userService */
         $userService = resolve(UserService::class);
 

@@ -10,6 +10,7 @@ return [
             'client_secret' => env('AUTH_CLIENT_SECRET', null),
         ],
         'trial_access_days_count' => env('TRIAL_ACCESS_DAYS_COUNT', 30),
+        'system_api_key' => env('SYSTEM_API_KEY', null),
     ],
 
     'posts' => [
