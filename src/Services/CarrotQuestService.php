@@ -3,6 +3,8 @@
 namespace SE\SDK\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Log;
 
 final class CarrotQuestService
 {
@@ -22,16 +24,22 @@ final class CarrotQuestService
 
     public function addEvent(int $userId, string $event)
     {
-        $response = $this->client->request('post', "v1/users/{$userId}/events", [
-            'query' => [
-                'auth_token' => $this->authToken,
-                'by_user_id' => true,
-            ],
-            'form_params' => [
-                'event' => $event,
-            ],
-        ]);
+        try {
+            $response = $this->client->request('post', "v1/users/{$userId}/events", [
+                'query' => [
+                    'auth_token' => $this->authToken,
+                    'by_user_id' => true,
+                ],
+                'form_params' => [
+                    'event' => $event,
+                ],
+            ]);
 
-        return $response->getBody()->getContents();
+            return $response->getBody()->getContents();
+        } catch (GuzzleException $e) {
+            Log::error($e->getMessage(), $e->getTrace());
+        }
+
+        return null;
     }
 }
