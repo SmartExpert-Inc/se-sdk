@@ -50,10 +50,10 @@ final class S3Service
         return $return;
     }
 
-    public function putFile(UploadedFile $file, $directory = self::DEFAULT_DIRECTORY, $access = self::DEFAULT_ACCESS): string
+    public function putFile(UploadedFile $file, $directory = self::DEFAULT_DIRECTORY, $access = self::DEFAULT_ACCESS, bool $originalName = true): string
     {
         $directory = $this->getDirectory($directory);
-        $filename = $this->getUniqueFileName($file);
+        $filename = $this->getUniqueFileName($file, $originalName);
         $this->storage->putFileAs($directory, $file, $filename, $access);
 
         return $this->storage->url("{$directory}{$filename}");
@@ -169,11 +169,11 @@ final class S3Service
         return "{$this->env}/{$directory}/";
     }
 
-    private function getUniqueFileName(UploadedFile $file = null): string
+    private function getUniqueFileName(UploadedFile $file = null, bool $originalName = true): string
     {
         $filename = Uuid::generate()->string;
 
-        if (! is_null($file)) {
+        if (! is_null($file) && $originalName) {
             $filename = $this->getOriginalName($file);
 //            $filename .= $file->getClientOriginalExtension()
 //                ? ".{$file->getClientOriginalExtension()}" // extension
