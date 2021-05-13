@@ -6,6 +6,10 @@ use BenSampo\Enum\Enum;
 
 final class RatingLogAction extends Enum
 {
+    const PASSED_ONE_PRODUCT = 1;
+    const PASSED_TWO_PRODUCTS = 2;
+    const PASSED_THREE_PRODUCTS = 3;
+
     // global rating action
     const CreateHelpPost = 0;
     const DeleteHelpPost = 1;
@@ -113,6 +117,25 @@ final class RatingLogAction extends Enum
             default:
                 return 1;
         }
+    }
+
+    public static function getProductsFinishedAction(int $finishedProductsCount): ?int
+    {
+        switch ($finishedProductsCount) {
+            case self::PASSED_ONE_PRODUCT:
+                $action = RatingLogAction::FirstProductFinished;
+                break;
+            case self::PASSED_TWO_PRODUCTS:
+                $action = RatingLogAction::SecondProductFinished;
+                break;
+            case self::PASSED_THREE_PRODUCTS:
+                $action = RatingLogAction::ThirdProductFinished;
+                break;
+            default:
+                $action = null;
+        }
+
+        return $action;
     }
 
     public static function getDescription($value): string
