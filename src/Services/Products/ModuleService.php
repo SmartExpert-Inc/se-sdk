@@ -115,4 +115,21 @@ final class ModuleService extends BaseService
 
         return $response;
     }
+
+    public function move(int $moduleId): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->put("/modules/$moduleId/move")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
