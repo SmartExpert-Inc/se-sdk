@@ -133,7 +133,7 @@ final class LessonService extends BaseService
         return $response;
     }
 
-    public function move(int $lessonId): ?\stdClass
+    public function move(int $lessonId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -141,7 +141,7 @@ final class LessonService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/lessons/$lessonId/move")
+            ->put("/lessons/$lessonId/move", $request->all())
             ->getObject();
 
         $this->api->dropState();
