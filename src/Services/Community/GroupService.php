@@ -99,6 +99,23 @@ final class GroupService extends BaseService
         return $response;
     }
 
+    public function deleteForUser(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/groups/delete-for-user", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function addParticipants(Request $request): ?\stdClass
     {
         $this->withAuth();
@@ -125,6 +142,23 @@ final class GroupService extends BaseService
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
             ->put("/group-participants/update-for-user", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function deleteParticipantsForUser(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/group-participants/delete-for-user", $request->all())
             ->getObject();
 
         $this->api->dropState();

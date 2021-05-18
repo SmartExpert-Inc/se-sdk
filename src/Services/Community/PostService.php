@@ -99,6 +99,23 @@ final class PostService extends BaseService
         return $response;
     }
 
+    public function deleteForUser(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/posts/delete-for-user", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function indexHelp(Request $request): ?\stdClass
     {
         $this->withAuth();

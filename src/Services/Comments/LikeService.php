@@ -101,4 +101,21 @@ final class LikeService extends BaseService
 
         return $likes;
     }
+
+    public function deleteForUser(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/likes/delete-for-user", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
