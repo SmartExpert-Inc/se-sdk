@@ -10,6 +10,7 @@ final class NotificationType extends Enum
     const LessonOnCheckForTeacher = 'App\Notifications\LessonOnCheckForTeacher';
     const LessonOpened = 'App\Notifications\LessonOpened';
     const LessonPassed = 'App\Notifications\LessonPassed';
+    const LessonPassedForTeacher = 'App\Notifications\LessonPassedForTeacher';
     const LessonReturned = 'App\Notifications\LessonReturned';
     const LessonStarted = 'App\Notifications\LessonStarted';
     const UserActivatedInProduct = 'App\Notifications\UserActivatedInProduct';
