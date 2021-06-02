@@ -46,6 +46,9 @@ final class RatingLogAction extends Enum
 
     const CommentedHelpPost = 27;
 
+    const PointsFromTeacher = 28;
+    const PointsFromAdmin = 29;
+
     public static function getAmount(int $value): int
     {
         switch ($value) {
@@ -179,5 +182,11 @@ final class RatingLogAction extends Enum
     public static function isCommentedHelpPost($value): bool
     {
         return $value == self::CommentedHelpPost;
+    }
+
+    public static function isManuallyAddedPoints($value): bool
+    {
+        return $value == self::PointsFromAdmin
+            || $value == self::PointsFromTeacher;
     }
 }

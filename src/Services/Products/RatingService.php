@@ -82,6 +82,23 @@ final class RatingService extends BaseService
         return $ratings;
     }
 
+    public function store(int $productId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $ratings = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/products/{$productId}/ratings", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $ratings;
+    }
+
     public function logs(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
