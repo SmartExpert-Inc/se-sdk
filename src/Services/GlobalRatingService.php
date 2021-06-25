@@ -21,7 +21,7 @@ final class GlobalRatingService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->put("/rating/update", $request->all())
+            ->put("/ratings/update", $request->all())
             ->getObject();
 
         $this->api->dropState();
