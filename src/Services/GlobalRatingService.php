@@ -17,7 +17,7 @@ final class GlobalRatingService extends BaseService
     {
         $this->withAuth();
 
-        $setting = $this->api
+        $rating = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
@@ -27,6 +27,23 @@ final class GlobalRatingService extends BaseService
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $setting;
+        return $rating;
+    }
+
+    public function deleteForProduct(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->delete("/ratings/delete-for-product", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
     }
 }
