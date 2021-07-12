@@ -132,4 +132,21 @@ final class StudyService extends BaseService
 
         return $response;
     }
+
+    public function processLessonCommented(int $lessonId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/study/lessons/{$lessonId}/commented", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }

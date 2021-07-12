@@ -240,8 +240,8 @@ final class SmartExpertSDK
         $this->todoStages = app(StagesService::class);
         $this->todoTargets = app(TargetsService::class);
 
-        if (config('filesystems.disks.do_spaces.region')
-            && config('filesystems.disks.do_spaces.endpoint')) {
+        if (config('filesystems.disks.' . env('FILESYSTEM_DRIVER') . '.region')
+            && config('filesystems.disks.' . env('FILESYSTEM_DRIVER') . '.endpoint')) {
             $this->s3 = app(S3Service::class);
         }
 
