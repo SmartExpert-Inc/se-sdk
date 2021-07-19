@@ -25,7 +25,7 @@ final class S3Service
 
     public function __construct()
     {
-        $this->storage = Storage::disk(env('FILESYSTEM_DRIVER'));
+        $this->storage = Storage::disk(config('filesystems.default'));
         $this->env = config('app.env');
     }
 
