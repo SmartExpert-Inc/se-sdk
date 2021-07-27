@@ -146,10 +146,6 @@ final class ApiClientService
         $res = (object) $results->body;
         $this->setResults($res);
 
-        if (! app()->isProduction()) {
-            Log::debug($url . ': ' . print_r($res, true));
-        }
-
         return $this;
     }
 
