@@ -116,6 +116,23 @@ final class TeacherService extends BaseService
         return $response;
     }
 
+    public function getAllStudents(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/teacher/students", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function getStudentsForLesson(int $lessonId, Request $request): ?\stdClass
     {
         $this->withAuth();
