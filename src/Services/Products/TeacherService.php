@@ -14,7 +14,7 @@ final class TeacherService extends BaseService
         $this->host = config('se_sdk.products.host');
     }
 
-    public function indexLessons(int $moduleId): ?\stdClass
+    public function indexLessons(int $moduleId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -22,7 +22,7 @@ final class TeacherService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/teacher/modules/{$moduleId}/lessons")
+            ->get("/teacher/modules/{$moduleId}/lessons", $request->all())
             ->getObject();
 
         $this->api->dropState();
@@ -184,7 +184,7 @@ final class TeacherService extends BaseService
         return $response;
     }
 
-    public function getLessonsAttendanceForProduct(int $productId, Request $request): ?\stdClass
+    public function getProductProgress(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
