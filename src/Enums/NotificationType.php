@@ -23,6 +23,7 @@ final class NotificationType extends Enum
     const NewPublishedLesson = 'App\Notifications\NewPublishedLesson';
     const ProductPassed = 'App\Notifications\ProductPassed';
     const SkippedTaskNotification = 'App\Notifications\SkippedTaskNotification';
+    const SkippedTaskNotificationForStudent = 'App\Notifications\SkippedTaskNotificationForStudent';
     const NewCommentInLessonForTeachers = 'App\Notifications\NewCommentInLessonForTeachers';
     const LessonContentChanged = 'App\Notifications\LessonContentChanged';
     const NewLessonAvailable = 'App\Notifications\NewLessonAvailable';
