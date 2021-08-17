@@ -27,6 +27,7 @@ final class NotificationType extends Enum
     const NewCommentInLessonForTeachers = 'App\Notifications\NewCommentInLessonForTeachers';
     const LessonContentChanged = 'App\Notifications\LessonContentChanged';
     const NewLessonAvailable = 'App\Notifications\NewLessonAvailable';
+    const UserEmailChangedByAdmin = 'App\Notifications\UserEmailChangedByAdmin';
 
     public static function isRatingNotification($value): bool
     {
