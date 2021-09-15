@@ -194,4 +194,19 @@ class UserService extends BaseService
 
         return $response;
     }
+
+    public function resetPasswordByPhone(Request $request): ?\stdClass
+    {
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->put("/users/reset-password", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
