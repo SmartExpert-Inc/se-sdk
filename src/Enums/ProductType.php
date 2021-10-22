@@ -8,7 +8,7 @@ use BenSampo\Enum\Enum;
 /**
  * @SWG\Definition(
  *     definition="ProductType",
- *     required={"Course": 0, "Marathon": 1},
+ *     required={"Course": 0, "Marathon": 1, "Event": 2, "Game": 3},
  *     title="Product Type",
  *     type="array",
  *     @SWG\Items(
@@ -23,6 +23,7 @@ final class ProductType extends Enum implements LocalizedEnum
     const Course = 0;
     const Marathon = 1;
     const Event = 2;
+    const Game = 3;
 
     public static function isCourse(int $value): bool
     {
@@ -37,5 +38,10 @@ final class ProductType extends Enum implements LocalizedEnum
     public static function isEvent(int $value): bool
     {
         return $value == self::Event;
+    }
+
+    public static function isGame(int $value): bool
+    {
+        return $value == self::Game;
     }
 }
