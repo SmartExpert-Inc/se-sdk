@@ -45,6 +45,12 @@ final class RatingLogAction extends Enum
     const PointsFromTeacher = 28;
     const PointsFromAdmin = 29;
 
+    const PointsFromAchievement = 30;
+    const DeletePointsForGift = 31;
+    const DeleteOldAchievementsPoints = 32;
+
+    const PointsFromUser = 33;
+
     public static function getAmount(int $value): int
     {
         switch ($value) {
@@ -183,6 +189,22 @@ final class RatingLogAction extends Enum
     public static function isManuallyAddedPoints($value): bool
     {
         return $value == self::PointsFromAdmin
-            || $value == self::PointsFromTeacher;
+            || $value == self::PointsFromTeacher
+            || $value == self::PointsFromUser;
+    }
+
+    public static function isDeletePointsForGift($value): bool
+    {
+        return $value == self::DeletePointsForGift;
+    }
+
+    public static function isPointsFromAchievement($value): bool
+    {
+        return $value == self::PointsFromAchievement;
+    }
+
+    public static function isDeleteOldAchievementsPoints($value): bool
+    {
+        return $value == self::DeleteOldAchievementsPoints;
     }
 }
