@@ -50,6 +50,7 @@ final class RatingLogAction extends Enum
     const DeleteOldAchievementsPoints = 32;
 
     const PointsFromUser = 33;
+    const PointsDonateToUser = 34;
 
     public static function getAmount(int $value): int
     {
@@ -206,5 +207,10 @@ final class RatingLogAction extends Enum
     public static function isDeleteOldAchievementsPoints($value): bool
     {
         return $value == self::DeleteOldAchievementsPoints;
+    }
+
+    public static function isPointsFromUser($value): bool
+    {
+        return $value == self::PointsFromUser;
     }
 }
