@@ -91,9 +91,6 @@ final class SmartExpertSDK
     /** @var TargetsService $todoTargets */
     public $todoTargets;
 
-    /** @var S3Service $s3 */
-    public $s3;
-
     /** @var CustomLogger $logger */
     public $logger;
 
@@ -239,11 +236,6 @@ final class SmartExpertSDK
         $this->todoPriority = app(PriorityService::class);
         $this->todoStages = app(StagesService::class);
         $this->todoTargets = app(TargetsService::class);
-
-        if (config('filesystems.disks.' . config('filesystems.default') . '.region')
-            && config('filesystems.disks.' . config('filesystems.default') . '.endpoint')) {
-            $this->s3 = app(S3Service::class);
-        }
 
         $this->logger = app(CustomLogger::class);
         $this->exception = app(ExceptionHandler::class);

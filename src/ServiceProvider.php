@@ -5,7 +5,8 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{ApiClientService,
+use SE\SDK\Services\{
+    ApiClientService,
     Auth\GroupService as AuthGroupService,
     Billing\CredentialService,
     Billing\PaymentService,
@@ -46,7 +47,6 @@ use SE\SDK\Services\{ApiClientService,
     Products\RatingService,
     Products\HelpOtherService,
     Products\PresentationService,
-    S3Service,
     SmartExpertSDK,
     Todo\PriorityService,
     Todo\StagesService,
@@ -61,7 +61,8 @@ use SE\SDK\Services\{ApiClientService,
     NotificationService,
     GlobalRatingService,
     Community\PostService as CommunityPostService,
-    Community\FriendService};
+    Community\FriendService
+};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 
@@ -104,26 +105,8 @@ class ServiceProvider extends IlluminateServiceProvider
             require_once($file);
         }
 
-        if (config('se_sdk.s3')) {
-            $disk = config('se_sdk.s3.cloud');
-
-            if (config('filesystems.cloud')) {
-                Config::set('filesystems.cloud', config('se_sdk.s3.cloud'));
-            }
-
-            if (config("filesystems.disks")) {
-                Config::set("filesystems.disks.{$disk}", config("se_sdk.s3.disks.{$disk}"));
-            }
-        }
-
         if (config('se_sdk.channels')) {
             Config::set("logging.channels.api", config("se_sdk.channels.api"));
-        }
-
-        if (config('filesystems')) {
-            $this->app->singleton(S3Service::class, function () {
-                return new S3Service;
-            });
         }
 
         $this->app->singleton(ApiClientService::class, function () {
