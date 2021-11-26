@@ -175,7 +175,7 @@ final class UserLinkService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("lessons/{$lessonId}/users/{$userId}/reset")
+            ->get("/lessons/{$lessonId}/users/{$userId}/reset")
             ->getObject();
 
         $this->api->dropState();
