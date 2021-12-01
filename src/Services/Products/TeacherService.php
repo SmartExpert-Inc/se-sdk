@@ -201,6 +201,23 @@ final class TeacherService extends BaseService
         return $response;
     }
 
+    public function getStudentProgressInLesson(int $id, int $lessonId): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/teacher/students/{$id}/lessons/{$lessonId}/progress")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function getGradesForProduct(int $productId): ?\stdClass
     {
         $this->withAuth();
