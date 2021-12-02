@@ -192,7 +192,24 @@ final class TeacherService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/teacher/products/{$productId}/lessons-attendance", $request->all())
+            ->get("/teacher/products/{$productId}/progress", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
+    public function getProductProgressForExport(int $productId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/teacher/products/{$productId}/progress/export", $request->all())
             ->getObject();
 
         $this->api->dropState();
