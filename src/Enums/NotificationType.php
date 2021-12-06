@@ -32,6 +32,7 @@ final class NotificationType extends Enum
     const SuccessfulImport = 'App\Notifications\SuccessfulImport';
     const FailedImport = 'App\Notifications\FailedImport';
     const SuccessfulExport = 'App\Notifications\SuccessfulExport';
+    const LessonNotPassedForTeacher = 'App\Notifications\LessonNotPassedForTeacher';
 
     public static function isRatingNotification($value): bool
     {
