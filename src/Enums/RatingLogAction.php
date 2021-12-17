@@ -213,4 +213,27 @@ final class RatingLogAction extends Enum
     {
         return $value == self::PointsFromUser;
     }
+
+    public static function isNotProductAction($value): bool
+    {
+        return $value === self::DeleteHelpPost
+            || $value === self::PutThanks
+            || $value === self::DeleteThanks
+            || $value === self::GetThanks
+            || $value === self::DeleteGettingThanks
+            || $value === self::DeleteGettingThanks
+            || $value === self::RepostHelpPost
+            || $value === self::AvatarLoaded
+            || $value === self::SelectedTags
+            || $value === self::FilledOutProfile
+            || $value === self::ActiveWeek
+            || $value === self::ActiveMonth
+            || $value === self::TwoMonthsActive
+            || $value === self::PointsFromAdmin
+            || $value === self::PointsFromAchievement
+            || $value === self::DeletePointsForGift
+            || $value === self::DeleteOldAchievementsPoints
+            || $value === self::PointsFromUser
+            || $value === self::PointsDonateToUser;
+    }
 }
