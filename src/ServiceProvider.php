@@ -5,8 +5,7 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{
-    ApiClientService,
+use SE\SDK\Services\{ApiClientService,
     Auth\GroupService as AuthGroupService,
     Billing\CredentialService,
     Billing\PaymentService,
@@ -33,6 +32,7 @@ use SE\SDK\Services\{
     Products\ProductService,
     Products\QuestionService,
     Products\ReviewService,
+    Products\ScormPackageService,
     Products\StatisticService as ProductStatisticService,
     Products\StudyService,
     Products\TariffService,
@@ -61,8 +61,7 @@ use SE\SDK\Services\{
     NotificationService,
     GlobalRatingService,
     Community\PostService as CommunityPostService,
-    Community\FriendService
-};
+    Community\FriendService};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 
@@ -252,6 +251,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(LibraryService::class, function () {
             return new LibraryService();
+        });
+
+        $this->app->singleton(ScormPackageService::class, function () {
+            return new ScormPackageService();
         });
 
         $this->app->singleton(UserLinkService::class, function () {

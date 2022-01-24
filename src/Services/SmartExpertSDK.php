@@ -19,8 +19,7 @@ use SE\SDK\Services\Todo\{
 use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
-use SE\SDK\Services\Products\{
-    BannerService,
+use SE\SDK\Services\Products\{BannerService,
     GamificationService,
     GradeService,
     GroupLinkService,
@@ -34,6 +33,7 @@ use SE\SDK\Services\Products\{
     ProductService,
     QuestionService,
     ReviewService,
+    ScormPackageService,
     StatisticService as ProductStatisticService,
     StudyService,
     TariffService,
@@ -45,8 +45,7 @@ use SE\SDK\Services\Products\{
     VideoService,
     RatingService,
     HelpOtherService,
-    PresentationService
-};
+    PresentationService};
 use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
 use SE\SDK\Services\Billing\{CredentialService, PaymentService};
 
@@ -150,6 +149,9 @@ final class SmartExpertSDK
 
     /** @var LiveStreamService $lessonLiveStream */
     public $lessonLiveStream;
+
+    /** @var ScormPackageService $lessonScormPackage */
+    public $lessonScormPackage;
 
     /** @var UserLinkService $productUser */
     public $productUser;
@@ -263,6 +265,7 @@ final class SmartExpertSDK
         $this->lessonHelpOther = app(HelpOtherService::class);
         $this->lessonPresentation = app(PresentationService::class);
         $this->lessonLiveStream = app(LiveStreamService::class);
+        $this->lessonScormPackage = app(ScormPackageService::class);
 
         $this->productUser = app(UserLinkService::class);
         $this->productTeacher = app(TeacherLinkService::class);
