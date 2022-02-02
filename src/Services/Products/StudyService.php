@@ -116,7 +116,7 @@ final class StudyService extends BaseService
         return $response;
     }
 
-    public function showProduct(int $productId): ?\stdClass
+    public function showProduct(int $productId, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -124,7 +124,7 @@ final class StudyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/study/products/{$productId}")
+            ->get("/study/products/{$productId}", $request->all())
             ->getObject();
 
         $this->api->dropState();
