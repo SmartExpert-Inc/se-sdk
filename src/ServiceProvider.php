@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Services\{ApiClientService,
     Auth\GroupService as AuthGroupService,
+    Auth\PositionService,
     Billing\CredentialService,
     Billing\PaymentService,
     BotService,
@@ -347,6 +348,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(BannerService::class, function () {
             return new BannerService();
+        });
+
+        $this->app->singleton(PositionService::class, function () {
+            return new PositionService();
         });
     }
 }
