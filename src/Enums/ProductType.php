@@ -59,6 +59,7 @@ final class ProductType extends Enum implements LocalizedEnum
     public static function isSuccessiveByDefault(int $value): bool
     {
         return self::isMarathon($value)
-            || self::isEvent($value);
+            || self::isEvent($value)
+            || self::isGame($value);
     }
 }
