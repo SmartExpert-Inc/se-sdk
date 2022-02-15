@@ -35,6 +35,8 @@ final class NotificationType extends Enum
     const LessonNotPassedForTeacher = 'App\Notifications\LessonNotPassedForTeacher';
     const UserGiftRequest = 'App\Notifications\UserGiftRequest';
     const BirthdayNotification = 'App\Notifications\BirthdayNotification';
+    const UserGiftRequestAccepted = 'App\Notifications\UserGiftRequestAccepted';
+    const UserGiftRequestDeclined = 'App\Notifications\UserGiftRequestDeclined';
 
     public static function isRatingNotification($value): bool
     {
