@@ -209,4 +209,19 @@ class UserService extends BaseService
 
         return $response;
     }
+
+    public function changeStates(Request $request): ?\stdClass
+    {
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->put("/users/change-states", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
 }
