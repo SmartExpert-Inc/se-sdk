@@ -48,6 +48,23 @@ final class UserLinkService extends BaseService
         return $response;
     }
 
+    public function storeMany(int $productId, Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->post("/products/{$productId}/users/store-many", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function update(int $userId, Request $request): ?\stdClass
     {
         $this->withAuth();
