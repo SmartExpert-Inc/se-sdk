@@ -212,6 +212,8 @@ class UserService extends BaseService
 
     public function changeStates(Request $request): ?\stdClass
     {
+        $this->withAuth();
+
         $response = $this->api
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
