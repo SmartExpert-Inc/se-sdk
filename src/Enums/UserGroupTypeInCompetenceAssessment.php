@@ -18,7 +18,7 @@ use BenSampo\Enum\Enum;
  *     ),
  * )
  */
-final class UserGroupTypeInCompetencyAssessment extends Enum implements LocalizedEnum
+final class UserGroupTypeInCompetenceAssessment extends Enum implements LocalizedEnum
 {
     const Evaluated = 0;
     const Subordinate = 1;

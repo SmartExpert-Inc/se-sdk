@@ -25,7 +25,7 @@ final class ProductType extends Enum implements LocalizedEnum
     const Event = 2;
     const Game = 3;
     const KnowledgeBase = 4;
-    const CompetencyAssessment = 5;
+    const CompetenceAssessment = 5;
 
     public static function isCourse(int $value): bool
     {
@@ -52,9 +52,9 @@ final class ProductType extends Enum implements LocalizedEnum
         return $value == self::KnowledgeBase;
     }
 
-    public static function isCompetencyAssessment(int $value): bool
+    public static function isCompetenceAssessment(int $value): bool
     {
-        return $value == self::CompetencyAssessment;
+        return $value == self::CompetenceAssessment;
     }
 
     public static function isProductTypeHasSubtype(int $value): bool
