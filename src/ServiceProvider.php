@@ -5,7 +5,8 @@ namespace SE\SDK;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use SE\SDK\Logging\CustomLogger;
-use SE\SDK\Services\{ApiClientService,
+use SE\SDK\Services\{
+    ApiClientService,
     Auth\GroupService as AuthGroupService,
     Auth\PositionService,
     Billing\CredentialService,
@@ -22,8 +23,8 @@ use SE\SDK\Services\{ApiClientService,
     Posts\PostService,
     Posts\StatisticService,
     Products\BannerService,
+    Products\CompetenceService,
     Products\GamificationService,
-    Products\GroupLinkService,
     Products\LessonService,
     Products\LessonableService,
     Products\LibraryService,
@@ -62,7 +63,8 @@ use SE\SDK\Services\{ApiClientService,
     NotificationService,
     GlobalRatingService,
     Community\PostService as CommunityPostService,
-    Community\FriendService};
+    Community\FriendService
+};
 use SE\SDK\Client\HttpClient;
 use SE\SDK\Handlers\ExceptionHandler;
 
@@ -220,6 +222,10 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $this->app->singleton(LessonService::class, function () {
             return new LessonService();
+        });
+
+        $this->app->singleton(CompetenceService::class, function () {
+            return new CompetenceService();
         });
 
         $this->app->singleton(LessonableService::class, function () {

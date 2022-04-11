@@ -20,6 +20,7 @@ use SE\SDK\Services\Tags\{
     CategoryService, TagService
 };
 use SE\SDK\Services\Products\{BannerService,
+    CompetenceService,
     GamificationService,
     GradeService,
     GroupLinkService,
@@ -120,6 +121,9 @@ final class SmartExpertSDK
 
     /** @var LessonService $lesson */
     public $lesson;
+
+    /** @var CompetenceService $competence */
+    public $competence;
 
     /** @var ModuleService $module */
     public $module;
@@ -258,6 +262,7 @@ final class SmartExpertSDK
         $this->productStatistic = app(ProductStatisticService::class);
         $this->module = app(ModuleService::class);
         $this->lesson = app(LessonService::class);
+        $this->competence = app(CompetenceService::class);
         $this->banner = app(BannerService::class);
         $this->lessonable = app(LessonableService::class);
         $this->lessonPractice = app(PracticeService::class);
