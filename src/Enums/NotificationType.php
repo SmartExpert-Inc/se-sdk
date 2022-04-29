@@ -37,6 +37,9 @@ final class NotificationType extends Enum
     const BirthdayNotification = 'App\Notifications\BirthdayNotification';
     const UserGiftRequestAccepted = 'App\Notifications\UserGiftRequestAccepted';
     const UserGiftRequestDeclined = 'App\Notifications\UserGiftRequestDeclined';
+    const NotificationAfterStart = 'App\Notifications\NotificationAfterStart';
+    const NotificationAfterStartForEvaluated = 'App\Notifications\NotificationAfterStartForEvaluated';
+    const NotificationBeforeStart = 'App\Notifications\NotificationBeforeStart';
 
     public static function isRatingNotification($value): bool
     {

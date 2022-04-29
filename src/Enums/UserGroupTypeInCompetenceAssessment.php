@@ -24,6 +24,7 @@ final class UserGroupTypeInCompetenceAssessment extends Enum implements Localize
     const Subordinate = 1;
     const Leader = 2;
     const Colleague = 3;
+    const Author = 4;
 
     public static function isEvaluated(int $value): bool
     {
@@ -43,5 +44,10 @@ final class UserGroupTypeInCompetenceAssessment extends Enum implements Localize
     public static function isColleague(int $value): bool
     {
         return $value == self::Colleague;
+    }
+
+    public static function isAuthor(int $value): bool
+    {
+        return $value == self::Author;
     }
 }
