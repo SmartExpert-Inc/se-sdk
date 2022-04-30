@@ -29,30 +29,6 @@ final class UserGroupType extends Enum implements LocalizedEnum
     const Leader = 6;
     const Colleague = 7;
 
-    /**
-     * @param mixed $value
-     * @return string
-     */
-    public static function getDescription($value): string
-    {
-        switch ($value) {
-            case self::User:
-                return trans('User');
-                break;
-            case self::Teacher:
-                return trans('Teacher');
-                break;
-            case self::Moderator:
-                return trans('Moderator');
-                break;
-            case self::Author:
-                return trans('Author');
-                break;
-            default:
-                return self::getKey($value);
-        }
-    }
-
     public static function isUser(int $value): bool
     {
         return $value == self::User;
@@ -71,6 +47,26 @@ final class UserGroupType extends Enum implements LocalizedEnum
     public static function isAuthor(int $value): bool
     {
         return $value == self::Author;
+    }
+
+    public static function isEvaluated(int $value): bool
+    {
+        return $value == self::Evaluated;
+    }
+
+    public static function isSubordinate(int $value): bool
+    {
+        return $value == self::Subordinate;
+    }
+
+    public static function isLeader(int $value): bool
+    {
+        return $value == self::Leader;
+    }
+
+    public static function isColleague(int $value): bool
+    {
+        return $value == self::Leader;
     }
 
     public static function isNotAuthor(int $value): bool
