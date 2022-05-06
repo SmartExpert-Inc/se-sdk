@@ -82,6 +82,23 @@ final class StudyService extends BaseService
         return $users;
     }
 
+    public function showUser(int $id): ?\stdClass
+    {
+        $this->withAuth();
+
+        $users = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/study/users/{$id}")
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $users;
+    }
+
     public function indexModule(int $id): ?\stdClass
     {
         $this->withAuth();
