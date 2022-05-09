@@ -82,6 +82,23 @@ final class StatisticService extends BaseService
         return $response;
     }
 
+    public function getCompetenceAssessmentsStat(Request $request): ?\stdClass
+    {
+        $this->withAuth();
+
+        $response = $this->api
+            ->setHeaders($this->headers)
+            ->setBaseUrl($this->host)
+            ->setPrefix($this->prefix)
+            ->get("/statistics/competence-assessments", $request->all())
+            ->getObject();
+
+        $this->api->dropState();
+        $this->api->dropUrls();
+
+        return $response;
+    }
+
     public function getStudentsStat(Request $request): ?\stdClass
     {
         $this->withAuth();
