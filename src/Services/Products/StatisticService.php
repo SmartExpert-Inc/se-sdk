@@ -124,7 +124,7 @@ final class StatisticService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/statistics/competence-assessments/{$productId}/users/{$userId}", $request->all())
+            ->get("/statistics/competence-assessments/{$productId}/users/{$userId}")
             ->getObject();
 
         $this->api->dropState();
