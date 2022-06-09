@@ -158,13 +158,17 @@ final class StudyService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->post("/study/products/{$productId}/recommended", $request->all())
-            ->getObject();
+            ->post("/study/products/{$productId}/recommended", $request->all());
+
+        $formattedResponse = (object) [
+            'status' => $response->getStatus(),
+            'response' => $response->getObject(),
+        ];
 
         $this->api->dropState();
         $this->api->dropUrls();
 
-        return $response;
+        return $formattedResponse;
     }
 
     public function getActiveProducts(Request $request): ?\stdClass

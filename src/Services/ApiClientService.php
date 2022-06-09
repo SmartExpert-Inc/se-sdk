@@ -35,6 +35,9 @@ final class ApiClientService
     /** @var bool $isSystemModeOn*/
     private $isSystemModeOn = false;
 
+    /** @var integer $status */
+    private $status;
+
     public function __construct()
     {
         $this->client = requests();
@@ -89,6 +92,13 @@ final class ApiClientService
         return $this;
     }
 
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function activateSystemMode(): self
     {
         $this->isSystemModeOn = true;
@@ -112,6 +122,11 @@ final class ApiClientService
     public function getObject()
     {
         return $this->response;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function setHeaders(array $headers): self
@@ -145,6 +160,7 @@ final class ApiClientService
         $this->setCookies($results);
         $res = (object) $results->body;
         $this->setResults($res);
+        $this->setStatus($results->code);
 
         return $this;
     }
