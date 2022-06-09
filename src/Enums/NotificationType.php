@@ -42,6 +42,7 @@ final class NotificationType extends Enum
     const NotificationBeforeStart = 'App\Notifications\NotificationBeforeStart';
     const EventReminder = 'App\Notifications\EventReminder';
     const EventReminderDaily = 'App\Notifications\EventReminderDaily';
+    const AssessmentCompetencesReportNotification = 'App\Notifications\AssessmentCompetencesReportNotification';
 
     public static function isRatingNotification($value): bool
     {
