@@ -65,7 +65,7 @@ final class ProductService extends BaseService
         return $product;
     }
 
-    public function show(int $id): ?\stdClass
+    public function show(int $id, Request $request): ?\stdClass
     {
         $this->withAuth();
 
@@ -73,7 +73,7 @@ final class ProductService extends BaseService
             ->setHeaders($this->headers)
             ->setBaseUrl($this->host)
             ->setPrefix($this->prefix)
-            ->get("/products/{$id}")
+            ->get("/products/{$id}", $request->all())
             ->getObject();
 
         $this->api->dropState();
