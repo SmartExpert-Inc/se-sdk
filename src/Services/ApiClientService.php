@@ -147,6 +147,9 @@ final class ApiClientService
         }
 
         $payload = $this->getParams($arguments);
+        if (! array_key_exists('subdomain', $payload) && SubdomainService::hostHasSubdomain()) {
+            $payload['subdomain'] = SubdomainService::getSubdomain();
+        }
 
         if ($this->isSystemModeOn) {
             $this->addSystemApiKey($payload);

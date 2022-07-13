@@ -8,7 +8,6 @@ use SE\SDK\Logging\CustomLogger;
 use SE\SDK\Services\{
     ApiClientService,
     Auth\GroupService as AuthGroupService,
-    Auth\PositionService,
     Billing\CredentialService,
     Billing\PaymentService,
     BotService,
@@ -50,6 +49,7 @@ use SE\SDK\Services\{
     Products\HelpOtherService,
     Products\PresentationService,
     SmartExpertSDK,
+    SubdomainService,
     Todo\PriorityService,
     Todo\StagesService,
     Todo\TargetsService,
@@ -356,8 +356,8 @@ class ServiceProvider extends IlluminateServiceProvider
             return new BannerService();
         });
 
-        $this->app->singleton(PositionService::class, function () {
-            return new PositionService();
+        $this->app->singleton(SubdomainService::class, function () {
+            return new SubdomainService();
         });
     }
 }

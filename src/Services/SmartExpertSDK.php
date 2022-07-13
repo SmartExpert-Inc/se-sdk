@@ -224,6 +224,9 @@ final class SmartExpertSDK
     /** @var BannerService $banner */
     public $banner;
 
+    /** @var SubdomainService $subdomain */
+    public $subdomain;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
@@ -302,5 +305,7 @@ final class SmartExpertSDK
         $this->payments = app(PaymentService::class);
 
         $this->carrotQuest = app(CarrotQuestService::class);
+
+        $this->subdomain = app(SubdomainService::class);
     }
 }
