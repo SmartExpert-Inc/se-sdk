@@ -227,6 +227,9 @@ final class SmartExpertSDK
     /** @var SubdomainService $subdomain */
     public $subdomain;
 
+    /** @var Application|mixed $carrotQuest */
+    public $carrotQuest;
+
     public function __construct()
     {
         $this->auth = app(AuthService::class);
