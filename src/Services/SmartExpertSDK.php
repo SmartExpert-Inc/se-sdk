@@ -49,7 +49,6 @@ use SE\SDK\Services\Products\{BannerService,
     PresentationService};
 use SE\SDK\Services\Community\{GroupService, PostService as CommunityPostService, FriendService};
 use SE\SDK\Services\Billing\{CredentialService, PaymentService};
-use SE\SDK\Services\Auth\PositionService;
 
 final class SmartExpertSDK
 {
@@ -67,9 +66,6 @@ final class SmartExpertSDK
 
     /** @var SocialService $social */
     public $social;
-
-    /** @var PositionService $position */
-    public $position;
 
     /** @var PostService $post */
     public $post;
@@ -239,7 +235,6 @@ final class SmartExpertSDK
         $this->userAttributes = app(UserAttributeService::class);
         $this->userSettings = app(UserSettingService::class);
         $this->social = app(SocialService::class);
-        $this->position = app(PositionService::class);
 
         $this->post = app(PostService::class);
         $this->postStatistic = app(StatisticService::class);
