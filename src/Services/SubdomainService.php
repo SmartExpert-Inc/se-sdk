@@ -47,6 +47,6 @@ final class SubdomainService extends BaseService
 
     public static function hostHasSubdomain(): bool
     {
-        return request()->getHost() !== short_url(config('se_sdk.platform.host'));
+        return request()->getHost() !== short_url(config('app.url'));
     }
 }
