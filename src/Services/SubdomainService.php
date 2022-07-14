@@ -33,7 +33,7 @@ final class SubdomainService extends BaseService
 
     public static function setDatabase(Request $request)
     {
-        if (SubdomainService::hostHasSubdomain()) {
+        if (SubdomainService::hostHasSubdomain() || $request->has('subdomain')) {
             $subdomain = SubdomainService::getSubdomain($request);
             $defaultDbName = Config::get('database.connections.mysql.database');
             Config::set('database.connections.mysql.database', "{$subdomain}_{$defaultDbName}");
