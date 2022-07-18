@@ -19,6 +19,8 @@ final class SubdomainService extends BaseService
 
     public function migrateDatabase(Request $request)
     {
+        $this->withAuth();
+
         $response = $this->api
             ->setBaseUrl(config("se_sdk.{$request->input('host')}.host"))
             ->setPrefix($this->prefix)

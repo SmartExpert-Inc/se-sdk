@@ -239,13 +239,15 @@ final class AuthService extends BaseService
 
     public function getToken(): string
     {
-        $keyName = $this->getSessionKey();
-        $accessToken = Redis::get($keyName);
-        $tokenType = session()->get('token_type', 'Bearer');
+        if ($this->hasToken()) {
+            $keyName = $this->getSessionKey();
+            $accessToken = Redis::get($keyName);
+            $tokenType = session()->get('token_type', 'Bearer');
 
-        return $this->hasToken()
-            ? "{$tokenType} {$accessToken}"
-            : '';
+            return "{$tokenType} {$accessToken}";
+        }
+
+        return '';
     }
 
     public function user(): ?\stdClass
