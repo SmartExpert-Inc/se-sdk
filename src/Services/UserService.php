@@ -178,6 +178,17 @@ class UserService extends BaseService
         return array_key_exists(UserRoleType::Trial, $user->roles);
     }
 
+    public function isManager(): bool
+    {
+        $user = $this->authUser();
+
+        if (! $user or ! property_exists($user, "roles")) {
+            return false;
+        }
+
+        return array_key_exists(UserRoleType::Manager, $user->roles);
+    }
+
     public function delete(int $id): ?\stdClass
     {
         $this->withAuth();
