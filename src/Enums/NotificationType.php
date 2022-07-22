@@ -49,6 +49,7 @@ final class NotificationType extends Enum
     const UserFillProfile = 'App\Notifications\UserFillProfile';
     const ProductPerMonthReport = 'App\Notifications\ProductPerMonthReport';
     const AdminFillGamification = 'App\Notifications\AdminFillGamification';
+    const UserCreatedEvent = 'App\Notifications\UserCreatedEvent';
     const AuthorFillGamification = 'App\Notifications\AuthorFillGamification';
 
     public static function isRatingNotification($value): bool
