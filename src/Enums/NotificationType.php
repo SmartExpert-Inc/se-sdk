@@ -43,14 +43,13 @@ final class NotificationType extends Enum
     const EventReminder = 'App\Notifications\EventReminder';
     const EventReminderDaily = 'App\Notifications\EventReminderDaily';
     const AssessmentCompetencesReportNotification = 'App\Notifications\AssessmentCompetencesReportNotification';
-    const AuthorNoProductOneDay = 'App\Notifications\AuthorNoProductOneDay';
-    const AuthorNoProductFiveDay = 'App\Notifications\AuthorNoProductFiveDay';
-    const AuthorNoProductSevenDay = 'App\Notifications\AuthorNoProductSevenDay';
     const UserFillProfile = 'App\Notifications\UserFillProfile';
-    const ProductPerMonthReport = 'App\Notifications\ProductPerMonthReport';
-    const AdminFillGamification = 'App\Notifications\AdminFillGamification';
-    const UserCreatedEvent = 'App\Notifications\UserCreatedEvent';
     const AuthorFillGamification = 'App\Notifications\AuthorFillGamification';
+    const UserCreatedEvent = 'App\Notifications\UserCreatedEvent';
+    const NotProductOneDay = 'App\Notifications\NotProductOneDay';
+    const NotProductFiveDay = 'App\Notifications\NotProductFiveDay';
+    const NotProductSevenDay = 'App\Notifications\NotProductSevenDay';
+    const ProductPerMonthReport = 'App\Notifications\ProductPerMonthReport';
 
     public static function isRatingNotification($value): bool
     {
