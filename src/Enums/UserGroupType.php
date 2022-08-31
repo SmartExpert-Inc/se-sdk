@@ -71,9 +71,7 @@ final class UserGroupType extends Enum implements LocalizedEnum
 
     public static function isNotAuthor(int $value): bool
     {
-        return self::isUser($value)
-            || self::isModerator($value)
-            || self::isTeacher($value);
+        return ! self::isAuthor($value);
     }
 
     public static function getGroupKeysForCompetencyAssessment()
