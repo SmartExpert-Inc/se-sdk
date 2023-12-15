@@ -8,7 +8,7 @@
     "sdk"
   ],
   "require": {
-    "php": "^7|^8",
+    "php": "^7",
     "bensampo/laravel-enum": "^4.2.0",
     "illuminate/support": "^5.0.0",
     "guzzlehttp/guzzle": "^7",
@@ -16,7 +16,7 @@
     "spatie/image": "^1.4",
     "ext-curl": "*",
     "ext-json": "*",
-    "laravel/framework": "8",
+    "laravel/framework": "^8.0",
     "predis/predis": "^1.1"
   },
   "require-dev": {
