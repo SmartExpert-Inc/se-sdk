@@ -16,7 +16,7 @@
     "spatie/image": "^1.4",
     "ext-curl": "*",
     "ext-json": "*",
-    "laravel/framework": "6",
+    "laravel/framework": "8",
     "predis/predis": "^1.1"
   },
   "require-dev": {
